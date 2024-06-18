@@ -7,11 +7,12 @@ import EventDetails from "./pages/EventDetails";
 import Login from "./pages/UserLogin";
 import Register from "./pages/UserRegister";
 import PageNotFound from "./pages/PageNotFound";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <>
-      <div>Nav-bar component</div>
+      <NavBar />
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
