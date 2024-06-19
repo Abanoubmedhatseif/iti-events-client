@@ -8,23 +8,38 @@ import Login from "./pages/UserLogin";
 import Register from "./pages/UserRegister";
 import PageNotFound from "./pages/PageNotFound";
 import NavBar from "./components/NavBar";
+import { Box } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function App() {
+  const defaultTheme = createTheme();
   return (
     <>
-      <BrowserRouter>
-        <NavBar />
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="events" element={<Events />} />
-          <Route path="events/:eventId" element={<EventDetails />} />
-          <Route path="Categories" element={<Categories />} />
-          <Route path="Categories/:categoryId" element={<CategoryDetials />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider theme={defaultTheme}>
+        <BrowserRouter>
+          <NavBar />
+          <Box
+            sx={{
+              minHeight: "100vh",
+              display: "flex",
+            }}
+          >
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="events" element={<Events />} />
+              <Route path="events/:eventId" element={<EventDetails />} />
+              <Route path="Categories" element={<Categories />} />
+              <Route
+                path="Categories/:categoryId"
+                element={<CategoryDetials />}
+              />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Box>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   );
 }
