@@ -19,7 +19,8 @@ function App() {
           <Route path="events" element={<Events />} />
           <Route path="events/:eventId" element={<EventDetails />} />
           <Route path="Categories" element={<Categories />} />
-          <Route path="Categories/:categoryId" element={<CategoryDetials />} />
+          {/* <Route path="Categories/:categoryId" element={<CategoryDetials />} /> */}
+          <Route path="categories/:categoryId" element={<CategoryDetials />} /> 
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} />
