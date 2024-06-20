@@ -3,8 +3,9 @@ import "../styles/Profile.css";
 
 function App() {
   const [profile, setProfile] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
+    first_name: "Abanoub",
+    last_name: "Medhat",
+    email: "abanoub@example.com",
     password: "password123",
     profileImage: "profile-image.png",
   });
@@ -12,7 +13,8 @@ function App() {
   const [isEditing, setIsEditing] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: profile.name,
+    first_name: profile.first_name,
+    last_name: profile.last_name,
     email: profile.email,
     password: profile.password,
     profileImage: profile.profileImage,
@@ -53,9 +55,11 @@ function App() {
               className="profile-image"
             />
             <div className="details">
-              <h2>Name: {profile.name}</h2>
+              <h2>
+                Name: {profile.first_name} {profile.last_name}
+              </h2>
               <p>Email: {profile.email}</p>
-              <p>Password: ••••••••</p>
+              <p>Password: {profile.password}</p>
               <button className="edit-btn" onClick={() => setIsEditing(true)}>
                 Edit
               </button>
@@ -72,12 +76,21 @@ function App() {
             </span>
             <form onSubmit={handleSubmit}>
               <h2>Edit Profile</h2>
-              <label htmlFor="name">Name:</label>
+              <label htmlFor="name">First name:</label>
               <input
                 type="text"
-                id="name"
-                name="name"
-                value={formData.name}
+                id="firstname"
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleInputChange}
+                required
+              />
+              <label htmlFor="name">Last name:</label>
+              <input
+                type="text"
+                id="lastname"
+                name="last_name"
+                value={formData.last_name}
                 onChange={handleInputChange}
                 required
               />
@@ -89,7 +102,10 @@ function App() {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                title="Please enter a valid email address"
               />
+
               <label htmlFor="password">Password:</label>
               <input
                 type="password"
@@ -98,6 +114,8 @@ function App() {
                 value={formData.password}
                 onChange={handleInputChange}
                 required
+                minLength={8}
+                maxLength={20}
               />
               <label htmlFor="profileImage">Profile Image:</label>
               <input
@@ -107,7 +125,7 @@ function App() {
                 accept="image/*"
                 onChange={handleImageChange}
               />
-              <button type="submit">Save</button>
+              <button type="submit">Update</button>
             </form>
           </div>
         </div>
