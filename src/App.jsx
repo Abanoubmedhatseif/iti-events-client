@@ -10,6 +10,7 @@ import PageNotFound from "./pages/PageNotFound";
 import NavBar from "./components/NavBar";
 import { Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Profile from "./pages/Profile";
 
 function App() {
   const defaultTheme = createTheme();
@@ -35,6 +36,7 @@ function App() {
               />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
+              <Route path="my" element={<Profile />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Box>
