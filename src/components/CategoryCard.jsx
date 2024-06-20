@@ -1,8 +1,10 @@
+// CategoryCard.jsx
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
 
-const CategoryCard = ({ id, name, desc, image }) => {
+const CategoryCard = ({ id, name, desc, image, style }) => {
   return (
     <Card>
       <CardActionArea component={Link} to={`/categories/${id}`}>
@@ -11,6 +13,7 @@ const CategoryCard = ({ id, name, desc, image }) => {
           height="140"
           image={image}
           alt={name}
+          style={style} // Apply the style prop here
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -23,6 +26,6 @@ const CategoryCard = ({ id, name, desc, image }) => {
       </CardActionArea>
     </Card>
   );
-}
+};
 
 export default CategoryCard;

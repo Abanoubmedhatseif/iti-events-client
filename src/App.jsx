@@ -8,12 +8,14 @@ import Login from "./pages/UserLogin";
 import Register from "./pages/UserRegister";
 import PageNotFound from "./pages/PageNotFound";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <>
-      <NavBar />
       <BrowserRouter>
+      <NavBar />
+
         <Routes>
           <Route index element={<Home />} />
           <Route path="events" element={<Events />} />
@@ -24,7 +26,10 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} />
+
         </Routes>
+        <Footer />
+
       </BrowserRouter>
     </>
   );

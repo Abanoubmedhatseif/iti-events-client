@@ -1,7 +1,13 @@
+import SliderHero from "../components/SliderHero"; // Import SliderHero component
+import Categories from "./Categories";
+import Footer from "../components/Footer";
+import HowItWorks from "./HowItWorks";
 function Home() {
   return (
     <div>
-      <h1>Hero</h1>
+      <SliderHero />
+      <Categories />
+      <HowItWorks />
     </div>
   );
 }
