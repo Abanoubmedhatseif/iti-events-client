@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchEventDetails, clearEvent } from '../store/events/eventDetailsSlice';
+import { fetchEventDetails, clearEvent } from '../store/Events/eventDetailsSlice';
 import { Container, Typography, CircularProgress } from '@mui/material';
 import EventCard from '../components/EventCard';
 

@@ -39,6 +39,7 @@ function Events() {
               id={event.id}
               name={event.name}
               desc={event.desc}
+              date={event.date}
               image={event.image}
             />
           </Grid>
