@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchEventDetails, clearEvent } from '../store/Events/eventDetailsSlice';
 import { Container, Typography, CircularProgress } from '@mui/material';
 import EventCard from '../components/EventCard';
+import Button from '../components/Button';
 
 function EventDetails() {
   const { eventId } = useParams();
@@ -43,6 +44,14 @@ function EventDetails() {
         desc={event.desc}
         date={event.date}
         image={event.image}
+      />
+      <Button
+        text="Register To The Event"
+        backgroundColor="#203947"
+        color="#fff"
+        width={200}
+        height={50}
+        fontSize={100}
       />
     </Container>
   );
