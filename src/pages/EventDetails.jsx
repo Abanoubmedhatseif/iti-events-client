@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchEventDetails, clearEvent } from '../store/Events/eventDetailsSlice';
+import { fetchEventDetails, clearEvent } from '../store/events/eventDetailsSlice';
 import { Container, Typography, CircularProgress } from '@mui/material';
+import EventCard from '../components/EventCard';
 
 function EventDetails() {
   const { eventId } = useParams();
@@ -36,8 +37,13 @@ function EventDetails() {
 
   return (
     <Container>
-      <Typography variant="h4" component="h1">{event.name}</Typography>
-      <Typography variant="body1" component="p">{event.desc}</Typography>
+      <EventCard
+        id={event.id}
+        name={event.name}
+        desc={event.desc}
+        date={event.date}
+        image={event.image}
+      />
     </Container>
   );
 }
