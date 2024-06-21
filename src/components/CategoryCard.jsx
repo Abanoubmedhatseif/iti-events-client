@@ -13,7 +13,7 @@ const CategoryCard = ({ id, name, desc, image, style }) => {
           height="140"
           image={image}
           alt={name}
-          style={style} // Apply the style prop here
+          style={style} 
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
