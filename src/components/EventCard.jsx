@@ -1,28 +1,24 @@
+// components/EventCard.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 
-const CategoryCard = ({ id, name, desc, image }) => {
+function EventCard({ id, name, desc, date, image }) {
   return (
     <Card>
-      <CardActionArea component={Link} to={`/events/${id}`}>
-        <CardMedia
-          component="img"
-          height="140"
-          image={image}
-          alt={name}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {desc}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      <CardMedia component="img" alt={name} height="140" image={image} />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {desc}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {date}
+        </Typography>
+      </CardContent>
     </Card>
   );
 }
 
-export default CategoryCard;
+export default EventCard;
