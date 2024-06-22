@@ -28,19 +28,17 @@ import { Link as LinkR } from "react-router-dom";
 
 // Initial state for the form
 const initialState = {
-  first_name: "",
-  last_name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
   confirmPassword: "",
-  name: "",
-  profile_image: null,
 };
 
 // Initial state for error handling
 const initialErrorState = {
-  first_name: false,
-  last_name: false,
+  firstName: false,
+  lastName: false,
   email: false,
   password: false,
   confirmPassword: false,
@@ -48,7 +46,7 @@ const initialErrorState = {
 
 // Component for user registration (sign up)
 export default function Register() {
-  // Redux dispatch and navigation hookF
+  // Redux dispatch and navigation hook
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errorData = useSelector(selectAuthErrData);
@@ -77,7 +75,6 @@ export default function Register() {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-      name: `${formData.first_name} ${formData.last_name}`,
     });
     setError({ ...error, [e.target.name]: false });
   };
@@ -87,8 +84,8 @@ export default function Register() {
     event.preventDefault();
     // Validation checks for form fields
     if (
-      formData.first_name.length === 0 ||
-      formData.last_name.length === 0 ||
+      formData.firstName.length === 0 ||
+      formData.lastName.length === 0 ||
       !formData.email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) ||
       !formData.password.match(
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
@@ -96,8 +93,8 @@ export default function Register() {
       formData.confirmPassword !== formData.password
     ) {
       setError({
-        first_name: formData.first_name.length === 0,
-        last_name: formData.last_name.length === 0,
+        firstName: formData.firstName.length === 0,
+        lastName: formData.lastName.length === 0,
         email: !formData.email.match(
           /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
         ),
@@ -105,29 +102,29 @@ export default function Register() {
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
         ),
         confirmPassword: formData.confirmPassword !== formData.password,
-        username: formData.username.length === 0,
       });
     } else {
-      const formDataCopy = new FormData();
-      formDataCopy.append("first_name", formData.first_name);
-      formDataCopy.append("last_name", formData.last_name);
+      /* const formDataCopy = new FormData();
+      formDataCopy.append("firstName", formData.firstName);
+      formDataCopy.append("lastName", formData.lastName);
       formDataCopy.append("email", formData.email);
-      formDataCopy.append("password", formData.password);
+      formDataCopy.append("password", formData.password); */
       /* if (formData.profile_image) {
         formDataCopy.append("profile_image", formData.profile_image);
       } */
+      const { confirmPassword, ...formDataCopy } = formData;
       // Dispatches sign-up action if form data is valid
       dispatch(registerAction(formDataCopy));
-      /*   navigate("/"); */
     }
   };
 
   const addImage = async (e) => {
     const file = e.target.files[0];
     if (!file) return setImage(undefined);
-    setImage(URL.createObjectURL(e?.target?.files[0]));
+    setImage(URL.createObjectURL(file));
     setFormData({ ...formData, profile_image: file });
   };
+
   // JSX code for rendering the sign-up form
   return (
     <Container sx={{ pt: 2 }} maxWidth="xs">
@@ -157,7 +154,7 @@ export default function Register() {
               src={image}
               sx={{ width: "100px", height: "100px", fontSize: 50 }}
             >
-              {formData.name.charAt(0)}
+              {formData.firstName.charAt(0)}
             </Avatar>
           </Box>
         </Box>
@@ -170,18 +167,18 @@ export default function Register() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
-                name="first_name"
+                name="firstName"
                 required
                 fullWidth
-                id="first_name"
+                id="firstName"
                 label="First Name"
                 autoFocus
                 helperText={
-                  error.first_name ? "Please enter your first name." : false
+                  error.firstName ? "Please enter your first name." : false
                 }
-                value={formData.first_name}
+                value={formData.firstName}
                 inputProps={{ maxLength: 20 }}
-                error={error.first_name}
+                error={error.firstName}
                 onChange={handleChange}
               />
             </Grid>
@@ -190,25 +187,19 @@ export default function Register() {
               <TextField
                 required
                 fullWidth
-                id="last_name"
+                id="lastName"
                 label="Last Name"
-                name="last_name"
+                name="lastName"
                 autoComplete="family-name"
-                value={formData.last_name}
+                value={formData.lastName}
                 inputProps={{ maxLength: 20 }}
                 helperText={
-                  error.last_name ? "Please enter your last name." : false
+                  error.lastName ? "Please enter your last name." : false
                 }
-                error={error.last_name}
+                error={error.lastName}
                 onChange={handleChange}
               />
             </Grid>
-            {/* Hidden field for full name */}
-            <TextField
-              name="name"
-              value={`${formData.first_name} ${formData.last_name}`}
-              sx={{ display: "none" }}
-            />
             {/* Email */}
             <Grid item xs={12}>
               <TextField
@@ -284,20 +275,13 @@ export default function Register() {
               </FormControl>
             </Grid>
             {/* Checkbox */}
-            {(errorData?.username || errorData?.email) && (
-              <Grid item xs={12}>
-                {errorData?.username && (
-                  <Typography color="error" variant="body2">
-                    Username is used.
-                  </Typography>
-                )}
-                {errorData?.email && (
-                  <Typography color="error" variant="body2">
-                    Email is used.
-                  </Typography>
-                )}
-              </Grid>
-            )}
+            <Grid item xs={12}>
+              {errorData?.email && (
+                <Typography color="error" variant="body2">
+                  Email is used.
+                </Typography>
+              )}
+            </Grid>
           </Grid>
           {/* Sign-up Button */}
           <Button

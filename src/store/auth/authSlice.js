@@ -13,8 +13,8 @@ import {
 import { toast } from "react-toastify";
 
 const initialState = {
-  access_token: localStorage.getItem("access_token") || "",
-  refresh_token: localStorage.getItem("refresh_token") || "",
+  accessToken: localStorage.getItem("accessToken") || "",
+  refreshToken: localStorage.getItem("refreshToken") || "",
   loading: false,
   error: false,
   user: JSON.parse(localStorage.getItem("user") || "null"),
@@ -35,21 +35,21 @@ const handleRejected = (defaultMessage) => (state, action) => {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: "auth",   
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      const { access_token, refresh_token } = action.payload;
-      state.access_token = access_token;
-      state.refresh_token = refresh_token;
-      localStorage.setItem("access_token", access_token);
-      localStorage.setItem("refresh_token", refresh_token);
+      const { accessToken, refreshToken } = action.payload;
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
     },
     logOut: (state) => {
-      state.access_token = "";
-      state.refresh_token = "";
+      state.accessToken = "";
+      state.refreshToken = "";
       state.user = null;
-      localStorage.clear();
+      localStorage.clear(); 
     },
   },
   extraReducers: (builder) => {
@@ -58,10 +58,11 @@ const authSlice = createSlice({
       .addCase(loginAction.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.access_token = action.payload.access;
-        state.refresh_token = action.payload.refresh;
-        localStorage.setItem("access_token", action.payload.access);
-        localStorage.setItem("refresh_token", action.payload.refresh);
+        console.log("Action payload", action.payload);
+        state.accessToken = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
+        localStorage.setItem("accessToken", action.payload.accessToken);
+        localStorage.setItem("refreshToken", action.payload.refreshToken);
       })
       .addCase(loginAction.rejected, handleRejected("Invalid credentials"))
       .addCase(registerAction.pending, handlePending)
@@ -69,10 +70,10 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = false;
         state.errorData = null;
-        state.access_token = action.payload.access_token;
-        state.refresh_token = action.payload.refresh_token;
-        localStorage.setItem("access_token", action.payload.access_token);
-        localStorage.setItem("refresh_token", action.payload.refresh_token);
+        state.accessToken = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
+        localStorage.setItem("accessToken", action.payload.accessToken);
+        localStorage.setItem("refreshToken", action.payload.refreshToken);
         toast.success("Registration successful", { position: "bottom-left" });
       })
       .addCase(registerAction.rejected, handleRejected("Error registering"))
@@ -80,8 +81,8 @@ const authSlice = createSlice({
       .addCase(refreshTokenAction.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.access_token = action.payload.access;
-        localStorage.setItem("access_token", action.payload.access);
+        state.accessToken = action.payload.accessToken;
+        localStorage.setItem("accessToken", action.payload.accessToken);
       })
       .addCase(
         refreshTokenAction.rejected,
@@ -91,13 +92,13 @@ const authSlice = createSlice({
       .addCase(userDataAction.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
+        state.user = action.payload.user;
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(userDataAction.rejected, (state, action) => {
         handleRejected("Error fetching user data")(state, action);
-        state.access_token = "";
-        state.refresh_token = "";
+        state.accessToken = "";
+        state.refreshToken = "";
         state.user = null;
         localStorage.clear();
       })
@@ -161,8 +162,8 @@ export const { setCredentials, logOut } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const selectAccessToken = (state) => state.auth.access_token;
-export const selectRefreshToken = (state) => state.auth.refresh_token;
+export const selectAccessToken = (state) => state.auth.accessToken;
+export const selectRefreshToken = (state) => state.auth.refreshToken;
 export const selectAuthLoading = (state) => state.auth.loading;
 export const selectAuthError = (state) => state.auth.error;
 export const selectUser = (state) => state.auth.user;
