@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Profile.css";
 
-function App() {
+function Profile() {
   const [profile, setProfile] = useState({
     first_name: "Abanoub",
     last_name: "Medhat",
@@ -134,4 +134,4 @@ function App() {
   );
 }
 
-export default App;
+export default Profile;
