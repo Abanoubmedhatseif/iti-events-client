@@ -8,8 +8,22 @@ import Login from "./pages/UserLogin";
 import Register from "./pages/UserRegister";
 import PageNotFound from "./pages/PageNotFound";
 import NavBar from "./components/NavBar";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAccessToken , selectUser } from "./store/auth/authSlice";
+import { useEffect } from "react";
+import { isTokenExpired } from "./api";
+import { userDataAction } from "./store/auth/authActions";
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const accessToken = useSelector(selectAccessToken);
+  useEffect(() => {
+    if (!user || isTokenExpired(accessToken)) {
+      dispatch(userDataAction());
+    }
+    console.log("User", user);
+  }, [user, accessToken, dispatch]);
   return (
     <>
       <NavBar />
