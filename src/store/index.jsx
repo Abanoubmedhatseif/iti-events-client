@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import categoryReducer from './categories/categorySlice';
-import categoryDetailsReducer from './categories/categoryDetailsSlice'
+import eventCategoryReducer from './categories/categorySlice'
 
 export const store = configureStore({
   reducer: {
-    categories: categoryReducer,
-    categoryDetails: categoryDetailsReducer,
+    // categories: categoryReducer,
+    eventCategories: eventCategoryReducer,
+
 
   },
 });

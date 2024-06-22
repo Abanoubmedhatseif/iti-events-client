@@ -4,19 +4,19 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Container, CircularProgress, Typography, Grid } from '@mui/material';
-import { fetchCategoryDetails } from '../store/categories/categoryDetailsSlice';
-import CategoryCard from '../components/CategoryCard';
+import { fetchEventCategoryDetails } from '../store/categories/categorySlice';
+import CategoryCard from '../components/Category/CategoryCard';
 
 function CategoryDetails() {
   const { categoryId } = useParams();
   const dispatch = useDispatch();
-  const { category, loading, error } = useSelector(state => state.categoryDetails);
+  const { eventCategory, status, error } = useSelector(state => state.eventCategories);
 
   useEffect(() => {
-    dispatch(fetchCategoryDetails(categoryId)); 
+    dispatch(fetchEventCategoryDetails(categoryId));
   }, [dispatch, categoryId]);
 
-  if (loading) {
+  if (status === 'loading') {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <CircularProgress />
@@ -25,7 +25,7 @@ function CategoryDetails() {
     );
   }
 
-  if (error) {
+  if (status === 'failed') {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Typography variant="h6" component="div">Error: {error}</Typography>
@@ -33,7 +33,7 @@ function CategoryDetails() {
     );
   }
 
-  if (!category) {
+  if (!eventCategory) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Typography variant="h6" component="div">Category not found.</Typography>
@@ -46,10 +46,10 @@ function CategoryDetails() {
       <Grid container spacing={3} justifyContent="center">
         <Grid item xs={12} sm={8} md={6}>
           <CategoryCard
-            id={category.id}
-            name={category.name}
-            desc={category.desc}
-            image={category.image}
+            id={eventCategory.id}
+            name={eventCategory.name}
+            desc={eventCategory.desc} // Assuming desc is a property in your category object
+            // image={eventCategory.image} // Assuming image is a property in your category object
             style={{ width: '100%', height: 'auto' }} 
           />
         </Grid>

@@ -10,8 +10,8 @@ import Register from "./pages/UserRegister";
 import PageNotFound from "./pages/PageNotFound";
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
-import AdminCategoryPage from './pages/AdminCategoryPage';
-import AdminHome from './pages/AdminHome';
+import AdminCategoryPage from './pages/Admin/AdminCategoryPage';
+import AdminHome from './pages/Admin/AdminHome';
 function App() {
   return (
     <BrowserRouter>

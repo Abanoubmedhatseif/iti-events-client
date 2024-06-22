@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
 
-const CategoryCard = ({ id, name, desc, image, style }) => {
+const CategoryCard = ({ id, name, image, style }) => {
   return (
     <Card>
       <CardActionArea component={Link} to={`/categories/${id}`}>
@@ -19,9 +19,9 @@ const CategoryCard = ({ id, name, desc, image, style }) => {
           <Typography gutterBottom variant="h5" component="div">
             {name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          {/* <Typography variant="body2" color="text.secondary">
             {desc}
-          </Typography>
+          </Typography> */}
         </CardContent>
       </CardActionArea>
     </Card>
