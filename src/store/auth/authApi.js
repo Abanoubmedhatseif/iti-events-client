@@ -5,7 +5,7 @@ export const login = (
   loginData /* : { username: string; password: string } */
 ) => api.post("auth/login/", loginData);
 export const register = (registerData /* : FormData */) =>
-  api.postForm("auth/", registerData);
+  api.postForm("auth/register/", registerData);
 export const refreshToken = (refreshToken /* : string */) =>
   refreshApi.post("auth/refresh-token/", { refresh: refreshToken });
 export const getUserData = () => api.get("users/me/");
