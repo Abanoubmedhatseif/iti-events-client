@@ -8,11 +8,28 @@ import Login from "./pages/UserLogin";
 import Register from "./pages/UserRegister";
 import PageNotFound from "./pages/PageNotFound";
 import NavBar from "./components/NavBar";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAccessToken, selectUser } from "./store/auth/authSlice";
+import { useEffect } from "react";
+import { isTokenExpired } from "./api";
+import { userDataAction } from "./store/auth/authActions";
 import { Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Profile from "./pages/Profile";
+import { setupInterceptors } from "./api";
+import store from "./store";
+
+setupInterceptors(store);
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const accessToken = useSelector(selectAccessToken);
+  useEffect(() => {
+    if (!user || isTokenExpired(accessToken)) {
+      dispatch(userDataAction());
+    }
+  }, [user, accessToken, dispatch]);
   const defaultTheme = createTheme();
   return (
     <>

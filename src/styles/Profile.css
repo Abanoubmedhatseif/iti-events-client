@@ -98,7 +98,7 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
-
+/* 
 form {
   display: flex;
   flex-direction: column;
@@ -127,3 +127,4 @@ form button {
 form button:hover {
   background-color: #a00;
 }
+ */
