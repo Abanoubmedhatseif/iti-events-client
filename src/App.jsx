@@ -13,6 +13,9 @@ import { selectAccessToken , selectUser } from "./store/auth/authSlice";
 import { useEffect } from "react";
 import { isTokenExpired } from "./api";
 import { userDataAction } from "./store/auth/authActions";
+import { Box } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Profile from "./pages/Profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,21 +27,35 @@ function App() {
     }
     console.log("User", user);
   }, [user, accessToken, dispatch]);
+  const defaultTheme = createTheme();
   return (
     <>
-      <NavBar />
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="events" element={<Events />} />
-          <Route path="events/:eventId" element={<EventDetails />} />
-          <Route path="Categories" element={<Categories />} />
-          <Route path="Categories/:categoryId" element={<CategoryDetials />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider theme={defaultTheme}>
+        <BrowserRouter>
+          <NavBar />
+          <Box
+            sx={{
+              minHeight: "100vh",
+              display: "flex",
+            }}
+          >
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="events" element={<Events />} />
+              <Route path="events/:eventId" element={<EventDetails />} />
+              <Route path="Categories" element={<Categories />} />
+              <Route
+                path="Categories/:categoryId"
+                element={<CategoryDetials />}
+              />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="my" element={<Profile />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Box>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   );
 }
