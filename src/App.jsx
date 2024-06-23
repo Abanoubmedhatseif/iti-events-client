@@ -12,6 +12,8 @@ import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 import AdminCategoryPage from './pages/Admin/AdminCategoryPage';
 import AdminHome from './pages/Admin/AdminHome';
+import FAQ from './pages/FAQ';
+
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +27,7 @@ function App() {
           <Route path="categories/:categoryId" element={<CategoryDetails />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="faq" element={<FAQ/>}/>
           <Route path="*" element={<PageNotFound />} />
         </Route>
 
