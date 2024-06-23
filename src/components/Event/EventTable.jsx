@@ -11,6 +11,9 @@ import {
   TableRow,
   Paper,
   IconButton,
+  Typography,
+  Tooltip,
+  Snackbar,
 } from '@mui/material';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import { fetchEvents, deleteEvent, updateEvent } from '../../store/Events/eventSlice';
@@ -23,6 +26,8 @@ const EventTable = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [hoveredEventId, setHoveredEventId] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -58,6 +63,7 @@ const EventTable = () => {
         .then(() => {
           setOpenUpdateModal(false);
           setSelectedEvent(null);
+          setSnackbarOpen(true);
         })
         .catch((error) => {
           console.error('Failed to update event:', error);
@@ -76,13 +82,17 @@ const EventTable = () => {
     setSelectedEvent(null);
   };
 
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <CircularProgress />
-      </Box>
-    );
-  }
+  const handleMouseEnter = (eventId) => {
+    setHoveredEventId(eventId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredEventId(null);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -101,14 +111,28 @@ const EventTable = () => {
             <TableCell>Registration Status</TableCell>
             <TableCell>Active</TableCell>
             <TableCell>Paid</TableCell>
-            <TableCell>Actions</TableCell> 
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {events.map((event) => (
             <TableRow key={event.id}>
               <TableCell>{event.name}</TableCell>
-              <TableCell>{event.description}</TableCell>
+              <TableCell>
+                <Tooltip title={event.description} arrow>
+                  <Typography
+                    onMouseEnter={() => handleMouseEnter(event.id)}
+                    onMouseLeave={handleMouseLeave}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {hoveredEventId === event.id
+                      ? event.description
+                      : `${event.description.split(' ').slice(0, 2).join(' ')}${
+                          event.description.split(' ').length > 2 ? '...' : ''
+                        }`}
+                  </Typography>
+                </Tooltip>
+              </TableCell>
               <TableCell>{event.category ? event.category.name : 'Uncategorized'}</TableCell>
               <TableCell>{new Date(event.startDate).toLocaleString()}</TableCell>
               <TableCell>{event.capacity}</TableCell>
@@ -144,8 +168,17 @@ const EventTable = () => {
       <UpdateModal
         open={openUpdateModal}
         onClose={handleCloseUpdateModal}
-        onUpdate={handleConfirmUpdate}
+        onUpdate={handleConfirmUpdate} // Pass this callback
         event={selectedEvent}
+      />
+
+      {/* Snackbar for Update Success */}
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message="Event updated successfully!"
       />
     </TableContainer>
   );

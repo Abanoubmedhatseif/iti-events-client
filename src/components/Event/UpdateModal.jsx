@@ -12,15 +12,16 @@ import {
   Select,
   Checkbox,
   FormControlLabel,
+  Snackbar,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEvent } from '../../store/Events/eventSlice';
 import { fetchEventCategories } from '../../store/categories/categorySlice';
 
-const UpdateModal = ({ open, onClose, event }) => {
+const UpdateModal = ({ open, onClose, onUpdate, event }) => {
   const dispatch = useDispatch();
   const { eventCategories } = useSelector((state) => state.eventCategories);
-  const { updateEventError } = useSelector((state) => state.events); 
+  const { updateEventError } = useSelector((state) => state.events);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -38,6 +39,7 @@ const UpdateModal = ({ open, onClose, event }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
     if (open && event) {
@@ -84,7 +86,7 @@ const UpdateModal = ({ open, onClose, event }) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: type === 'checkbox' ? checked : (type === 'number' ? parseFloat(value) : value),
+      [name]: type === 'checkbox' ? checked : type === 'number' ? parseFloat(value) : value,
     }));
   };
 
@@ -129,7 +131,9 @@ const UpdateModal = ({ open, onClose, event }) => {
 
     try {
       await dispatch(updateEvent({ id: event.id, ...parsedFormData })).unwrap();
-      onClose();
+      setSnackbarOpen(true);
+      onUpdate(parsedFormData); // Call the onUpdate callback with updated data
+      onClose(); // Close the modal after successful update
     } catch (error) {
       console.error('Failed to update event:', error);
     }
@@ -137,206 +141,219 @@ const UpdateModal = ({ open, onClose, event }) => {
 
   const handleClose = () => {
     onClose();
+    setSnackbarOpen(false); // Reset snackbar state when the modal is closed
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   if (!open) return null;
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '80%',
-          maxWidth: 600,
-          maxHeight: '80%',
-          overflowY: 'auto',
-          backgroundColor: '#ffffff',
-          boxShadow: 24,
-          p: 4,
-          borderRadius: 4,
-        }}
+    <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        <Typography variant="h6" component="h2" style={{ color: '#901b20', marginBottom: 16 }}>
-          Update Event
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                label="Event Name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                fullWidth
-                size="small"
-                margin="dense"
-                error={!!errors.name}
-                helperText={errors.name}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Event Description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                fullWidth
-                size="small"
-                margin="dense"
-                multiline
-                rows={5}
-                error={!!errors.description}
-                helperText={errors.description}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="datetime-local"
-                label="Start Date"
-                name="startDate"
-                value={formData.startDate}
-                onChange={handleChange}
-                fullWidth
-                size="small"
-                margin="dense"
-                error={!!errors.startDate}
-                helperText={errors.startDate}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Capacity"
-                name="capacity"
-                value={formData.capacity}
-                onChange={handleChange}
-                fullWidth
-                size="small"
-                margin="dense"
-                type="number"
-                error={!!errors.capacity}
-                helperText={errors.capacity}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Price"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-                fullWidth
-                size="small"
-                margin="dense"
-                type="number"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Duration (in hours)"
-                name="duration"
-                value={formData.duration}
-                onChange={handleChange}
-                fullWidth
-                size="small"
-                margin="dense"
-                type="number"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth size="small" margin="dense">
-                <InputLabel>Category</InputLabel>
-                <Select
-                  name="category"
-                  value={formData.category}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '80%',
+            maxWidth: 600,
+            maxHeight: '80%',
+            overflowY: 'auto',
+            backgroundColor: '#ffffff',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 4,
+          }}
+        >
+          <Typography variant="h6" component="h2" style={{ color: '#901b20', marginBottom: 16 }}>
+            Update Event
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  label="Event Name"
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
-                >
-                  {eventCategories.map((category) => (
-                    <MenuItem key={category.id} value={category.id}>
-                      {category.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Event Description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  multiline
+                  rows={5}
+                  error={!!errors.description}
+                  helperText={errors.description}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="datetime-local"
+                  label="Start Date"
+                  name="startDate"
+                  value={formData.startDate}
+                  onChange={handleChange}
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  error={!!errors.startDate}
+                  helperText={errors.startDate}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Capacity"
+                  name="capacity"
+                  value={formData.capacity}
+                  onChange={handleChange}
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  type="number"
+                  error={!!errors.capacity}
+                  helperText={errors.capacity}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Price"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  type="number"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Duration (in hours)"
+                  name="duration"
+                  value={formData.duration}
+                  onChange={handleChange}
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  type="number"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth size="small" margin="dense">
+                  <InputLabel>Category</InputLabel>
+                  <Select
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                  >
+                    {eventCategories.map((category) => (
+                      <MenuItem key={category.id} value={category.id}>
+                        {category.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Minimum Age"
+                  name="minAge"
+                  value={formData.minAge}
+                  onChange={handleChange}
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  type="number"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Maximum Age"
+                  name="maxAge"
+                  value={formData.maxAge}
+                  onChange={handleChange}
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  type="number"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  control={<Checkbox checked={formData.registrationClosed} onChange={handleChange} />}
+                  label="Close Registration"
+                  name="registrationClosed"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  control={<Checkbox checked={formData.isActive} onChange={handleChange} />}
+                  label="Active"
+                  name="isActive"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox checked={formData.isPaid} onChange={handleChange} />}
+                  label="Paid"
+                  name="isPaid"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    style={{ width: '45%', backgroundColor: '#203947', color: '#ffffff' }}
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    onClick={handleClose}
+                    variant="contained"
+                    style={{ width: '45%', background: '#901b20', color: '#ffffff' }}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+                {updateEventError && (
+                  <Typography variant="body2" color="error" style={{ marginTop: 8 }}>
+                    Failed to update event. Please try again later.
+                  </Typography>
+                )}
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Minimum Age"
-                name="minAge"
-                value={formData.minAge}
-                onChange={handleChange}
-                fullWidth
-                size="small"
-                margin="dense"
-                type="number"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Maximum Age"
-                name="maxAge"
-                value={formData.maxAge}
-                onChange={handleChange}
-                fullWidth
-                size="small"
-                margin="dense"
-                type="number"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <FormControlLabel
-                control={<Checkbox checked={formData.registrationClosed} onChange={handleChange} />}
-                label="Close Registration"
-                name="registrationClosed"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <FormControlLabel
-                control={<Checkbox checked={formData.isActive} onChange={handleChange} />}
-                label="Active"
-                name="isActive"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox checked={formData.isPaid} onChange={handleChange} />}
-                label="Paid"
-                name="isPaid"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  style={{ width: '45%', backgroundColor: '#203947', color: '#ffffff' }}
-                >
-                  Update
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="contained"
-                  style={{ width: '45%', background: '#901b20', color: '#ffffff' }}
-                >
-                  Cancel
-                </Button>
-              </Box>
-              {updateEventError && (
-                <Typography variant="body2" color="error" style={{ marginTop: 8 }}>
-                  Failed to update event. Please try again later.
-                </Typography>
-              )}
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
-    </Modal>
+          </form>
+        </Box>
+      </Modal>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message="Event updated successfully"
+      />
+    </>
   );
 };
 
