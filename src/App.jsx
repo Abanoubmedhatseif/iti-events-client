@@ -1,12 +1,18 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
 import Categories from "./pages/Categories";
-import CategoryDetials from "./pages/CategoryDetails";
+import CategoryDetails from "./pages/CategoryDetails";
 import EventDetails from "./pages/EventDetails";
 import Login from "./pages/UserLogin";
 import Register from "./pages/UserRegister";
 import PageNotFound from "./pages/PageNotFound";
+import MainLayout from './layouts/MainLayout';
+import AdminLayout from './layouts/AdminLayout';
+import AdminCategoryPage from './pages/Admin/AdminCategoryPage';
+import AdminHome from './pages/Admin/AdminHome';
+import AdminEventPage from './pages/Admin/AdminEventPage';
 import NavBar from "./components/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAccessToken, selectUser } from "./store/auth/authSlice";
@@ -35,13 +41,6 @@ function App() {
     <>
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
-          <NavBar />
-          <Box
-            sx={{
-              minHeight: "100vh",
-              display: "flex",
-            }}
-          >
             <Routes>
               <Route index element={<Home />} />
               <Route path="events" element={<Events />} />
@@ -55,11 +54,33 @@ function App() {
               <Route path="register" element={<Register />} />
               <Route path="my" element={<Profile />} />
               <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </Box>
-        </BrowserRouter>
+
+        {/* Main Layout Routes */}
+        <Route element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="events" element={<Events />} />
+          <Route path="events/:eventId" element={<EventDetails />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="categories/:categoryId" element={<CategoryDetails />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+
+        {/* Admin Layout Routes */}
+        <Route path="admin/*" element={<AdminLayout />}>
+          <Route index element={<AdminHome />} />
+          <Route path="categories" element={<AdminCategoryPage />} />
+          <Route path="events" element={<AdminEventPage />} />
+
+
+
+          {/* Add other admin routes here */}
+        </Route>
+      </Routes>
+    </BrowserRouter>
       </ThemeProvider>
-    </>
+      </>
   );
 }
 
