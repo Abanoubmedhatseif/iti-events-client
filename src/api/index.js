@@ -39,7 +39,7 @@ export const isTokenExpired = (token) => {
 
 // Function to refresh access token
 const refreshAccessToken = async (store, refreshToken) => {
-  await store.dispatch(refreshTokenAction(refreshToken));
+  await store.dispatch(refreshTokenAction(`Bearer ${refreshToken}`));
   return selectAccessToken(store.getState());
 };
 

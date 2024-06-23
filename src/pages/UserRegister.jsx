@@ -26,22 +26,22 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link as LinkR } from "react-router-dom";
 
-// Initial state for the form
 const initialState = {
   firstName: "",
   lastName: "",
   email: "",
   password: "",
   confirmPassword: "",
+  birthdate: "", // Add birthdate to the initial state
 };
 
-// Initial state for error handling
 const initialErrorState = {
   firstName: false,
   lastName: false,
   email: false,
   password: false,
   confirmPassword: false,
+  birthdate: false, // Add birthdate to the error state
 };
 
 // Component for user registration (sign up)
@@ -90,7 +90,8 @@ export default function Register() {
       !formData.password.match(
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
       ) ||
-      formData.confirmPassword !== formData.password
+      formData.confirmPassword !== formData.password ||
+      formData.birthdate.length === 0 // Validate birthdate
     ) {
       setError({
         firstName: formData.firstName.length === 0,
@@ -102,6 +103,7 @@ export default function Register() {
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
         ),
         confirmPassword: formData.confirmPassword !== formData.password,
+        birthdate: formData.birthdate.length === 0, // Add birthdate error handling
       });
     } else {
       /* const formDataCopy = new FormData();
@@ -112,6 +114,7 @@ export default function Register() {
       /* if (formData.profile_image) {
         formDataCopy.append("profile_image", formData.profile_image);
       } */
+      // Removes confirmPassword field from form data
       const { confirmPassword, ...formDataCopy } = formData;
       // Dispatches sign-up action if form data is valid
       dispatch(registerAction(formDataCopy));
@@ -214,6 +217,24 @@ export default function Register() {
                 error={error.email}
                 helperText={
                   error.email ? "Please enter your email correctly." : false
+                }
+                onChange={handleChange}
+              />
+            </Grid>
+            {/* Birthdate */}
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="birthdate"
+                label="Birthdate"
+                name="birthdate"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                value={formData.birthdate}
+                error={error.birthdate}
+                helperText={
+                  error.birthdate ? "Please enter your birthdate." : false
                 }
                 onChange={handleChange}
               />
