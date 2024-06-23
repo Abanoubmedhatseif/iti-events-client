@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, TextField, Button, Snackbar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createEventCategory } from '../../store/categories/categorySlice'; 
+import { createEventCategory } from '../../store/categories/categorySlice';
 
 const CreateCategoryModal = ({ open, handleClose, handleSuccessMessageClose }) => {
   const dispatch = useDispatch();
@@ -9,24 +9,24 @@ const CreateCategoryModal = ({ open, handleClose, handleSuccessMessageClose }) =
 
   const [categoryName, setCategoryName] = useState('');
   const [errors, setErrors] = useState({});
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false); 
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (validateForm()) {
       try {
-        await dispatch(createEventCategory({ name: categoryName })).unwrap(); 
-        setShowSuccessMessage(true); 
+        await dispatch(createEventCategory({ name: categoryName })).unwrap();
+        setShowSuccessMessage(true);
         setTimeout(() => {
-          setShowSuccessMessage(false); 
+          setShowSuccessMessage(false);
         }, 5000);
         resetForm();
         handleClose();
-        handleSuccessMessageClose(); 
+        handleSuccessMessageClose();
       } catch (error) {
         console.error('Failed to create category:', error);
-        setErrors({ name: error });
+        setErrors({ ...errors, createUpdate: error.message }); // Set the error message here
       }
     }
   };
@@ -70,7 +70,7 @@ const CreateCategoryModal = ({ open, handleClose, handleSuccessMessageClose }) =
               onChange={(e) => setCategoryName(e.target.value)}
               margin="normal"
               error={!!errors.name || !!createUpdateError}
-              helperText={errors.name || createUpdateError}
+              helperText={errors.name || createUpdateError || ''}
               InputLabelProps={{ style: { color: '#901b20' } }}
             />
             <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>

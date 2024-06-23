@@ -12,6 +12,7 @@ import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 import AdminCategoryPage from './pages/Admin/AdminCategoryPage';
 import AdminHome from './pages/Admin/AdminHome';
+import AdminEventPage from './pages/Admin/AdminEventPage';
 function App() {
   return (
     <BrowserRouter>
@@ -32,6 +33,8 @@ function App() {
         <Route path="admin/*" element={<AdminLayout />}>
           <Route index element={<AdminHome />} />
           <Route path="categories" element={<AdminCategoryPage />} />
+          <Route path="events" element={<AdminEventPage />} />
+
 
 
           {/* Add other admin routes here */}

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Container, Grid, Box } from '@mui/material';
 import AdminNavbar from '../../components/AdminNavbar';
-import CategoryTable from '../../components/Category/CategoryTable';
-import CreateCategoryModal from '../../components/Category/CreateCategoryModal';
+import EventTable from '../../components/Event/EventTable';
+import CreateEventModal from '../../components/Event/CreateEventModal';
 import Button from '../../components/Button'; 
 
-const AdminCategoryPage = () => {
+const AdminEventPage = () => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleCreateCategory = () => {
+  const handleCreateEvent = () => {
     setOpen(true);
   };
 
@@ -22,25 +22,25 @@ const AdminCategoryPage = () => {
           <Button
             variant="contained"
             color="white"
-            text="Create Category"
-            onClick={handleCreateCategory}
-            width={200} 
-            height={60} 
-            fontSize={100} 
-            margin="0" 
-            padding="10px" 
+            text="Create Event"
+            onClick={handleCreateEvent}
+            width={200}
+            height={60}
+            fontSize={100}
+            margin="0"
+            padding="10px"
             backgroundColor="#901b20b3"
           />
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <CategoryTable />
+            <EventTable />
           </Grid>
         </Grid>
-        <CreateCategoryModal open={open} handleClose={handleClose} />
+        <CreateEventModal open={open} handleClose={handleClose} />
       </Container>
     </>
   );
 };
 
-export default AdminCategoryPage;
+export default AdminEventPage;

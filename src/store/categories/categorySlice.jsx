@@ -3,11 +3,10 @@ import axios from 'axios';
 
 const BASE_URL = 'https://iti-events-server.onrender.com/api/v1';
 
-// Async thunk actions
 export const fetchEventCategories = createAsyncThunk('eventCategories/fetchEventCategories', async () => {
   try {
     const response = await axios.get(`${BASE_URL}/event-categories`);
-    return response.data.categories; // Adjust this based on your API's response structure
+    return response.data.categories; 
   } catch (error) {
     return Promise.reject(error.message || 'Failed to fetch event categories');
   }
@@ -20,11 +19,11 @@ export const createEventCategory = createAsyncThunk('eventCategories/createEvent
         'Content-Type': 'application/json'
       }
     });
-    return response.data.category; // Adjust this based on your API's response structure
+    return response.data.category; 
   } catch (error) {
     if (error.response && error.response.status === 500) {
       return thunkAPI.rejectWithValue('Category Name already exists');
-    } else if (error.response && error.response.status === 400) { // Conflict for duplicate category name
+    } else if (error.response && error.response.status === 400) { 
       return thunkAPI.rejectWithValue('Category Name must be at least 3 characters');
     } else {
       return thunkAPI.rejectWithValue(error.message || 'Failed to create category');
@@ -39,23 +38,21 @@ export const updateEventCategory = createAsyncThunk('eventCategories/updateEvent
         'Content-Type': 'application/json'
       }
     });
-    return response.data.category; // Adjust this based on your API's response structure
+    return response.data.category; 
   } catch (error) {
     if (error.response && error.response.status === 500) {
-    } else if (error.response && error.response.status === 400) { // Conflict for duplicate category name
+    } else if (error.response && error.response.status === 400) { 
       return thunkAPI.rejectWithValue('Category Name already exists');
-
     } else {
       return thunkAPI.rejectWithValue(error.message || 'Failed to create category');
     }
   }
 });
 
-
 export const deleteEventCategory = createAsyncThunk('eventCategories/deleteEventCategory', async (categoryId, thunkAPI) => {
   try {
     await axios.delete(`${BASE_URL}/event-categories/${categoryId}`);
-    return categoryId; // Return the deleted categoryId upon success
+    return categoryId; 
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
@@ -70,7 +67,6 @@ export const fetchEventCategoryDetails = createAsyncThunk('eventCategories/fetch
   }
 });
 
-// Slice definition
 const eventCategorySlice = createSlice({
   name: 'eventCategories',
   initialState: {
@@ -78,12 +74,11 @@ const eventCategorySlice = createSlice({
     eventCategory: null,
     status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,
-    createUpdateError: null, // Separate error state for create/update actions
+    createUpdateError: null, 
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch Event Categories reducers
       .addCase(fetchEventCategories.pending, (state) => {
         state.status = 'loading';
       })
@@ -106,10 +101,9 @@ const eventCategorySlice = createSlice({
         state.createUpdateError = null;
       })
       .addCase(createEventCategory.rejected, (state, action) => {
-        state.status = 'succeeded'; // Maintain the succeeded state for table to display
-        state.createUpdateError = action.payload;
+        state.status = 'succeeded'; 
+        state.createUpdateError = action.payload; 
       })
-      // Update Event Category reducers
       .addCase(updateEventCategory.pending, (state) => {
         state.status = 'loading';
       })
@@ -122,10 +116,9 @@ const eventCategorySlice = createSlice({
         state.createUpdateError = null;
       })
       .addCase(updateEventCategory.rejected, (state, action) => {
-        state.status = 'succeeded'; // Maintain the succeeded state for table to display
-        state.createUpdateError = action.payload;
+        state.status = 'succeeded'; 
+        state.createUpdateError = action.payload; 
       })
-      // Delete Event Category reducers
       .addCase(deleteEventCategory.pending, (state) => {
         state.status = 'loading';
       })
@@ -134,10 +127,9 @@ const eventCategorySlice = createSlice({
         state.eventCategories = state.eventCategories.filter((category) => category.id !== action.payload);
       })
       .addCase(deleteEventCategory.rejected, (state, action) => {
-        state.status = 'succeeded'; // Maintain the succeeded state for table to display
-        state.createUpdateError = action.payload;
+        state.status = 'succeeded'; 
+        state.createUpdateError = action.payload; 
       })
-      // Fetch Event Category Details reducers
       .addCase(fetchEventCategoryDetails.pending, (state) => {
         state.status = 'loading';
       })
@@ -149,6 +141,7 @@ const eventCategorySlice = createSlice({
         state.status = 'failed';
         state.error = action.payload || 'Failed to fetch category details';
       });
+      
   },
 });
 
