@@ -134,6 +134,7 @@ const EventTable = () => {
                 </Tooltip>
               </TableCell>
               <TableCell>{event.category ? event.category.name : 'Uncategorized'}</TableCell>
+
               <TableCell>{new Date(event.startDate).toLocaleString()}</TableCell>
               <TableCell>{event.capacity}</TableCell>
               <TableCell>{event.price}</TableCell>
