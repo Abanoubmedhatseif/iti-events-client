@@ -10,7 +10,8 @@ import {
   Paper,
   IconButton,
   Snackbar,
-  Typography, CircularProgress
+  Typography,
+  CircularProgress
 } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
@@ -29,7 +30,7 @@ const EventCategoryTable = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [selectedEventCategory, setSelectedEventCategory] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [backendError, setBackendError] = useState(null); 
+  const [backendError, setBackendError] = useState(null);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -62,7 +63,7 @@ const EventCategoryTable = () => {
         .catch((error) => {
           console.error('Failed to delete event category:', error);
           if (error.message === 'Category name already exists') {
-            setBackendError(error.message); 
+            setBackendError(error.message);
           }
         });
     }
@@ -92,7 +93,7 @@ const EventCategoryTable = () => {
       setShowSuccessMessage(true);
     }
     if (errorMessage) {
-      setBackendError(errorMessage); 
+      setBackendError(errorMessage);
     }
   };
 
@@ -102,7 +103,7 @@ const EventCategoryTable = () => {
       setShowSuccessMessage(true);
     }
     if (errorMessage) {
-      setBackendError(errorMessage); 
+      setBackendError(errorMessage);
     }
   };
 
@@ -120,7 +121,9 @@ const EventCategoryTable = () => {
           {eventCategories.map((eventCategory) => (
             <TableRow key={eventCategory.id}>
               <TableCell>{eventCategory.name}</TableCell>
-              <TableCell>{/* Display image or other fields */}</TableCell>
+              <TableCell>
+                <img src={eventCategory.imageUrl} alt={eventCategory.name} style={{ width: '100px', height: '100px' }} />
+              </TableCell>
               <TableCell>
                 <IconButton onClick={() => handleUpdate(eventCategory)}>
                   <EditIcon />
@@ -139,7 +142,7 @@ const EventCategoryTable = () => {
             open={openDeleteDialog}
             onClose={() => setOpenDeleteDialog(false)}
             category={selectedEventCategory}
-            handleSuccessMessageClose={() => setShowSuccessMessage(false)} 
+            handleSuccessMessageClose={() => setShowSuccessMessage(false)}
           />
           <UpdateCategoryModal
             open={openUpdateModal}
@@ -148,7 +151,7 @@ const EventCategoryTable = () => {
             onUpdateSuccess={() => handleModalClose(true)}
             showSuccessMessage={showSuccessMessage}
             setShowSuccessMessage={setShowSuccessMessage}
-            backendError={backendError} 
+            backendError={backendError}
           />
         </>
       )}
@@ -156,9 +159,9 @@ const EventCategoryTable = () => {
         open={openCreateModal}
         handleClose={(created, errorMessage) => handleCreateModalClose(created, errorMessage)}
         handleSuccessMessageClose={() => setShowSuccessMessage(false)}
-        backendError={backendError} 
+        backendError={backendError}
       />
-   
+
       {showSuccessMessage && (
         <Snackbar
           open={showSuccessMessage}

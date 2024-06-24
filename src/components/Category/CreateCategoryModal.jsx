@@ -8,15 +8,25 @@ const CreateCategoryModal = ({ open, handleClose, handleSuccessMessageClose }) =
   const createUpdateError = useSelector((state) => state.eventCategories.createUpdateError);
 
   const [categoryName, setCategoryName] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null);
   const [errors, setErrors] = useState({});
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  const handleImageChange = (event) => {
+    setSelectedImage(event.target.files[0]);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (validateForm()) {
+      const formData = {
+        name: categoryName,
+        image: selectedImage,
+      };
+
       try {
-        await dispatch(createEventCategory({ name: categoryName })).unwrap();
+        await dispatch(createEventCategory(formData)).unwrap();
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
@@ -26,13 +36,14 @@ const CreateCategoryModal = ({ open, handleClose, handleSuccessMessageClose }) =
         handleSuccessMessageClose();
       } catch (error) {
         console.error('Failed to create category:', error);
-        setErrors({ ...errors, createUpdate: error.message }); // Set the error message here
+        setErrors({ ...errors, createUpdate: error.message });
       }
     }
   };
 
   const resetForm = () => {
     setCategoryName('');
+    setSelectedImage(null);
     setErrors({});
   };
 
@@ -71,37 +82,40 @@ const CreateCategoryModal = ({ open, handleClose, handleSuccessMessageClose }) =
               margin="normal"
               error={!!errors.name || !!createUpdateError}
               helperText={errors.name || createUpdateError || ''}
-              InputLabelProps={{ style: { color: '#901b20' } }}
+              InputLabelProps={{
+                style: { color: '#901b20' },
+              }}
             />
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                style={{ width: '45%', backgroundColor: '#203947', color: '#ffffff' }}
-              >
-                Create
-              </Button>
-              <Button
-                onClick={handleModalClose}
-                variant="contained"
-                style={{ width: '45%', background: "#901b20" }}
-              >
-                Cancel
-              </Button>
-            </Box>
+            <input
+              accept="image/*"
+              type="file"
+              onChange={handleImageChange}
+              style={{ marginTop: '16px' }}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              style={{ backgroundColor: '#901b20', color: 'white', marginTop: '16px' }}
+              fullWidth
+            >
+              Create
+            </Button>
+            <Button
+              onClick={handleModalClose}
+              style={{ backgroundColor: '#6c757d', color: 'white', marginTop: '8px' }}
+              fullWidth
+            >
+              Cancel
+            </Button>
           </form>
         </Box>
       </Modal>
-      {showSuccessMessage && (
-        <Snackbar
-          open={showSuccessMessage}
-          autoHideDuration={5000}
-          onClose={() => setShowSuccessMessage(false)}
-          message="Category created successfully"
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        />
-      )}
+      <Snackbar
+        open={showSuccessMessage}
+        autoHideDuration={5000}
+        onClose={() => setShowSuccessMessage(false)}
+        message="Category created successfully"
+      />
     </>
   );
 };
