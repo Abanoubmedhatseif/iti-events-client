@@ -9,14 +9,14 @@ function ContactUs() {
   const form = useRef();
 
   useEffect(() => {
-    emailjs.init('_ZnvnZHdu3jIrU-4f');
+    emailjs.init(process.env.EMAILJS_PUBLIC_KEY);
   }, []);
 
   const sendEmail = (e) => {
     e.preventDefault();
 
     emailjs
-      .sendForm('service_57k1c3n', 'template_021k7sy', form.current)
+      .sendForm(process.env.EMAILJS_SERVICE_ID, process.env.EMAILJS_TEMPLATE_ID, form.current)
       .then(
         () => {
           setAlert('Message sent successfully!');
