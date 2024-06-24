@@ -2,26 +2,28 @@ import { useState } from "react";
 import Table from "../../components/reusables/table";
 import DeleteConfirmationDialog from "../../components/reusables/DeleteConfirmationDialogue";
 import { Snackbar } from "@mui/material";
+import { Delete as DeleteIcon } from "@mui/icons-material";
 
 function AdminUsersPage() {
-  const [open, setOpen] = useState(false);
+  const [openConfrimationDialogue, setOpenConfrimationDialogue] =
+    useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  function handleOpen(user) {
+  function handleOpenConfirmationDialogue(user) {
     setUserToDelete(user);
-    setOpen(true);
+    setOpenConfrimationDialogue(true);
   }
-  function handleClose() {
+  function handleCloseConfirmationDialogue() {
     setUserToDelete(null);
-    setOpen(false);
+    setOpenConfrimationDialogue(false);
   }
 
   function handleDeleteUser() {
     if (userToDelete) {
       setUsers(Users.filter((u) => u.id !== userToDelete.id));
       setShowSuccessMessage(true);
-      handleClose();
+      handleCloseConfirmationDialogue();
     }
   }
 
@@ -39,10 +41,11 @@ function AdminUsersPage() {
         marginTop: "40px",
       }}
     >
-      <Table data={Users} handleDelete={handleOpen} />
+      <Table data={Users} handler={handleOpenConfirmationDialogue} />
+
       <DeleteConfirmationDialog
-        open={open}
-        onClose={handleClose}
+        open={openConfrimationDialogue}
+        onClose={handleCloseConfirmationDialogue}
         onConfirm={handleDeleteUser}
         item={userToDelete}
       />

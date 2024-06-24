@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
 
-function table({ data, handleDelete }) {
+function table({ data, handler }) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -33,7 +33,7 @@ function table({ data, handleDelete }) {
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>
-                <IconButton onClick={() => handleDelete(user)}>
+                <IconButton onClick={() => handler(user)}>
                   <DeleteIcon />
                 </IconButton>
               </TableCell>
