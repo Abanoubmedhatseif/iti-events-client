@@ -6,7 +6,7 @@ const BASE_URL = 'https://iti-events-server.onrender.com/api/v1';
 export const fetchEventCategories = createAsyncThunk('eventCategories/fetchEventCategories', async () => {
   try {
     const response = await axios.get(`${BASE_URL}/event-categories`);
-    return response.data.categories; 
+    return response.data.categories;
   } catch (error) {
     return Promise.reject(error.message || 'Failed to fetch event categories');
   }
@@ -14,37 +14,50 @@ export const fetchEventCategories = createAsyncThunk('eventCategories/fetchEvent
 
 export const createEventCategory = createAsyncThunk('eventCategories/createEventCategory', async (categoryData, thunkAPI) => {
   try {
-    const response = await axios.post(`${BASE_URL}/event-categories`, categoryData, {
+    const formData = new FormData();
+    formData.append('name', categoryData.name);
+    if (categoryData.image) {
+      formData.append('image', categoryData.image);
+    }
+
+    const response = await axios.post(`${BASE_URL}/event-categories`, formData, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'multipart/form-data'
       }
     });
-    return response.data.category; 
+    return response.data.category;
   } catch (error) {
-    if (error.response && error.response.status === 500) {
-      return thunkAPI.rejectWithValue('Category Name already exists');
-    } else if (error.response && error.response.status === 400) { 
+    if (error.response && error.response.status === 400) {
       return thunkAPI.rejectWithValue('Category Name must be at least 3 characters');
+    } else if (error.response && error.response.status === 409) {
+      return thunkAPI.rejectWithValue('Category Name already exists');
     } else {
       return thunkAPI.rejectWithValue(error.message || 'Failed to create category');
     }
   }
 });
 
-export const updateEventCategory = createAsyncThunk('eventCategories/updateEventCategory', async ({ id, name }, thunkAPI) => {
+export const updateEventCategory = createAsyncThunk('eventCategories/updateEventCategory', async ({ id, name, image }, thunkAPI) => {
   try {
-    const response = await axios.put(`${BASE_URL}/event-categories/${id}`, { name }, {
+    const formData = new FormData();
+    formData.append('name', name);
+    if (image) {
+      formData.append('image', image);
+    }
+
+    const response = await axios.put(`${BASE_URL}/event-categories/${id}`, formData, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'multipart/form-data'
       }
     });
-    return response.data.category; 
+    return response.data.category;
   } catch (error) {
-    if (error.response && error.response.status === 500) {
-    } else if (error.response && error.response.status === 400) { 
+    if (error.response && error.response.status === 400) {
+      return thunkAPI.rejectWithValue('Category Name must be at least 3 characters');
+    } else if (error.response && error.response.status === 409) {
       return thunkAPI.rejectWithValue('Category Name already exists');
     } else {
-      return thunkAPI.rejectWithValue(error.message || 'Failed to create category');
+      return thunkAPI.rejectWithValue(error.message || 'Failed to update category');
     }
   }
 });
@@ -52,7 +65,7 @@ export const updateEventCategory = createAsyncThunk('eventCategories/updateEvent
 export const deleteEventCategory = createAsyncThunk('eventCategories/deleteEventCategory', async (categoryId, thunkAPI) => {
   try {
     await axios.delete(`${BASE_URL}/event-categories/${categoryId}`);
-    return categoryId; 
+    return categoryId;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
@@ -72,9 +85,9 @@ const eventCategorySlice = createSlice({
   initialState: {
     eventCategories: [],
     eventCategory: null,
-    status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+    status: 'idle',
     error: null,
-    createUpdateError: null, 
+    createUpdateError: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -91,7 +104,6 @@ const eventCategorySlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      // Create Event Category reducers
       .addCase(createEventCategory.pending, (state) => {
         state.status = 'loading';
       })
@@ -101,8 +113,8 @@ const eventCategorySlice = createSlice({
         state.createUpdateError = null;
       })
       .addCase(createEventCategory.rejected, (state, action) => {
-        state.status = 'succeeded'; 
-        state.createUpdateError = action.payload; 
+        state.status = 'failed';
+        state.createUpdateError = action.payload;
       })
       .addCase(updateEventCategory.pending, (state) => {
         state.status = 'loading';
@@ -116,8 +128,8 @@ const eventCategorySlice = createSlice({
         state.createUpdateError = null;
       })
       .addCase(updateEventCategory.rejected, (state, action) => {
-        state.status = 'succeeded'; 
-        state.createUpdateError = action.payload; 
+        state.status = 'failed';
+        state.createUpdateError = action.payload;
       })
       .addCase(deleteEventCategory.pending, (state) => {
         state.status = 'loading';
@@ -127,8 +139,8 @@ const eventCategorySlice = createSlice({
         state.eventCategories = state.eventCategories.filter((category) => category.id !== action.payload);
       })
       .addCase(deleteEventCategory.rejected, (state, action) => {
-        state.status = 'succeeded'; 
-        state.createUpdateError = action.payload; 
+        state.status = 'failed';
+        state.createUpdateError = action.payload;
       })
       .addCase(fetchEventCategoryDetails.pending, (state) => {
         state.status = 'loading';
@@ -141,7 +153,6 @@ const eventCategorySlice = createSlice({
         state.status = 'failed';
         state.error = action.payload || 'Failed to fetch category details';
       });
-      
   },
 });
 

@@ -6,6 +6,7 @@ import { updateEventCategory } from '../../store/categories/categorySlice';
 const UpdateCategoryModal = ({ open, onClose, category, onUpdateSuccess }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null);
   const [backendError, setBackendError] = useState(null); 
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
@@ -17,10 +18,14 @@ const UpdateCategoryModal = ({ open, onClose, category, onUpdateSuccess }) => {
     }
   }, [open, category]);
 
+  const handleImageChange = (event) => {
+    setSelectedImage(event.target.files[0]);
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault(); 
     try {
-      await dispatch(updateEventCategory({ id: category.id, name })).unwrap();
+      await dispatch(updateEventCategory({ id: category.id, name, image: selectedImage })).unwrap();
       setShowSuccessMessage(true); 
       onUpdateSuccess();
       setTimeout(() => {
@@ -34,6 +39,7 @@ const UpdateCategoryModal = ({ open, onClose, category, onUpdateSuccess }) => {
 
   const handleModalClose = () => {
     setName(''); 
+    setSelectedImage(null);
     setBackendError(null);
     onClose();
   };
@@ -51,6 +57,12 @@ const UpdateCategoryModal = ({ open, onClose, category, onUpdateSuccess }) => {
             margin="normal"
             error={!!createUpdateError} 
             helperText={createUpdateError || backendError || ''}
+          />
+          <input
+            accept="image/*"
+            type="file"
+            onChange={handleImageChange}
+            style={{ marginTop: '16px' }}
           />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
             <Button type="submit" color="primary" variant="contained" style={{ width: '45%', backgroundColor: '#203947', color: '#ffffff' }}>
