@@ -101,7 +101,7 @@ const EventTable = () => {
   };
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ width: '1200px', margin: '0 auto', overflowX: 'auto' }}>
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
           <CircularProgress />
