@@ -80,11 +80,28 @@ export const fetchEventCategoryDetails = createAsyncThunk('eventCategories/fetch
   }
 });
 
+// New thunk to fetch events by category
+export const fetchCategoryEvents = createAsyncThunk('eventCategories/fetchCategoryEvents', async (categoryId, thunkAPI) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/event-categories/${categoryId}/events`);
+    return response.data.events;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return thunkAPI.rejectWithValue('Invalid event id format');
+    } else if (error.response && error.response.status === 404) {
+      return thunkAPI.rejectWithValue('Event not found');
+    } else {
+      return thunkAPI.rejectWithValue(error.message || 'Failed to fetch category events');
+    }
+  }
+});
+
 const eventCategorySlice = createSlice({
   name: 'eventCategories',
   initialState: {
     eventCategories: [],
     eventCategory: null,
+    categoryEvents: [],
     status: 'idle',
     error: null,
     createUpdateError: null,
@@ -152,6 +169,19 @@ const eventCategorySlice = createSlice({
       .addCase(fetchEventCategoryDetails.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload || 'Failed to fetch category details';
+      })
+      // Add cases for fetching category events
+      .addCase(fetchCategoryEvents.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCategoryEvents.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.categoryEvents = action.payload;
+        state.error = null;
+      })
+      .addCase(fetchCategoryEvents.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload || 'Failed to fetch category events';
       });
   },
 });

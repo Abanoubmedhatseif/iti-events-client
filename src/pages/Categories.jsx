@@ -38,8 +38,7 @@ function Categories() {
             <CategoryCard
               id={category.id}
               name={category.name}
-              // desc={category.desc}
-              // image={category.image}
+              image={category.imageUrl}  // Pass the image URL here
             />
           </Grid>
         ))}
