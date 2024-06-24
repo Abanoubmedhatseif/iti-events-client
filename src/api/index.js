@@ -23,7 +23,6 @@ export const refreshApi = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
 });
 
 // Function to decode token and check if it is expired
@@ -39,7 +38,7 @@ export const isTokenExpired = (token) => {
 
 // Function to refresh access token
 const refreshAccessToken = async (store, refreshToken) => {
-  await store.dispatch(refreshTokenAction(`Bearer ${refreshToken}`));
+  await store.dispatch(refreshTokenAction(refreshToken));
   return selectAccessToken(store.getState());
 };
 
