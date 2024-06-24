@@ -13,6 +13,7 @@ import AdminLayout from './layouts/AdminLayout';
 import AdminCategoryPage from './pages/Admin/AdminCategoryPage';
 import AdminHome from './pages/Admin/AdminHome';
 import FAQ from './pages/FAQ';
+import ContactUs from './pages/ContactUs';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="faq" element={<FAQ/>}/>
+          <Route path="contact-us" element={<ContactUs/>}/>
           <Route path="*" element={<PageNotFound />} />
         </Route>
 
