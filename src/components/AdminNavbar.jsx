@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, Typography, Tabs, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const AdminNavbar = ({ activeTab, onTabChange }) => {
+const AdminNavbar = () => {
   return (
     <AppBar position="static" sx={{ backgroundColor: "#901b20b3" }}>
       <Toolbar>
@@ -10,8 +10,6 @@ const AdminNavbar = ({ activeTab, onTabChange }) => {
           Admin Dashboard
         </Typography>
         <Tabs
-          value={activeTab}
-          onChange={onTabChange}
           indicatorColor="secondary" // Adjust indicator color if needed
           textColor="inherit"
         >

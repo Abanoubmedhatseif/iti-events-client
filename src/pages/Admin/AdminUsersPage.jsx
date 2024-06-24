@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Table from "../../components/reusables/table";
 import DeleteConfirmationDialog from "../../components/reusables/DeleteConfirmationDialogue";
+import { Snackbar } from "@mui/material";
 
 function AdminUsersPage() {
   const [open, setOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   function handleOpen(user) {
     setUserToDelete(user);
@@ -18,6 +20,7 @@ function AdminUsersPage() {
   function handleDeleteUser() {
     if (userToDelete) {
       setUsers(Users.filter((u) => u.id !== userToDelete.id));
+      setShowSuccessMessage(true);
       handleClose();
     }
   }
@@ -42,6 +45,12 @@ function AdminUsersPage() {
         onClose={handleClose}
         onConfirm={handleDeleteUser}
         item={userToDelete}
+      />
+      <Snackbar
+        open={showSuccessMessage}
+        autoHideDuration={4000}
+        onClose={() => setShowSuccessMessage(false)}
+        message="User Deleted Successfully"
       />
     </div>
   );
