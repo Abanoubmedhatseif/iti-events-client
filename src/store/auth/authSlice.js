@@ -12,12 +12,21 @@ import {
 } from "./authActions";
 import { toast } from "react-toastify";
 
+const parseLocalStorageUser = () => {
+  try {
+    return JSON.parse(localStorage.getItem("user") || "null");
+  } catch (e) {
+    console.error("Failed to parse user from localStorage", e);
+    return null;
+  }
+};
+
 const initialState = {
   accessToken: localStorage.getItem("accessToken") || "",
   refreshToken: localStorage.getItem("refreshToken") || "",
   loading: false,
   error: false,
-  user: JSON.parse(localStorage.getItem("user") || "null"),
+  user: parseLocalStorageUser(),
   errorData: null,
 };
 
@@ -35,7 +44,7 @@ const handleRejected = (defaultMessage) => (state, action) => {
 };
 
 const authSlice = createSlice({
-  name: "auth",   
+  name: "auth",
   initialState,
   reducers: {
     setCredentials: (state, action) => {
@@ -49,7 +58,7 @@ const authSlice = createSlice({
       state.accessToken = "";
       state.refreshToken = "";
       state.user = null;
-      localStorage.clear(); 
+      localStorage.clear();
     },
   },
   extraReducers: (builder) => {
@@ -106,8 +115,8 @@ const authSlice = createSlice({
       .addCase(editUserAction.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
+        state.user = action.payload.user;
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(
         editUserAction.rejected,

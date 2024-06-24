@@ -8,7 +8,7 @@ import moment from "moment";
 import { jwtDecode } from "jwt-decode";
 import { refreshTokenAction } from "../store/auth/authActions";
 
-const serverUrl = import.meta.env.VITE_SERVER_URL;
+const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
 
 // Create Axios instance
 const api = axios.create({
@@ -23,7 +23,6 @@ export const refreshApi = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
 });
 
 // Function to decode token and check if it is expired
