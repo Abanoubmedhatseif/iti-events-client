@@ -38,7 +38,6 @@ const CreateAdminModal = ({ open, handleClose, handleSuccessMessageClose }) => {
 
       try {
         const response = await dispatch(createAdmin(formData));
-        console.log(response);
         if (response.error) {
           setShowErrorMessage(true);
           setTimeout(() => {
