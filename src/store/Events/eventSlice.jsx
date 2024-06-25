@@ -77,6 +77,15 @@ export const updateEvent = createAsyncThunk(
   }
 );
 
+export const fetchEventDetails = createAsyncThunk('eventDetails/fetchEventDetails', async (eventId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/events/${eventId}`);
+    return response.data.event;
+  } catch (error) {
+    return Promise.reject(error.message || 'Failed to fetch event details');
+  }
+});
+
 const eventSlice = createSlice({
   name: "events",
   initialState: {
@@ -84,8 +93,18 @@ const eventSlice = createSlice({
     createEventError: null,
     updateEventError: null,
     loading: false,
+    eventDetails: {
+      event: null,
+      loading: false,
+      error: null,
+    },
   },
-  reducers: {},
+  reducers: {
+    clearEvent: (state) => {
+      state.eventDetails.event = null;
+      state.eventDetails.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchEvents.pending, (state) => {
@@ -154,8 +173,22 @@ const eventSlice = createSlice({
         } else {
           state.updateEventError = "Failed to update event";
         }
+      })
+      .addCase(fetchEventDetails.pending, (state) => {
+        state.eventDetails.loading = true;
+        state.eventDetails.error = null;
+      })
+      .addCase(fetchEventDetails.fulfilled, (state, action) => {
+        state.eventDetails.loading = false;
+        state.eventDetails.event = action.payload;
+      })
+      .addCase(fetchEventDetails.rejected, (state, action) => {
+        state.eventDetails.loading = false;
+        state.eventDetails.error = action.error.message;
       });
   },
 });
+
+export const { clearEvent } = eventSlice.actions;
 
 export default eventSlice.reducer;
