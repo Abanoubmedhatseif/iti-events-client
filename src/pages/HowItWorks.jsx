@@ -1,11 +1,10 @@
-// HowItWorks.jsx
 import React from 'react';
 import '../styles/HowItWorks.css'; // Import the CSS file
 
 const HowItWorks = () => {
   return (
     <div className="how-it-works">
-      <h2>How It Works</h2>
+      <h2 className="how-it-works-title">How It Works</h2>
       <div className="steps">
         <div className="step">
           <div className="step-number">1</div>

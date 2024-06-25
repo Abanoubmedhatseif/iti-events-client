@@ -1,27 +1,32 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import api from "../../api";
+import api from "../../api"; // Ensure you have your API configuration set up properly
 
+const BASE_URL = import.meta.env.VITE_SERVER_URL; // Ensure this points to your server URL
 
-const BASE_URL = import.meta.env.VITE_SERVER_URL;
-
-export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
-  try {
-    const response = await api.get(`${BASE_URL}/events`);
-    return response.data.events;
-  } catch (error) {
-    return Promise.reject(error.message || "Failed to fetch events");
+export const fetchEvents = createAsyncThunk(
+  "events/fetchEvents",
+  async () => {
+    try {
+      const response = await api.get(`${BASE_URL}/events`);
+      return response.data.events;
+    } catch (error) {
+      return Promise.reject(error.message || "Failed to fetch events");
+    }
   }
-});
+);
 
-export const fetchUpcomingEvents = createAsyncThunk("events/fetchUpcomingEvents", async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/events/upcoming`);
-    return response.data.events;
-  } catch (error) {
-    return Promise.reject(error.message || "Failed to fetch upcoming events");
+export const fetchUpcomingEvents = createAsyncThunk(
+  "events/fetchUpcomingEvents",
+  async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/events/upcoming`);
+      return response.data.events;
+    } catch (error) {
+      return Promise.reject(error.message || "Failed to fetch upcoming events");
+    }
   }
-});
+);
 
 export const createEvent = createAsyncThunk(
   "events/createEvent",
@@ -79,14 +84,17 @@ export const updateEvent = createAsyncThunk(
   }
 );
 
-export const fetchEventDetails = createAsyncThunk('eventDetails/fetchEventDetails', async (eventId) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/events/${eventId}`);
-    return response.data.event;
-  } catch (error) {
-    return Promise.reject(error.message || 'Failed to fetch event details');
+export const fetchEventDetails = createAsyncThunk(
+  'eventDetails/fetchEventDetails',
+  async (eventId) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/events/${eventId}`);
+      return response.data.event;
+    } catch (error) {
+      return Promise.reject(error.message || 'Failed to fetch event details');
+    }
   }
-});
+);
 
 const eventSlice = createSlice({
   name: "events",

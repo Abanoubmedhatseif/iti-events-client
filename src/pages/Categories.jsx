@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchEventCategories } from '../store/categories/categorySlice';
-import { Grid, Container, Typography, CircularProgress } from '@mui/material';
+import { Grid, Container, Typography, CircularProgress, Box } from '@mui/material';
+import CategoryIcon from '@mui/icons-material/Category';
 import CategoryCard from '../components/Category/CategoryCard';
 
 function Categories() {
@@ -26,13 +27,29 @@ function Categories() {
   }
 
   return (
-    <Container>
+    <Container style={{ paddingTop: '10px', paddingBottom: '20px' }}>
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={6}>
-          <Typography variant="h4" component="h1">Categories</Typography>
+        <Grid item xs={12}>
+          <Box display="flex" alignItems="center" justifyContent="center" mt={1} mb={2}>
+            <CategoryIcon fontSize="large" style={{ marginRight: '8px', color: '#901b20' }} />
+            <Typography 
+              variant="h3" 
+              component="h1" 
+              style={{ 
+                fontWeight: 700, 
+                letterSpacing: '2px', 
+                color: '#151e27', 
+                background: 'linear-gradient(45deg, #901b20, #ff6b6b)', 
+                WebkitBackgroundClip: 'text', 
+                WebkitTextFillColor: 'transparent' 
+              }}
+            >
+              Explore Our Categories
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
-      <Grid container spacing={4} style={{ marginTop: '16px' }}>
+      <Grid container spacing={4} style={{ marginTop: '10px' }}>
         {eventCategories.map((category) => (
           <Grid item key={category.id} xs={12} sm={6} md={4} lg={3}>
             <CategoryCard
