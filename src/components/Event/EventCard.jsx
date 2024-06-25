@@ -2,20 +2,19 @@ import React from 'react';
 import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-function EventCard({ id, name, desc, date, image }) {
+function EventCard({ id, name, description, startDate }) {
   return (
     <Card>
       <CardActionArea component={Link} to={`/events/${id}`}>
-        <CardMedia component="img" alt={name} height="140" image={image} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {desc}
+            {description}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {date}
+            {startDate}
           </Typography>
         </CardContent>
       </CardActionArea>

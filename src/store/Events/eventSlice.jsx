@@ -12,6 +12,15 @@ export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
   }
 });
 
+export const fetchCurrentEvents = createAsyncThunk("events/fetchCurrentEvents", async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/events/current`);
+    return response.data.events;
+  } catch (error) {
+    return Promise.reject(error.message || "Failed to fetch current events");
+  }
+});
+
 export const createEvent = createAsyncThunk(
   "events/createEvent",
   async (eventData, thunkAPI) => {
@@ -88,6 +97,17 @@ const eventSlice = createSlice({
       })
       .addCase(fetchEvents.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(fetchCurrentEvents.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCurrentEvents.fulfilled, (state, action) => {
+        state.loading = false;
+        state.events = action.payload;
+      })
+      .addCase(fetchCurrentEvents.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(createEvent.pending, (state) => {
         state.loading = true;
