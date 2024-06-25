@@ -1,5 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { setupInterceptors } from "./api";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
 import Home from "./pages/Home";
 import Events from "./pages/Events";
 import Categories from "./pages/Categories";
@@ -13,14 +18,13 @@ import AdminLayout from "./layouts/AdminLayout";
 import AdminCategoryPage from "./pages/Admin/AdminCategoryPage";
 import AdminHome from "./pages/Admin/AdminHome";
 import AdminEventPage from "./pages/Admin/AdminEventPage";
-import { useDispatch, useSelector } from "react-redux";
 import { selectAccessToken, selectUser } from "./store/auth/authSlice";
-import { useEffect } from "react";
 import { isTokenExpired } from "./api";
 import { userDataAction } from "./store/auth/authActions";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { setupInterceptors } from "./api";
 import store from "./store";
+import AdminUsersPage from "./pages/Admin/AdminUsersPage";
+import AdminBusPage from "./pages/Admin/AdminBusPage";
+import AdminGuestsPage from "./pages/Admin/AdminGuestsPage";
 
 setupInterceptors(store);
 
@@ -59,6 +63,10 @@ function App() {
               <Route index element={<AdminHome />} />
               <Route path="categories" element={<AdminCategoryPage />} />
               <Route path="events" element={<AdminEventPage />} />
+              <Route path="bus" element={<AdminBusPage />} />
+              <Route path="guests" element={<AdminGuestsPage />} />
+              <Route path="users" element={<AdminUsersPage />} />
+              <Route path="*" element={<PageNotFound />} />
 
               {/* Add other admin routes here */}
             </Route>
