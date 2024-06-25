@@ -2,14 +2,21 @@ import SliderHero from "../components/SliderHero"; // Import SliderHero componen
 import Categories from "./Categories";
 import Footer from "../components/Footer";
 import HowItWorks from "./HowItWorks";
-import HappeningEventsPage from "./HappeningEventsPage"
+import UpcomingEventsPage from "./UpcomingEventsPage"
+import HomeHappingEvents from "./HomeHappingEvents";
+ 
 function Home() {
   return (
     <div>
       <SliderHero />
       <Categories />
+      <HomeHappingEvents />
+
+
+      <UpcomingEventsPage />
       <HowItWorks />
-      <HappeningEventsPage />
+
+      
     </div>
   );
 }

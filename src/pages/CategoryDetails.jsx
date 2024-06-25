@@ -68,7 +68,7 @@ function CategoryDetails() {
               alt={eventCategory.name}
               sx={{ width: '100%', height: '100%', objectFit: 'cover', borderTopLeftRadius: 'inherit', borderTopRightRadius: 'inherit' }}
             />
-            <CardContent sx={{ padding: '20px', flexGrow: 1 }}>
+            <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', padding: '20px', flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom sx={{ fontWeight: 600, marginBottom: theme => theme.spacing(2) }}>
                 {eventCategory.name}
               </Typography>

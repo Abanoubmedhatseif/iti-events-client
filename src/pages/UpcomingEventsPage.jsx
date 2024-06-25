@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchHappeningEvents } from '../store/Events/eventSlice';
+import { fetchUpcomingEvents } from '../store/Events/eventSlice';
 import { Grid, Container, Typography, CircularProgress, Box } from '@mui/material';
 import EventCard from '../components/Event/EventCard';
 
-const HappeningEventsPage = () => {
+const UpcomingEventsPage = () => {
   const dispatch = useDispatch();
   const { events, loading, error } = useSelector(state => state.events);
 
   useEffect(() => {
-    dispatch(fetchHappeningEvents());
+    dispatch(fetchUpcomingEvents());
   }, [dispatch]);
 
   if (loading) {
@@ -35,22 +35,22 @@ const HappeningEventsPage = () => {
             <Typography 
               variant="h3" 
               component="h1" 
-              sx={{ 
+              style={{ 
                 fontWeight: 700, 
                 letterSpacing: '2px', 
                 color: '#151e27', 
-                backgroundImage: 'linear-gradient(45deg, #901b20, #ff6b6b)',
+                background: 'linear-gradient(45deg, #901b20, #ff6b6b)', 
                 WebkitBackgroundClip: 'text', 
                 WebkitTextFillColor: 'transparent', 
                 marginTop: '70px'
               }}
             >
-              Currently Happening Events
+              Upcoming Events
             </Typography>
           </Box>
         </Grid>
       </Grid>
-      <Grid container spacing={2} justifyContent={first4Events.length < 4 ? 'center' : 'flex-start'}>
+      <Grid container spacing={2}>
         {first4Events.length === 0 ? (
           <Typography variant="h5">No events currently happening.</Typography>
         ) : (
@@ -70,4 +70,4 @@ const HappeningEventsPage = () => {
   );
 };
 
-export default HappeningEventsPage;
+export default UpcomingEventsPage;
