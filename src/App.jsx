@@ -26,6 +26,7 @@ import AdminUsersPage from "./pages/Admin/AdminUsersPage";
 import AdminBusPage from "./pages/Admin/AdminBusPage";
 import AdminGuestsPage from "./pages/Admin/AdminGuestsPage";
 import AdminAccountsPage from "./pages/Admin/AdminAccountsPage";
+import AboutUsPage from './pages/AboutUs'
 
 setupInterceptors(store);
 
@@ -56,6 +57,8 @@ function App() {
               />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
+              <Route path="aboutUs" element={<AboutUsPage />} />
+
               <Route path="*" element={<PageNotFound />} />
             </Route>
 

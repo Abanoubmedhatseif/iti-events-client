@@ -1,13 +1,13 @@
 /* styles/Footer.css */
-
 .footer {
-    background-color: #203947;
-    color: white;
-    padding: 10px 20px 40px 20px; /* Reduced top padding */
-    font-family: Arial, sans-serif; /* Example: Change font family if needed */
-    height: 150px;
-    margin-top: 20px;
-  }
+  background-color: #203947;
+  color: white;
+  padding: 10px 20px 40px 20px; /* Adjust padding as needed */
+  font-family: Arial, sans-serif; /* Example: Change font family if needed */
+  height: 150px; /* Fixed height of the footer */
+}
+
+
   
   .footer-content {
     display: flex;

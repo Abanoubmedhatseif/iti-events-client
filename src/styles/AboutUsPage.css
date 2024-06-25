@@ -1,0 +1,52 @@
+.section {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px; /* Adjusted for better responsiveness */
+    color: #fff;
+    text-align: center;
+  }
+  
+  .section-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 30px;
+    margin: 20px;
+    max-width: 800px;
+    width: 100%; /* Ensures it fits within smaller screens */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .heading {
+    font-size: 2.5rem; /* Adjusted for better readability */
+    margin-bottom: 20px;
+  }
+  
+  .paragraph {
+    font-size: 1.2rem; /* Adjusted for better readability */
+    line-height: 1.6; /* Adjusted for better readability */
+    margin-bottom: 30px;
+  }
+  
+  .call-to-action {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff6b6b;
+    padding: 15px 30px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .call-to-action:hover {
+    background-color: #ff4f4f;
+  }
+  

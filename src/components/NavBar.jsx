@@ -16,7 +16,7 @@ function NavBar() {
             <Link to="/">HOME</Link>
             <Link to="/events">EVENTS</Link>
             <Link to="/categories">CATEGORIES</Link>
-            <Link to="/about">ABOUT ITI</Link>
+            <Link to="/aboutUs">ABOUT ITI</Link>
           </nav>
           <div className="navbar-auth">
             <button className="login-button">
