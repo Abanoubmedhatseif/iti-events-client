@@ -15,6 +15,18 @@ export const fetchAllUsers = createAsyncThunk(
   }
 );
 
+export const createAdmin = createAsyncThunk(
+  "users/createUser",
+  async (newUser, thunkAPI) => {
+    try {
+      const response = await api.post(`${BASE_URL}/users`, newUser);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message || "Failed to create user");
+    }
+  }
+);
+
 export const deleteUser = createAsyncThunk(
   "users/deleteUser",
   async (id, thunkAPI) => {
@@ -59,6 +71,12 @@ const usersSlice = createSlice({
       })
       .addCase(deleteUser.rejected, (state) => {
         state.error = "Failed to delete user";
+      })
+      .addCase(createAdmin.fulfilled, (state, action) => {
+        state.users.push(action.payload);
+      })
+      .addCase(createAdmin.rejected, (state) => {
+        state.error = "Failed to create user";
       });
   },
 });
