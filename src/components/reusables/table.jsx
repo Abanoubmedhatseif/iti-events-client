@@ -30,7 +30,10 @@ function table({ data, handler }) {
         <TableBody>
           {data.map((user) => (
             <TableRow key={user.id}>
-              <TableCell>{user.name}</TableCell>
+              <TableCell>
+                {user.firstName}
+                {user.lastName}
+              </TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>
                 <IconButton onClick={() => handler(user)}>

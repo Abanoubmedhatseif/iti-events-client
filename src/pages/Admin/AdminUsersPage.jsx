@@ -1,37 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "../../components/reusables/table";
 import DeleteConfirmationDialog from "../../components/reusables/DeleteConfirmationDialogue";
 import { Snackbar } from "@mui/material";
-import { Delete as DeleteIcon } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUsers, deleteUser } from "../../store/users/usersSlice";
 
 function AdminUsersPage() {
+  const [userToDelete, setUserToDelete] = useState(null);
+
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users.users);
+  const loading = useSelector((state) => state.users.loading);
+  const error = useSelector((state) => state.users.error);
+
   const [openConfrimationDialogue, setOpenConfrimationDialogue] =
     useState(false);
-  const [userToDelete, setUserToDelete] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const UsersWithoutAdmins = users.filter((user) => user.role !== "admin");
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setShowErrorMessage(!!error);
+  }, [error]);
 
   function handleOpenConfirmationDialogue(user) {
     setUserToDelete(user);
     setOpenConfrimationDialogue(true);
   }
+
   function handleCloseConfirmationDialogue() {
     setUserToDelete(null);
     setOpenConfrimationDialogue(false);
   }
 
   function handleDeleteUser() {
+    console.log(userToDelete);
     if (userToDelete) {
-      setUsers(Users.filter((u) => u.id !== userToDelete.id));
+      dispatch(deleteUser(userToDelete.id));
       setShowSuccessMessage(true);
       handleCloseConfirmationDialogue();
     }
   }
 
-  const [Users, setUsers] = useState([
-    { id: 1, name: "John Doe", email: "john@example.com" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com" },
-    { id: 3, name: "Bob Johnson", email: "bob@example.com" },
-  ]);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -41,7 +58,10 @@ function AdminUsersPage() {
         marginTop: "40px",
       }}
     >
-      <Table data={Users} handler={handleOpenConfirmationDialogue} />
+      <Table
+        data={UsersWithoutAdmins}
+        handler={handleOpenConfirmationDialogue}
+      />
 
       <DeleteConfirmationDialog
         open={openConfrimationDialogue}
@@ -54,6 +74,12 @@ function AdminUsersPage() {
         autoHideDuration={4000}
         onClose={() => setShowSuccessMessage(false)}
         message="User Deleted Successfully"
+      />
+      <Snackbar
+        open={showErrorMessage}
+        autoHideDuration={4000}
+        onClose={() => setShowErrorMessage(false)}
+        message="encountered an error please try again later"
       />
     </div>
   );
