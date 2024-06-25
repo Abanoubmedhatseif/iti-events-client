@@ -46,7 +46,7 @@ function App() {
             {/* Main Layout Routes */}
             <Route element={<MainLayout />}>
               <Route index element={<Home />} />
-              <Route path="events/current" element={<Events />} />
+              <Route path="events/upcoming" element={<Events />} />
               <Route path="events/:eventId" element={<EventDetails />} />
               <Route path="categories" element={<Categories />} />
               <Route

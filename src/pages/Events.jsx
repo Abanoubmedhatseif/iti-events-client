@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchEvents } from '../store/Events/eventSlice';
+import { fetchUpcomingEvents } from '../store/Events/eventSlice';
 import { Grid, Container, Typography, CircularProgress } from '@mui/material';
 import EventCard from '../components/Event/EventCard';
 
@@ -9,7 +9,7 @@ function Events() {
   const { events, loading, error } = useSelector(state => state.events);
 
   useEffect(() => {
-    dispatch(fetchEvents());
+    dispatch(fetchUpcomingEvents());
   }, [dispatch]);
 
   if (loading) {
@@ -38,7 +38,6 @@ function Events() {
             <EventCard
               id={event.id}
               name={event.name}
-              description={event.description}
               startDate={event.startDate}
             />
           </Grid>

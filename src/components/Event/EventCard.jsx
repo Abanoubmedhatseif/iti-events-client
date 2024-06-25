@@ -1,48 +1,32 @@
 import React from 'react';
-import { Card, CardContent, Typography, CardActionArea } from '@mui/material';
+import { Card, CardContent, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
+import '../../styles/EventCard.css';
 
-const CustomCard = styled(Card)(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: theme.palette.action.hover,
-    transition: 'background-color 0.3s ease',
-  },
-  maxWidth: 400, // Increased width
-  margin: theme.spacing(2),
-}));
-
-function EventCard({ id, name, description, startDate }) {
+const EventCard = ({ id, name, description, startDate, category }) => {
+  const formattedStartDate = new Date(startDate).toLocaleDateString();
   return (
-    <CustomCard>
-      <CardActionArea component={Link} to={`/events/${id}`}>
-        <CardContent sx={{ minHeight: 200, textAlign: 'center' }}> {/* Centered text */}
-          <Typography 
-            gutterBottom 
-            variant="h4" 
-            component="div" 
-            sx={{ fontSize: '1.5rem', fontWeight: 'bold' }} // Bold name
-          >
-            {name}
+    <Card className="event-card">
+      <CardContent className="card-content">
+        <Typography variant="h5" component="div" className="event-title">
+          {name}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" className="event-description">
+         {category}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" className="event-date">
+          Start Date: {formattedStartDate}
+        </Typography>
+      </CardContent>
+      <Box className="hover-cover">
+        <Link to={`/events/${id}`} className="hover-link">
+          <Typography variant="h6" component="div" className="hover-text">
+            Click for more details
           </Typography>
-          <Typography 
-            variant="body1" 
-            color="text.secondary" 
-            sx={{ fontSize: '1.2rem', mb: 1 }}
-          >
-            {description}
-          </Typography>
-          <Typography 
-            variant="body2" 
-            color="text.secondary" 
-            sx={{ fontSize: '1.1rem' }}
-          >
-            {new Date(startDate).toLocaleString()}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </CustomCard>
+        </Link>
+      </Box>
+    </Card>
   );
-}
+};
 
 export default EventCard;

@@ -71,11 +71,22 @@ function EventDetails() {
                   End Date: {new Date(event.endDate).toLocaleString()}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
-                  Price: EGP{event.price}
+                  Price: {event.price} EGP
                 </Typography>
                 <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
                   Duration: {event.duration} {event.duration > 1 ? 'Hours' : 'Hour'}
                 </Typography>
+                
+                {event.minAge && (
+                  <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
+                    Min Age: {event.minAge} Years
+                  </Typography>
+                )}
+                {event.maxAge && (
+                  <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
+                    Max Age: {event.maxAge} Years
+                  </Typography>
+                )}
                 <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
                   Status: {event.registrationClosed ? 'Registration Closed' : 'Open To Register'}
                 </Typography>
@@ -83,7 +94,7 @@ function EventDetails() {
                   <Box display="flex" justifyContent="center" marginTop="20px">
                     <Button
                       text="Register"
-                      backgroundColor="#3f51b5"
+                      backgroundColor="#7d1719"
                       color="#ffffff"
                       width={200}
                       height={50}
