@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import Table from "../../components/reusables/table";
-import DeleteConfirmationDialog from "../../components/reusables/DeleteConfirmationDialogue";
 import { Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+
 import { fetchAllUsers, deleteUser } from "../../store/users/usersSlice";
+import DeleteConfirmationDialog from "../../components/reusables/DeleteConfirmationDialogue";
+import Table from "../../components/reusables/table";
 
 function AdminUsersPage() {
   const [userToDelete, setUserToDelete] = useState(null);
@@ -17,6 +18,7 @@ function AdminUsersPage() {
     useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+
   const UsersWithoutAdmins = users.filter((user) => user.role !== "admin");
 
   useEffect(() => {

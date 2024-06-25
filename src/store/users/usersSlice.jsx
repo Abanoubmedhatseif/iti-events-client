@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../api";
 
-const BASE_URL = "https://iti-events-server.onrender.com/api/v1";
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 export const fetchAllUsers = createAsyncThunk(
   "users/fetchUsers",
@@ -20,11 +20,9 @@ export const deleteUser = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await api.delete(`${BASE_URL}/users/${id}`);
-      console.log(response);
       response.data = id;
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message || "Failed to delete user");
     }
   }
@@ -57,7 +55,6 @@ const usersSlice = createSlice({
             (user) => user.id !== action.payload
           );
         }
-        console.log(action.payload);
         state.error = null; // Clear error on success
       })
       .addCase(deleteUser.rejected, (state) => {
