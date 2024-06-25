@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchAllUsers, deleteUser } from "../../store/users/usersSlice";
 import DeleteConfirmationDialog from "../../components/reusables/DeleteConfirmationDialogue";
-import Table from "../../components/reusables/table";
+import Table from "../../components/reusables/usersTable";
 
 function AdminUsersPage() {
   const [userToDelete, setUserToDelete] = useState(null);
@@ -16,6 +16,7 @@ function AdminUsersPage() {
 
   const [openConfrimationDialogue, setOpenConfrimationDialogue] =
     useState(false);
+
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 

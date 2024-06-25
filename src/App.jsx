@@ -25,6 +25,7 @@ import store from "./store";
 import AdminUsersPage from "./pages/Admin/AdminUsersPage";
 import AdminBusPage from "./pages/Admin/AdminBusPage";
 import AdminGuestsPage from "./pages/Admin/AdminGuestsPage";
+import AdminAccountsPage from "./pages/Admin/AdminAccountsPage";
 
 setupInterceptors(store);
 
@@ -66,6 +67,7 @@ function App() {
               <Route path="bus" element={<AdminBusPage />} />
               <Route path="guests" element={<AdminGuestsPage />} />
               <Route path="users" element={<AdminUsersPage />} />
+              <Route path="admins" element={<AdminAccountsPage />} />
               <Route path="*" element={<PageNotFound />} />
 
               {/* Add other admin routes here */}

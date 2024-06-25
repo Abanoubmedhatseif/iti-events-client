@@ -6,11 +6,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  IconButton,
 } from "@mui/material";
-import { Delete as DeleteIcon } from "@mui/icons-material";
 
-function table({ data, handler }) {
+function AdminTable({ data }) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -22,9 +20,6 @@ function table({ data, handler }) {
             <TableCell>
               <h3>Email</h3>
             </TableCell>
-            <TableCell>
-              <h3>Actions</h3>
-            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -35,11 +30,6 @@ function table({ data, handler }) {
                 {user.lastName}
               </TableCell>
               <TableCell>{user.email}</TableCell>
-              <TableCell>
-                <IconButton onClick={() => handler(user)}>
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -48,4 +38,4 @@ function table({ data, handler }) {
   );
 }
 
-export default table;
+export default AdminTable;
