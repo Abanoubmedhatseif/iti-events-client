@@ -27,6 +27,7 @@ import AdminBusPage from "./pages/Admin/AdminBusPage";
 import AdminGuestsPage from "./pages/Admin/AdminGuestsPage";
 import AdminAccountsPage from "./pages/Admin/AdminAccountsPage";
 import AboutUsPage from './pages/AboutUs'
+import UpcomingEventsPage from './pages/UpcomingEventsPage'
 import HappeningEventsPage from './pages/HappeningEventsPage'
 
 setupInterceptors(store);
@@ -59,7 +60,9 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="aboutUs" element={<AboutUsPage />} />
+              <Route path="UpcomingEventsPage" element={<UpcomingEventsPage />} />
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
+
 
 
               <Route path="*" element={<PageNotFound />} />

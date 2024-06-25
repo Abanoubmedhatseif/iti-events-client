@@ -20,10 +20,22 @@ export const fetchUpcomingEvents = createAsyncThunk(
   "events/fetchUpcomingEvents",
   async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/events/upcoming`);
+      const response = await api.get(`${BASE_URL}/events/upcoming`);
       return response.data.events;
     } catch (error) {
       return Promise.reject(error.message || "Failed to fetch upcoming events");
+    }
+  }
+);
+
+export const fetchHappeningEvents = createAsyncThunk(
+  "events/fetchHappeningEvents",
+  async () => {
+    try {
+      const response = await api.get(`${BASE_URL}/events/happening`);
+      return response.data.events;
+    } catch (error) {
+      return Promise.reject(error.message || "Failed to fetch happening events");
     }
   }
 );
@@ -137,6 +149,16 @@ const eventSlice = createSlice({
       .addCase(fetchUpcomingEvents.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchHappeningEvents.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchHappeningEvents.fulfilled, (state, action) => {
+        state.loading = false;
+        state.events = action.payload;
+      })
+      .addCase(fetchHappeningEvents.rejected, (state) => {
+        state.loading = false;
       })
       .addCase(createEvent.pending, (state) => {
         state.loading = true;
