@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@mui/material';
+import { Card, CardContent, Typography, CardActionArea } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 function EventCard({ id, name, description, startDate }) {
