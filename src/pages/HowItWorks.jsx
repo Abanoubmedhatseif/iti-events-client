@@ -25,7 +25,7 @@ const HowItWorks = () => {
           <div className="step-number">3</div>
           <div className="step-description">
             <h3>Book Your Bus Ride</h3>
-            <p>Reserve your seat for convenient transportation to the event.</p>
+            <p>Reserve your seat from the mobile app for convenient transportation to the event.</p>
           </div>
         </div>
       </div>
