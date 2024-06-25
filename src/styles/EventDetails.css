@@ -1,0 +1,54 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .slide-in-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+  }
+  
+  .card-content {
+    padding: 16px;
+    min-height: 300px;
+  }
+  
+  .large-text {
+    font-size: 1.5rem;
+  }
+  
+  .extra-large-text {
+    font-size: 2rem;
+  }
+  
+  .centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .transition {
+    transition: all 0.3s ease-in-out;
+  }
+  
