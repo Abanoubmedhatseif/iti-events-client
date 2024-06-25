@@ -4,14 +4,14 @@ import { useParams } from 'react-router-dom';
 import { Container, CircularProgress, Typography, Grid, Card, CardContent, CardMedia, Box } from '@mui/material';
 import { styled } from '@mui/system';
 import { fetchEventCategoryDetails, fetchCategoryEvents } from '../store/categories/categorySlice';
-import EventCard from '../components/Event/EventCard';
+import EventCard from '../components/Event/EventCard'; // Assuming EventCard is correctly implemented in its own file
 import defaultImage from '../assets/sessions-hero.jpg';
 
 const CategoryInfoCard = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  minHeight: '600px', // Set minimum height for the card
+  minHeight: '400px', // Updated minimum height for the card
   borderRadius: theme.spacing(2),
   transition: 'transform 0.3s ease-in-out',
   '&:hover': {
@@ -90,13 +90,20 @@ function CategoryDetails() {
           <Grid container spacing={3}>
             {categoryEvents.length > 0 ? (
               categoryEvents.map(event => (
-                <Grid item xs={12} key={event.id}>
+                <Grid item xs={12} sm={6} key={event.id}>
                   <EventCard
                     id={event.id}
                     name={event.name}
-                    desc={event.description}
-                    date={event.startDate}
-                    sx={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.05)' } }}
+                    // description={event.description}
+                    startDate={event.startDate}
+                    // category={event.category}
+                    sx={{
+                      height: '100%',
+                      borderRadius: '10px',
+                      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                      transition: 'transform 0.3s ease-in-out',
+                      '&:hover': { transform: 'scale(1.05)' }
+                    }}
                   />
                 </Grid>
               ))
