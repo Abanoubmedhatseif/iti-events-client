@@ -42,7 +42,9 @@ const UpcomingEventsPage = () => {
                 background: 'linear-gradient(45deg, #901b20, #ff6b6b)', 
                 WebkitBackgroundClip: 'text', 
                 WebkitTextFillColor: 'transparent', 
-                marginTop: '70px'
+                marginTop: '70px',
+                marginBottom: '50px'
+
               }}
             >
               Upcoming Events

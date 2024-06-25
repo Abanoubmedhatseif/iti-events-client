@@ -4,9 +4,9 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../styles/Hero.css';  // Import the CSS file
 
-import backgroundImage1 from '../assets/sessions-hero.jpg';
-import backgroundImage2 from '../assets/school-hero.jpg';
-import backgroundImage3 from '../assets/compition-hero.jpg';
+import backgroundImage2 from '../assets/sessions-hero.png';
+import backgroundImage1 from '../assets/school-hero.jpg';
+import backgroundImage3 from '../assets/kids.jpg';
 
 const slides = [
   {
@@ -30,7 +30,7 @@ const Hero = () => {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: 700,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,           

@@ -8,7 +8,7 @@ const HomeHappingEvents = () => {
     <Box sx={{ backgroundColor: '#f0f0f0', py: 4, maxWidth: '1400px', margin: 'auto' }}>
       <Box sx={{ maxWidth: '90%', textAlign: 'center', mx: 'auto', px: 2 }}>
         <Typography 
-          variant="h3"
+          variant="h2"
           component="h1"
           sx={{ 
             fontWeight: 700, 
@@ -18,12 +18,16 @@ const HomeHappingEvents = () => {
             WebkitBackgroundClip: 'text', 
             WebkitTextFillColor: 'transparent', 
             marginTop: '40px',
-            fontSize: '2.5rem', // Increased font size
+            marginBottom: '50px',
+            fontSize: '2.9rem', // Increased font size
+            '@media (max-width: 600px)': {
+              fontSize: '2.5rem', // Adjust font size for smaller screens
+            },
           }}
         >
           Today's Events
         </Typography>
-        <Card sx={{ maxWidth: 1000, margin: 'auto', borderRadius: '16px', overflow: 'hidden', position: 'relative', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+        <Card sx={{ maxWidth: '100%', margin: 'auto', borderRadius: '16px', overflow: 'hidden', position: 'relative', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
           <img src={EventImage} alt="Happening Events" style={{ width: '100%', height: 'auto', objectFit: 'cover', filter: 'brightness(0.7)', transition: 'filter 0.3s ease-in-out' }} />
           <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'white', zIndex: 1, width: '100%', padding: '0 20px' }}>
             <Typography variant="h3" sx={{ mb: 2, fontWeight: 'bold', fontSize: '2.5rem', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>Discover What's Happening Now</Typography>
