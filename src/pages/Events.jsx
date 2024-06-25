@@ -27,23 +27,24 @@ function Events() {
 
   return (
     <Container>
-    <Grid container spacing={2} alignItems="center">
-      <Grid item xs={6}>
-        <Typography variant="h4" component="h1">Events</Typography>
-      </Grid>
-    </Grid>
-    <Grid container spacing={4} style={{ marginTop: '16px' }}>
-      {events.map((event) => (
-        <Grid item key={event.id} xs={12} sm={6} md={4} lg={3}>
-          <EventCard
-            name={event.name}
-            description={event.description}
-            startDate={event.startDate}
-          />
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={6}>
+          <Typography variant="h4" component="h1">Events</Typography>
         </Grid>
-      ))}
-    </Grid>
-  </Container>
+      </Grid>
+      <Grid container spacing={4} style={{ marginTop: '16px' }}>
+        {events.map((event) => (
+          <Grid item key={event.id} xs={12} sm={6} md={4} lg={3}>
+            <EventCard
+              id={event.id}
+              name={event.name}
+              description={event.description}
+              startDate={event.startDate}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }
 
