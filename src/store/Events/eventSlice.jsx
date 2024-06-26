@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import api from "../../api"; // Ensure you have your API configuration set up properly
+import api from "../../api";
 
-const BASE_URL = import.meta.env.VITE_SERVER_URL; // Ensure this points to your server URL
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 export const fetchEvents = createAsyncThunk(
   "events/fetchEvents",
@@ -100,7 +100,7 @@ export const fetchEventDetails = createAsyncThunk(
   'eventDetails/fetchEventDetails',
   async (eventId) => {
     try {
-      const response = await axios.get(`${BASE_URL}/events/${eventId}`);
+      const response = await api.get(`${BASE_URL}/events/${eventId}`);
       return response.data.event;
     } catch (error) {
       return Promise.reject(error.message || 'Failed to fetch event details');
