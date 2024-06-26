@@ -33,11 +33,10 @@ import EventAttendeesPage from "./pages/Admin/EventAttendeesPage";
 import FAQ from "./pages/FAQ";
 import ForgotPassword from "./pages/ForgotPassword";
 import theme from "./styles/theme";
-import CssBaseline from '@mui/material/CssBaseline';
+import CssBaseline from "@mui/material/CssBaseline";
+import ResetPassword from "./pages/ResetPassword";
 
 setupInterceptors(store);
-
-
 
 function App() {
   const dispatch = useDispatch();
@@ -67,7 +66,8 @@ function App() {
               <Route path="faq" element={<FAQ />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
-              <Route path="forgotPassword" element={<ForgotPassword />} />
+              <Route path="forgot" element={<ForgotPassword />} />
+              <Route path="reset" element={<ResetPassword />} />
               <Route path="about" element={<AboutUsPage />} />
               <Route
                 path="UpcomingEventsPage"

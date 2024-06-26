@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { resetPasswordAction } from "../store/auth/authActions";
 
 import {
@@ -18,6 +17,7 @@ import {
   FormHelperText,
   Paper,
 } from "@mui/material";
+import useQuery from "../hooks/useQuery";
 
 const initialState = { password: "", confirmPassword: "" };
 const initialErrorState = { password: false, confirmPassword: false };
@@ -26,7 +26,9 @@ const ResetPassword = () => {
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(initialErrorState);
   const [showPassword, setShowPassword] = React.useState(false);
-  const { token } = useParams();
+  const query = useQuery();
+  const token = query.get("token");
+  const id = query.get("id");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +46,11 @@ const ResetPassword = () => {
       });
     } else {
       dispatch(
-        resetPasswordAction({ password: formData?.password, token: token })
+        resetPasswordAction({
+          newPassword: formData?.password,
+          token: token,
+          id: id,
+        })
       );
     }
   };
