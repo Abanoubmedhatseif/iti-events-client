@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   Box,
@@ -22,6 +22,16 @@ const CreateAdminModal = ({ open, handleClose, handleSuccessMessageClose }) => {
   const [errors, setErrors] = useState({});
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+  useEffect(() => {
+    setErrors({});
+  }, [
+    AdminFirstName,
+    AdminLastName,
+    AdminEmail,
+    AdminPassword,
+    AdminBirthdate,
+  ]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,6 +91,7 @@ const CreateAdminModal = ({ open, handleClose, handleSuccessMessageClose }) => {
 
   const validateForm = () => {
     let errors = {};
+    setErrors({});
     if (!AdminFirstName.trim()) {
       errors.firstName = "First Name is required";
     }
