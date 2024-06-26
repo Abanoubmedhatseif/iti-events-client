@@ -1,21 +1,23 @@
+/* Ensure the FAQ doesn't override the navbar and remains fixed */
 .wrapper {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Align items to the top to prevent overlap with the navbar */
     height: 100vh;
-    padding: 0 20px;
+    padding: 60px 20px 20px; /* Adjust padding to account for the navbar height */
+    box-sizing: border-box; /* Include padding in height calculations */
 }
 
 .accordion {
     width: 100%;
     max-width: 700px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     overflow: hidden;
 }
 
 .item {
-    background: #f0ebe1;
+    background: #ffffff;
     margin-bottom: 5px;
     padding: 10px 20px;
     border-bottom: 1px solid #ddd;
@@ -28,12 +30,14 @@
     align-items: center;
     cursor: pointer;
 }
+
 .title span {
     font-size: 1.5em; /* Adjust the size of the + and - */
     font-weight: bold;
     color: #7d1719; /* Same color as the title text */
     transition: transform 0.3s ease;
 }
+
 .content {
     color: #8b7f75;
     max-height: 0;
