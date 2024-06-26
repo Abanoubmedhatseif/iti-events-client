@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   Button,
@@ -13,9 +13,10 @@ import {
   ListItemText,
 } from "@mui/material";
 import * as XLSX from "xlsx";
-import { createAdmin } from "../store/users/usersSlice";
+import { createStudents } from "../store/users/usersSlice";
+import { useNavigate } from "react-router-dom";
 
-const processExcel = (file, setError, setUsers) => {
+const processExcel = (file, setError, setUsers, setOpen) => {
   const reader = new FileReader();
   reader.onload = (event) => {
     const data = new Uint8Array(event.target.result);
@@ -46,15 +47,21 @@ const processExcel = (file, setError, setUsers) => {
       birthdate: row[2],
       email: row[3],
       role: "student",
+      password: "12345678",
     }));
 
     setUsers(users);
     setError("");
+    setOpen(true); // Open the confirmation modal after processing the file
   };
   reader.readAsArrayBuffer(file);
+  reader.onerror = () => {
+    setError("Error reading the file");
+  };
 };
 
 const ExcelUploader = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
@@ -63,8 +70,7 @@ const ExcelUploader = () => {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      processExcel(file, setError, setUsers);
-      setOpen(true); // Open the confirmation modal
+      processExcel(file, setError, setUsers, setOpen);
     }
   };
 
@@ -73,11 +79,19 @@ const ExcelUploader = () => {
   };
 
   const handleConfirm = () => {
-    dispatch(createAdmin(users));
-
-    setOpen(false);
-    setUsers([]);
+    dispatch(createStudents(users)).then(() => {
+      setError("");
+      setOpen(false);
+      setUsers([]);
+      navigate("/");
+    });
   };
+
+  useEffect(() => {
+    if (users.length === 0) {
+      setOpen(false);
+    }
+  }, [users]);
 
   return (
     <div style={{ padding: "20px" }}>
@@ -101,37 +115,35 @@ const ExcelUploader = () => {
         </Button>
       </label>
       {error && <Typography color="error">{error}</Typography>}
-      {users.length > 0 && (
-        <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-          <DialogTitle>Confirm User Creation</DialogTitle>
-          <DialogContent
-            dividers
-            style={{ maxHeight: "400px", overflowY: "auto" }}
-          >
-            <DialogContentText>
-              Are you sure you want to create these students?
-            </DialogContentText>
-            <List>
-              {users.map((user, index) => (
-                <ListItem key={index}>
-                  <ListItemText
-                    primary={`${user.firstName} ${user.lastName}`}
-                    secondary={`${user.birthdate} - ${user.email} - ${user.role}`}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleConfirm} color="primary">
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
+      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+        <DialogTitle>Confirm User Creation</DialogTitle>
+        <DialogContent
+          dividers
+          style={{ maxHeight: "400px", overflowY: "auto" }}
+        >
+          <DialogContentText>
+            Are you sure you want to create these students?
+          </DialogContentText>
+          <List>
+            {users.map((user, index) => (
+              <ListItem key={index}>
+                <ListItemText
+                  primary={`${user.firstName} ${user.lastName}`}
+                  secondary={`${user.birthdate} - ${user.email} - ${user.role}`}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirm} color="primary">
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
