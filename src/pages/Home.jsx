@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import HowItWorks from "./HowItWorks";
 import UpcomingEventsPage from "./UpcomingEventsPage"
 import HomeHappingEvents from "./HomeHappingEvents";
+import RealityViewOfOurEvent from "./RealityViewOfOurEvent"
  
 function Home() {
   return (
@@ -15,6 +16,7 @@ function Home() {
 
       <UpcomingEventsPage />
       <HowItWorks />
+      <RealityViewOfOurEvent />
 
       
     </div>

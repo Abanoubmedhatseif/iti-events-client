@@ -29,33 +29,31 @@ const HappeningEventsPage = () => {
 
   return (
     <Container>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12}>
-          <Box display="flex" alignItems="center" justifyContent="center" mt={4} mb={2}>
-            <Typography 
-              variant="h3" 
-              component="h1" 
-              sx={{ 
-                fontWeight: 700, 
-                letterSpacing: '2px', 
-                color: '#151e27', 
-                backgroundImage: 'linear-gradient(45deg, #901b20, #ff6b6b)',
-                WebkitBackgroundClip: 'text', 
-                WebkitTextFillColor: 'transparent', 
-                marginTop: '70px'
-              }}
-            >
-              Currently Happening Events
-            </Typography>
-          </Box>
-        </Grid>
-      </Grid>
+      <Box textAlign="center" mt={4} mb={2}>
+        <Typography 
+          variant="h3" 
+          sx={{ 
+            fontWeight: 700, 
+            letterSpacing: '2px', 
+            color: '#151e27', 
+            backgroundImage: 'linear-gradient(45deg, #901b20, #ff6b6b)',
+            WebkitBackgroundClip: 'text', 
+            WebkitTextFillColor: 'transparent', 
+            marginTop: '70px'
+          }}
+        >
+          Currently Happening Events
+        </Typography>
+      </Box>
+
       <Grid container spacing={2} justifyContent={first4Events.length < 4 ? 'center' : 'flex-start'}>
         {first4Events.length === 0 ? (
-          <Typography variant="h5">No events currently happening.</Typography>
+          <Grid item xs={12}>
+            <Typography variant="h5" align="center">No events currently happening.</Typography>
+          </Grid>
         ) : (
           first4Events.map((event) => (
-            <Grid item key={event.id} xs={3}>
+            <Grid item key={event.id} xs={12} sm={6} md={3}>
               <EventCard
                 id={event.id}
                 name={event.name}

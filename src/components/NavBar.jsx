@@ -17,6 +17,7 @@ function NavBar() {
             <Link to="/events/upcoming">EVENTS</Link>
             <Link to="/categories">CATEGORIES</Link>
             <Link to="/aboutUs">ABOUT ITI</Link>
+            <Link to="/faq">FAQ</Link>
           </nav>
           <div className="navbar-auth">
             <button className="login-button">
