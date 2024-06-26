@@ -59,7 +59,7 @@ const HoverText = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
 }));
 
-const EventCard = ({ id, name, description, startDate, category }) => {
+const EventCard = ({ id, name, description, startDate, category, onClickPath }) => {
   // Format start date
   const formattedStartDate = new Date(startDate).toLocaleDateString();
 
@@ -71,7 +71,7 @@ const EventCard = ({ id, name, description, startDate, category }) => {
         <EventCardDate>Start Date: {formattedStartDate}</EventCardDate>
       </EventCardContent>
       <HoverCover>
-        <HoverLink to={`/events/${id}`}>
+        <HoverLink to={onClickPath || `/events/${id}`}>
           <HoverText variant="h6">Click for more details</HoverText>
         </HoverLink>
       </HoverCover>
