@@ -36,6 +36,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import ResetPassword from "./pages/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import Profile from "./pages/Profile";
+import ExcelUploader from "./pages/Excel";
 
 setupInterceptors(store);
 
@@ -76,7 +77,8 @@ function App() {
               />
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
               <Route path="profile" element={<Profile />} />
-              <Route path="*" element={<PageNotFound />} />
+              <Route path="excel" element={<ExcelUploader />} />
+              <Route path="*" element={<PageNotFound />} />        
             </Route>
 
             {/* Admin Layout Routes */}
