@@ -108,12 +108,33 @@ export const fetchEventDetails = createAsyncThunk(
   }
 );
 
+export const registerForEvent = createAsyncThunk(
+  'events/registerForEvent',
+  async ({ eventId, formData }, { rejectWithValue }) => {
+    try {
+      const response = await api.post(`${BASE_URL}/events/${eventId}/attendees`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const eventSlice = createSlice({
   name: "events",
   initialState: {
     events: [],
     createEventError: null,
     updateEventError: null,
+    registrationSuccess: null,
+    registrationError: null,
     loading: false,
     eventDetails: {
       event: null,
@@ -125,6 +146,10 @@ const eventSlice = createSlice({
     clearEvent: (state) => {
       state.eventDetails.event = null;
       state.eventDetails.error = null;
+    },
+    clearRegistrationMessages: (state) => {
+      state.registrationSuccess = null;
+      state.registrationError = null;
     },
   },
   extraReducers: (builder) => {
@@ -217,10 +242,23 @@ const eventSlice = createSlice({
       .addCase(fetchEventDetails.rejected, (state, action) => {
         state.eventDetails.loading = false;
         state.eventDetails.error = action.error.message;
+      })
+      .addCase(registerForEvent.pending, (state) => {
+        state.loading = true;
+        state.registrationError = null;
+        state.registrationSuccess = null;
+      })
+      .addCase(registerForEvent.fulfilled, (state) => {
+        state.loading = false;
+        state.registrationSuccess = 'Successfully registered for the event!';
+      })
+      .addCase(registerForEvent.rejected, (state, action) => {
+        state.loading = false;
+        state.registrationError = action.payload || 'Failed to register for the event';
       });
   },
 });
 
-export const { clearEvent } = eventSlice.actions;
+export const { clearEvent, clearRegistrationMessages } = eventSlice.actions;
 
 export default eventSlice.reducer;

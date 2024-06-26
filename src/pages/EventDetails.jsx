@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Container, CircularProgress, Typography, Grid, Card, CardContent, Box } from '@mui/material';
 import { fetchEventDetails, clearEvent } from '../store/Events/eventSlice';
 import Button from '../components/Button';
+import RegisterEventModal from '../components/Event/RegisterEvent';
 import '../styles/EventDetails.css';
 
 function EventDetails() {
   const { eventId } = useParams();
   const dispatch = useDispatch();
   const { event, loading, error } = useSelector(state => state.events.eventDetails);
+  const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchEventDetails(eventId));
@@ -18,6 +20,14 @@ function EventDetails() {
       dispatch(clearEvent());
     };
   }, [dispatch, eventId]);
+
+  const handleRegisterClick = () => {
+    setRegisterModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setRegisterModalOpen(false);
+  };
 
   if (loading) {
     return (
@@ -43,11 +53,6 @@ function EventDetails() {
       </Box>
     );
   }
-
-  const handleRegisterClick = () => {
-    // register for event
-    console.log('Register button clicked');
-  };
 
   return (
     <Container maxWidth="md" style={{ marginTop: '20px' }} className="fade-in">
@@ -108,6 +113,12 @@ function EventDetails() {
           </Grid>
         </CardContent>
       </Card>
+      <RegisterEventModal
+        eventId={eventId}
+        open={isRegisterModalOpen}
+        handleClose={handleModalClose}
+        event={event}
+      />
     </Container>
   );
 }
