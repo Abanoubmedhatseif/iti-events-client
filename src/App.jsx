@@ -86,12 +86,10 @@ function App() {
                 path="events/:eventId/attendees"
                 element={<EventAttendeesPage />}
               />
-              <Route path="bus" element={<AdminBusPage />} />
               <Route path="guests" element={<AdminGuestsPage />} />
               <Route path="users" element={<AdminUsersPage />} />
               <Route path="admins" element={<AdminAccountsPage />} />
               <Route path="*" element={<PageNotFound />} />
-
               {/* Add other admin routes here */}
             </Route>
           </Routes>
