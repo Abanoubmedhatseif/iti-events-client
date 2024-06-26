@@ -33,7 +33,7 @@ const EventCardDescription = styled(Typography)(({ theme }) => ({
 }));
 
 const EventCardDate = styled(Typography)(({ theme }) => ({
-  fontSize: '0.875rem',
+  fontSize: '1.25rem', // Larger font size
   color: theme.palette.text.secondary,
   marginTop: 'auto', // Ensures date is positioned at the bottom of the card
 }));

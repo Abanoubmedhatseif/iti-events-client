@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom';
 import { Container, CircularProgress, Typography, Grid, Card, CardContent, Box } from '@mui/material';
 import { fetchEventDetails, clearEvent } from '../store/Events/eventSlice';
 import Button from '../components/Button';
-import '../styles/EventDetails.css';
+import knowledgeCityIcon from '../assets/knowledgeCityicon.jpg'; // Import the static image
+import '../styles/EventDetails.css'; // Import your custom CSS for styles
 
 function EventDetails() {
   const { eventId } = useParams();
@@ -45,63 +46,66 @@ function EventDetails() {
   }
 
   const handleRegisterClick = () => {
-    // register for event
+    // Handle registration logic here
     console.log('Register button clicked');
   };
 
   return (
-    <Container maxWidth="md" style={{ marginTop: '20px' }} className="fade-in">
-      <Card>
-        <CardContent className="slide-in-left card-content">
-          <Grid container spacing={2} alignItems="center">
+    <Container maxWidth="md" className="event-details-container">
+      <Card className="event-details-card">
+        <CardContent className="event-details-content">
+          <Grid container spacing={4} alignItems="center">
+            {/* Static image */}
             <Grid item xs={12} md={4} className="centered">
-              <Typography gutterBottom variant="h4" component="div" align="center" style={{ fontSize: '2rem' }}>
-                {event.name}
-              </Typography>
+              <img src={knowledgeCityIcon} alt="Knowledge City Icon" className="event-details-image" />
             </Grid>
-            <Grid item xs={12} md={8} className="centered">
-              <Box>
-                <Typography variant="body1" color="textSecondary" align="center" style={{ fontSize: '1.5rem' }}>
+            {/* Event details */}
+            <Grid item xs={12} md={8} className="event-details-info-container">
+              <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <Typography gutterBottom variant="h4" className="event-details-title">
+                  {event.name}
+                </Typography>
+                <Typography variant="body1" className="event-details-description">
                   {event.description}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
-                  Start Date: {new Date(event.startDate).toLocaleString()}
+                <Typography variant="body2" className="event-details-info">
+                  <strong>Start Date:</strong> {new Date(event.startDate).toLocaleString()}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
-                  End Date: {new Date(event.endDate).toLocaleString()}
+                <Typography variant="body2" className="event-details-info">
+                  <strong>End Date:</strong> {new Date(event.endDate).toLocaleString()}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
-                  Price: {event.price} EGP
+                {/* Conditionally render price */}
+                {event.price !== 0 && (
+                  <Typography variant="body2" className="event-details-info">
+                    <strong>Price:</strong> {event.price} EGP
+                  </Typography>
+                )}
+                <Typography variant="body2" className="event-details-info">
+                  <strong>Duration:</strong> {event.duration} {event.duration > 1 ? 'Hours' : 'Hour'}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
-                  Duration: {event.duration} {event.duration > 1 ? 'Hours' : 'Hour'}
-                </Typography>
-                
                 {event.minAge && (
-                  <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
-                    Min Age: {event.minAge} Years
+                  <Typography variant="body2" className="event-details-info">
+                    <strong>Min Age:</strong> {event.minAge} Years
                   </Typography>
                 )}
                 {event.maxAge && (
-                  <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
-                    Max Age: {event.maxAge} Years
+                  <Typography variant="body2" className="event-details-info">
+                    <strong>Max Age:</strong> {event.maxAge} Years
                   </Typography>
                 )}
-                <Typography variant="body2" color="textSecondary" align="center" style={{ fontSize: '1.25rem' }}>
-                  Status: {event.registrationClosed ? 'Registration Closed' : 'Open To Register'}
+                <Typography variant="body2" className="event-details-info">
+                  <strong>Status:</strong> {event.registrationClosed ? 'Registration Closed' : 'Open To Register'}
                 </Typography>
                 {!event.registrationClosed && (
-                  <Box display="flex" justifyContent="center" marginTop="20px">
-                    <Button
-                      text="Register"
-                      backgroundColor="#7d1719"
-                      color="#ffffff"
-                      width={200}
-                      height={50}
-                      fontSize={100}
-                      onClick={handleRegisterClick}
-                    />
-                  </Box>
+                  <Button
+                    text="Register"
+                    backgroundColor="#7d1719"
+                    color="#ffffff"
+                    width={200}
+                    height={50}
+                    onClick={handleRegisterClick}
+                    className="event-register-button"
+                  />
                 )}
               </Box>
             </Grid>
