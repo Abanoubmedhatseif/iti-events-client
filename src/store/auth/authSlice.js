@@ -40,7 +40,9 @@ const handleRejected = (defaultMessage) => (state, action) => {
   state.error = true;
   state.errorData = action.payload;
   const message = action.payload?.message || defaultMessage;
-  toast.error(message, { position: "bottom-left" });
+  if (message !== 0) {
+    toast.error(message, { position: "bottom-left" });
+  }
 };
 
 const authSlice = createSlice({
@@ -105,7 +107,7 @@ const authSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(userDataAction.rejected, (state, action) => {
-        handleRejected("Error fetching user data")(state, action);
+        handleRejected(0)(state, action);
         state.accessToken = "";
         state.refreshToken = "";
         state.user = null;
@@ -132,7 +134,7 @@ const authSlice = createSlice({
       })
       .addCase(
         sendResetPasswordAction.rejected,
-        handleRejected("Error sending reset password link")
+        handleRejected("Invalid email address")
       )
       .addCase(resetPasswordAction.pending, handlePending)
       .addCase(resetPasswordAction.fulfilled, (state) => {

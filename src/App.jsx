@@ -1,10 +1,10 @@
 import React from "react";
+import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { setupInterceptors } from "./api";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-
 import Home from "./pages/Home";
 import Events from "./pages/Events";
 import Categories from "./pages/Categories";
@@ -34,6 +34,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import theme from "./styles/theme";
 import CssBaseline from "@mui/material/CssBaseline";
 import ResetPassword from "./pages/ResetPassword";
+import { ToastContainer } from "react-toastify";
+import Profile from "./pages/Profile";
+import ExcelUploader from "./pages/Excel";
 
 setupInterceptors(store);
 
@@ -73,8 +76,9 @@ function App() {
                 element={<UpcomingEventsPage />}
               />
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
-
-              <Route path="*" element={<PageNotFound />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="excel" element={<ExcelUploader />} />
+              <Route path="*" element={<PageNotFound />} />        
             </Route>
 
             {/* Admin Layout Routes */}
@@ -94,6 +98,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
+        <ToastContainer />
       </ThemeProvider>
     </>
   );
