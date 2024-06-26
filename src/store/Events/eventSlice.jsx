@@ -33,7 +33,10 @@ export const fetchHappeningEvents = createAsyncThunk(
   async () => {
     try {
       const response = await api.get(`${BASE_URL}/events/happening`);
+      console.log("happening events", response.data); // Log the response data here
+
       return response.data.events;
+
     } catch (error) {
       return Promise.reject(error.message || "Failed to fetch happening events");
     }

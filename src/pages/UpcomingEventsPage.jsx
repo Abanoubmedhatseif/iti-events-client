@@ -14,10 +14,10 @@ const UpcomingEventsPage = () => {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <CircularProgress />
-        <Typography variant="h6" component="div" style={{ marginLeft: '16px' }}>Loading...</Typography>
-      </div>
+        <Typography variant="h6" component="div" sx={{ marginLeft: '16px' }}>Loading...</Typography>
+      </Box>
     );
   }
 
@@ -29,35 +29,31 @@ const UpcomingEventsPage = () => {
 
   return (
     <Container>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12}>
-          <Box display="flex" alignItems="center" justifyContent="center" mt={4} mb={2}>
-            <Typography 
-              variant="h3" 
-              component="h1" 
-              style={{ 
-                fontWeight: 700, 
-                letterSpacing: '2px', 
-                color: '#151e27', 
-                background: 'linear-gradient(45deg, #901b20, #ff6b6b)', 
-                WebkitBackgroundClip: 'text', 
-                WebkitTextFillColor: 'transparent', 
-                marginTop: '70px',
-                marginBottom: '50px'
-
-              }}
-            >
-              Upcoming Events
-            </Typography>
-          </Box>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2}>
+      <Box sx={{ mt: 4, mb: 2, textAlign: 'center' }}>
+        <Typography 
+          variant="h3" 
+          component="h1" 
+          sx={{ 
+            fontWeight: 700, 
+            letterSpacing: '2px', 
+            color: '#151e27', 
+            background: 'linear-gradient(45deg, #901b20, #ff6b6b)', 
+            WebkitBackgroundClip: 'text', 
+            WebkitTextFillColor: 'transparent',
+            marginTop: { xs: '70px', md: '50px' },
+            marginBottom: '50px'
+          }}
+        >
+          Upcoming Events
+        </Typography>
+      </Box>
+      
+      <Grid container spacing={{ xs: 2, md: 3 }} justifyContent="center">
         {first4Events.length === 0 ? (
           <Typography variant="h5">No events currently happening.</Typography>
         ) : (
           first4Events.map((event) => (
-            <Grid item key={event.id} xs={3}>
+            <Grid item key={event.id} xs={12} sm={6} md={3}>
               <EventCard
                 id={event.id}
                 name={event.name}
