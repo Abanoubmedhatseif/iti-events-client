@@ -203,10 +203,12 @@ const CreateAdminModal = ({ open, handleClose, handleSuccessMessageClose }) => {
                   backgroundColor: "transparent",
                   border: "none",
                   marginLeft: "8px",
+                  cursor: "pointer",
+                  fontSize: "20px",
                 }}
                 onClick={handleShowPassword}
               >
-                {PasswordType === "password" ? "😄" : "😀"}
+                {PasswordType === "password" ? "😄" : "😃"}
               </button>
             </div>
             <TextField
