@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEventAttendees, fetchEventDetails } from "../../store/Events/eventSlice";
 import { useParams } from "react-router-dom";
-import { Box, Typography, Card, CardContent, Grid, Paper, CircularProgress, Divider } from '@mui/material';
+import { Box, Typography, Card, CardContent, Grid, Paper, CircularProgress, Divider, Button } from '@mui/material';
 
 const EventAttendeesPage = () => {
   const dispatch = useDispatch();
@@ -11,10 +11,23 @@ const EventAttendeesPage = () => {
   const eventDetails = useSelector((state) => state.events.eventDetails.event);
   const loading = useSelector((state) => state.events.loading);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const attendeesPerPage = 5;
+
   useEffect(() => {
     dispatch(fetchEventDetails(eventId)); // Fetch event details
     dispatch(fetchEventAttendees(eventId)); // Fetch event attendees
   }, [dispatch, eventId]);
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(attendees.length / attendeesPerPage)));
+  };
+
+  const paginatedAttendees = attendees.slice((currentPage - 1) * attendeesPerPage, currentPage * attendeesPerPage);
 
   return (
     <Box sx={{ py: 4, px: 2, backgroundColor: '#f9f9f9', minHeight: '100vh' }}>
@@ -73,18 +86,38 @@ const EventAttendeesPage = () => {
               ) : (
                 <Box>
                   {attendees.length > 0 ? (
-                    attendees.map((attendee) => (
-                      <Paper key={attendee.id} elevation={2} sx={{ mb: 2, p: 2, borderRadius: 1 }}>
-                        {attendee.user ? (
-                          <Box>
-                            <Typography variant="body1" sx={{ mb: 1 }}><strong>Name:</strong> {attendee.user.firstName} {attendee.user.lastName}</Typography>
-                            <Typography variant="body1" sx={{ mb: 1 }}><strong>Email:</strong> {attendee.user.email}</Typography>
-                          </Box>
-                        ) : (
-                          <Typography variant="body1" sx={{ mb: 1 }}>No user information available</Typography>
-                        )}
-                      </Paper>
-                    ))
+                    <>
+                      {paginatedAttendees.map((attendee) => (
+                        <Paper key={attendee.id} elevation={2} sx={{ mb: 2, p: 2, borderRadius: 1 }}>
+                          {attendee.user ? (
+                            <Box>
+                              <Typography variant="body1" sx={{ mb: 1 }}><strong>Name:</strong> {attendee.user.firstName} {attendee.user.lastName}</Typography>
+                              <Typography variant="body1" sx={{ mb: 1 }}><strong>Email:</strong> {attendee.user.email}</Typography>
+                            </Box>
+                          ) : (
+                            <Typography variant="body1" sx={{ mb: 1 }}>No user information available</Typography>
+                          )}
+                        </Paper>
+                      ))}
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+                        <Button 
+                          variant="contained" 
+                          onClick={handlePreviousPage} 
+                          disabled={currentPage === 1}
+                          sx={{ backgroundColor: '#901b20', color: '#ffffff' }}
+                        >
+                          Previous
+                        </Button>
+                        <Button 
+                          variant="contained" 
+                          onClick={handleNextPage} 
+                          disabled={currentPage === Math.ceil(attendees.length / attendeesPerPage)}
+                          sx={{ backgroundColor: '#d0d0d0', color: '#151e27' }}
+                        >
+                          Next
+                        </Button>
+                      </Box>
+                    </>
                   ) : (
                     <Typography variant="body1" sx={{ mb: 1 }}>No attendees registered yet</Typography>
                   )}
