@@ -5,18 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers, deleteUser } from "../../store/users/usersSlice";
 import DeleteConfirmationDialog from "../../components/reusables/DeleteConfirmationDialogue";
 import Table from "../../components/reusables/usersTable";
+import Loader from "../../components/reusables/loader";
 
 function AdminUsersPage() {
-  const [userToDelete, setUserToDelete] = useState(null);
-
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
   const loading = useSelector((state) => state.users.loading);
   const error = useSelector((state) => state.users.error);
 
-  const [openConfrimationDialogue, setOpenConfrimationDialogue] =
-    useState(false);
-
+  const [userToDelete, setUserToDelete] = useState(null);
+  const [openConfirmDialogue, setOpenConfirmDialogue] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
@@ -32,12 +30,12 @@ function AdminUsersPage() {
 
   function handleOpenConfirmationDialogue(user) {
     setUserToDelete(user);
-    setOpenConfrimationDialogue(true);
+    setOpenConfirmDialogue(true);
   }
 
   function handleCloseConfirmationDialogue() {
     setUserToDelete(null);
-    setOpenConfrimationDialogue(false);
+    setOpenConfirmDialogue(false);
   }
 
   function handleDeleteUser() {
@@ -50,8 +48,10 @@ function AdminUsersPage() {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
+
+  if (error) setShowErrorMessage(true);
 
   return (
     <div
@@ -67,7 +67,7 @@ function AdminUsersPage() {
       />
 
       <DeleteConfirmationDialog
-        open={openConfrimationDialogue}
+        open={openConfirmDialogue}
         onClose={handleCloseConfirmationDialogue}
         onConfirm={handleDeleteUser}
         item={userToDelete}

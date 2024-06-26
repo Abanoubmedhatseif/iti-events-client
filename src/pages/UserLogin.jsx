@@ -6,12 +6,13 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
+import { Link as LinkR, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../store/auth/authActions";
 
 function Copyright(props) {
@@ -31,17 +32,25 @@ function Copyright(props) {
 }
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const email = event.currentTarget.email.value;
     const password = event.currentTarget.password.value;
 
-    console.log({ email, password });
 
     dispatch(loginAction({ email, password }));
   };
+
+  React.useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -96,12 +105,12 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link component={LinkR} to="/forgot" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="register" variant="body2">
+              <Link component={LinkR} to="/register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

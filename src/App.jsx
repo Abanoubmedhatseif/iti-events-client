@@ -23,14 +23,17 @@ import { isTokenExpired } from "./api";
 import { userDataAction } from "./store/auth/authActions";
 import store from "./store";
 import AdminUsersPage from "./pages/Admin/AdminUsersPage";
-import AdminBusPage from "./pages/Admin/AdminBusPage";
 import AdminGuestsPage from "./pages/Admin/AdminGuestsPage";
 import AdminAccountsPage from "./pages/Admin/AdminAccountsPage";
-import AboutUsPage from './pages/AboutUs'
-import UpcomingEventsPage from './pages/UpcomingEventsPage'
-import HappeningEventsPage from './pages/HappeningEventsPage'
-import EventAttendeesPage from './pages/Admin/EventAttendeesPage'
-import FAQ from './pages/FAQ';
+import AboutUsPage from "./pages/AboutUs";
+import UpcomingEventsPage from "./pages/UpcomingEventsPage";
+import HappeningEventsPage from "./pages/HappeningEventsPage";
+import EventAttendeesPage from "./pages/Admin/EventAttendeesPage";
+import FAQ from "./pages/FAQ";
+import ForgotPassword from "./pages/ForgotPassword";
+import theme from "./styles/theme";
+import CssBaseline from "@mui/material/CssBaseline";
+import ResetPassword from "./pages/ResetPassword";
 
 setupInterceptors(store);
 
@@ -43,30 +46,33 @@ function App() {
       dispatch(userDataAction());
     }
   }, [user, accessToken, dispatch]);
-  const defaultTheme = createTheme();
   return (
     <>
-      <ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline enableColorScheme />
         <BrowserRouter>
           <Routes>
             {/* Main Layout Routes */}
             <Route element={<MainLayout />}>
               <Route index element={<Home />} />
-              <Route path="events/upcoming" element={<Events />} />
+              <Route path="events" element={<Events />} />
               <Route path="events/:eventId" element={<EventDetails />} />
               <Route path="categories" element={<Categories />} />
               <Route
                 path="categories/:categoryId"
                 element={<CategoryDetails />}
               />
-              <Route path="faq" element={<FAQ/>}/>
+              <Route path="faq" element={<FAQ />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
-              <Route path="aboutUs" element={<AboutUsPage />} />
-              <Route path="UpcomingEventsPage" element={<UpcomingEventsPage />} />
+              <Route path="forgot" element={<ForgotPassword />} />
+              <Route path="reset" element={<ResetPassword />} />
+              <Route path="about" element={<AboutUsPage />} />
+              <Route
+                path="UpcomingEventsPage"
+                element={<UpcomingEventsPage />}
+              />
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
-
-
 
               <Route path="*" element={<PageNotFound />} />
             </Route>
@@ -76,13 +82,14 @@ function App() {
               <Route index element={<AdminHome />} />
               <Route path="categories" element={<AdminCategoryPage />} />
               <Route path="events" element={<AdminEventPage />} />
-              <Route path="events/:eventId/attendees" element={<EventAttendeesPage />} />
-              <Route path="bus" element={<AdminBusPage />} />
+              <Route
+                path="events/:eventId/attendees"
+                element={<EventAttendeesPage />}
+              />
               <Route path="guests" element={<AdminGuestsPage />} />
               <Route path="users" element={<AdminUsersPage />} />
               <Route path="admins" element={<AdminAccountsPage />} />
               <Route path="*" element={<PageNotFound />} />
-
               {/* Add other admin routes here */}
             </Route>
           </Routes>

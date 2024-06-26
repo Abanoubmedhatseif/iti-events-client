@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEvents } from '../../store/Events/eventSlice'; // Adjust path as per your Redux setup
 import EventCard from '../../components/Event/EventCard';
-import { Grid, Container, Typography } from '@mui/material';
+import { Grid, Container, Typography, CircularProgress } from '@mui/material';
 
 const AdminHome = () => {
   const dispatch = useDispatch();
@@ -31,9 +31,9 @@ const AdminHome = () => {
         View Events Attendees
       </Typography>
       {loading ? (
-        <Typography variant="h6" component="p" sx={{ textAlign: 'center' }}>
-          Loading events...
-        </Typography>
+        <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
+          <CircularProgress />
+        </Container>
       ) : (
         <Grid container spacing={3}>
           {events.map((event) => (

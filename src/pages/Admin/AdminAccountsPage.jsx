@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../../store/users/usersSlice";
 import AdminTable from "../../components/reusables/adminsTable";
 import CreateAdminModal from "../../components/createAdminModal";
+import Loader from "../../components/reusables/loader";
 
 function AdminUsersPage() {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function AdminUsersPage() {
   }, [error]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

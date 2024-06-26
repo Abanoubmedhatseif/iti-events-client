@@ -67,7 +67,7 @@ const usersSlice = createSlice({
             (user) => user.id !== action.payload
           );
         }
-        state.error = null; // Clear error on success
+        state.error = null;
       })
       .addCase(deleteUser.rejected, (state) => {
         state.error = "Failed to delete user";
