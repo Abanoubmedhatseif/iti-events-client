@@ -1,10 +1,11 @@
 import React from 'react';
 import itinewCapital from '../assets/itinewCapital.png';
 import '../styles/AboutUsPage.css';
+import { Box } from '@mui/material';
 
 const AboutUsPage = () => {
   return (
-    <div className="section" style={{ backgroundImage: `url(${itinewCapital})` }}>
+    <Box className="section" sx={{ width:"100%", backgroundImage: `url(${itinewCapital})`, borderRadius:5 }}>
       <div className="section-container">
         <h1 className="heading">Welcome To ITI Events Website</h1>
         <p className="paragraph">Discover and book exciting events and educational opportunities happening at ITI Egypt.</p>
@@ -31,7 +32,7 @@ const AboutUsPage = () => {
         <p className="paragraph">We look forward to connecting with you and welcoming you to our events.</p>
         <a href="#our-story" className="call-to-action">Back to Top</a>
       </div>
-    </div>
+    </Box>
   );
 };
 
