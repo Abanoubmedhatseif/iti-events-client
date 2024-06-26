@@ -69,7 +69,6 @@ const attendeesSlice = createSlice({
       })
       .addCase(fetchPendingAttendees.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.pendingAttendees = action.payload;
       })
       .addCase(fetchPendingAttendees.rejected, (state, action) => {
@@ -98,7 +97,7 @@ const attendeesSlice = createSlice({
       })
       .addCase(rejectAttendee.fulfilled, (state, action) => {
         state.loading = false;
-        if (!action.payload) {
+        if (action.payload) {
           state.pendingAttendees = state.pendingAttendees.filter(
             (attendee) => attendee.id !== action.payload.id
           );

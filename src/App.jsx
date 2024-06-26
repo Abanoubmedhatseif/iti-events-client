@@ -23,7 +23,6 @@ import { isTokenExpired } from "./api";
 import { userDataAction } from "./store/auth/authActions";
 import store from "./store";
 import AdminUsersPage from "./pages/Admin/AdminUsersPage";
-import AdminBusPage from "./pages/Admin/AdminBusPage";
 import AdminGuestsPage from "./pages/Admin/AdminGuestsPage";
 import AdminAccountsPage from "./pages/Admin/AdminAccountsPage";
 import AboutUsPage from './pages/AboutUs'
@@ -31,6 +30,7 @@ import UpcomingEventsPage from './pages/UpcomingEventsPage'
 import HappeningEventsPage from './pages/HappeningEventsPage'
 import EventAttendeesPage from './pages/Admin/EventAttendeesPage'
 import FAQ from './pages/FAQ';
+
 
 setupInterceptors(store);
 
@@ -63,10 +63,11 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="aboutUs" element={<AboutUsPage />} />
-              <Route path="UpcomingEventsPage" element={<UpcomingEventsPage />} />
+              <Route
+                path="UpcomingEventsPage"
+                element={<UpcomingEventsPage />}
+              />
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
-
-
 
               <Route path="*" element={<PageNotFound />} />
             </Route>
@@ -77,7 +78,6 @@ function App() {
               <Route path="categories" element={<AdminCategoryPage />} />
               <Route path="events" element={<AdminEventPage />} />
               <Route path="events/:eventId/attendees" element={<EventAttendeesPage />} />
-              <Route path="bus" element={<AdminBusPage />} />
               <Route path="guests" element={<AdminGuestsPage />} />
               <Route path="users" element={<AdminUsersPage />} />
               <Route path="admins" element={<AdminAccountsPage />} />
