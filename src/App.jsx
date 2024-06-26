@@ -57,7 +57,7 @@ function App() {
             {/* Main Layout Routes */}
             <Route element={<MainLayout />}>
               <Route index element={<Home />} />
-              <Route path="events/upcoming" element={<Events />} />
+              <Route path="events" element={<Events />} />
               <Route path="events/:eventId" element={<EventDetails />} />
               <Route path="categories" element={<Categories />} />
               <Route
@@ -68,7 +68,7 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="forgotPassword" element={<ForgotPassword />} />
-              <Route path="aboutUs" element={<AboutUsPage />} />
+              <Route path="about" element={<AboutUsPage />} />
               <Route
                 path="UpcomingEventsPage"
                 element={<UpcomingEventsPage />}

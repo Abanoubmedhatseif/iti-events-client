@@ -103,7 +103,9 @@ export default function Register() {
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
         ),
         confirmPassword: formData.confirmPassword !== formData.password,
-        birthdate: formData.birthdate.length === 0, // Add birthdate error handling
+        birthdate:
+          formData.birthdate.length === 0 ||
+          formData.birthdate > new Date().toISOString().split("T")[0], // Add birthdate error handling
       });
     } else {
       /* const formDataCopy = new FormData();
@@ -234,7 +236,7 @@ export default function Register() {
                 value={formData.birthdate}
                 error={error.birthdate}
                 helperText={
-                  error.birthdate ? "Please enter your birthdate." : false
+                  error.birthdate ? "Please enter a valid birthdate." : false
                 }
                 onChange={handleChange}
               />

@@ -20,15 +20,16 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ITI_Logo from "../assets/ITI_LOGO.png";
 
-function capitalizeFirst(string) {
+function formatRoute(string) {
   return string?.charAt(0)?.toUpperCase() + string?.slice(1);
 }
 
-const pages = ["events/upcoming", "categories", "aboutUs", "/faq"];
+const pages = ["events", "categories", "about", "faq"];
 
-const settings = ["profile", "orders", "addresses", "wishlist"];
+const settings = ["profile"];
 
 function ResponsiveAppBar() {
+  const currentPage = window.location.pathname.split("/")[1];
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -72,7 +73,11 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 , bgcolor: "white"}}
+            sx={{
+              display: { xs: "none", md: "flex" },
+              mr: 1,
+              bgcolor: "white",
+            }}
             component={Link}
             to="/"
           >
@@ -116,7 +121,7 @@ function ResponsiveAppBar() {
                   onClick={handleCloseNavMenu}
                 >
                   <Typography textAlign="center">
-                    {capitalizeFirst(page)}
+                    {formatRoute(page)}
                   </Typography>
                 </MenuItem>
               ))}
@@ -124,7 +129,11 @@ function ResponsiveAppBar() {
             <MenuItem
               component={Link}
               to="/"
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1, bgcolor: "white"}}
+              sx={{
+                display: { xs: "flex", md: "none" },
+                mr: 1,
+                bgcolor: "white",
+              }}
             >
               <img src={ITI_Logo} alt="ITI" width={50} height={50} />
             </MenuItem>
@@ -137,15 +146,26 @@ function ResponsiveAppBar() {
                 to={page}
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: page === currentPage ? "gold" : "white",
+                  display: "block",
+                }}
               >
-                {capitalizeFirst(page)}
+                {formatRoute(page)}
               </Button>
             ))}
           </Box>
 
           {user && (
-            <Box sx={{ width: "200px" }}>
+            <Box
+              sx={{
+                width: "200px",
+                flexGrow: 1,
+                display: "flex",
+                justifyContent: "end",
+              }}
+            >
               {/* <Badge
                 anchorOrigin={{ horizontal: "left", vertical: "top" }}
                 badgeContent={cartQuantity}
@@ -185,17 +205,20 @@ function ResponsiveAppBar() {
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <Typography
                       component={Link}
-                      sx={{ textDecoration: "none", color: "inherit" }}
+                      sx={{
+                        textDecoration: "none",
+                        color: setting === currentPage ? "gold" : "black",
+                      }}
                       to={setting}
                       textAlign="center"
                     >
-                      {capitalizeFirst(setting)}
+                      {formatRoute(setting)}
                     </Typography>
                   </MenuItem>
                 ))}
                 <MenuItem onClick={handleAuth}>
                   <Typography
-                    sx={{ textDecoration: "none", color: "inherit" }}
+                    sx={{ textDecoration: "none", color: "black" }}
                     textAlign="center"
                   >
                     Logout

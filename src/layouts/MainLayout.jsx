@@ -23,6 +23,8 @@ const MainLayout = () => {
           margin: "0 auto",
           flexGrow: 1,
           width: "100%",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <Outlet /> {/* This will render the child routes */}

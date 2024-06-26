@@ -20,6 +20,7 @@ export default function ForgotPassword() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        flexGrow: 1,
       }}
       onSubmit={handleSubmit}
       component="form"
