@@ -41,7 +41,6 @@ export default function SignIn() {
     const email = event.currentTarget.email.value;
     const password = event.currentTarget.password.value;
 
-
     dispatch(loginAction({ email, password }));
   };
 
@@ -50,7 +49,6 @@ export default function SignIn() {
       navigate("/");
     }
   }, [user, navigate]);
-
 
   return (
     <Container component="main" maxWidth="xs">
