@@ -44,29 +44,32 @@ function AdminGuestsPage() {
         justifyContent: "center",
         alignItems: "center",
         padding: "50px",
-        width: "100%",
       }}
     >
-      {attendees.map((attendee) => (
-        <Card
-          key={attendee.id}
-          title={
-            attendee.user
-              ? `${attendee.user.firstName} ${attendee.user.lastName}`
-              : "Guest"
-          }
-          description={attendee.event.name || "Event"}
-          imageSrc={attendee.receipt.imageUrl}
-          action1="Accept"
-          action2="Reject"
-          handler1={() => {
-            handleApporve(attendee.id);
-          }}
-          handler2={() => {
-            handleReject(attendee.id);
-          }}
-        />
-      ))}
+      {attendees.length > 0 ? (
+        attendees?.map((attendee) => (
+          <Card
+            key={attendee.id}
+            title={
+              attendee.user
+                ? `${attendee.user?.firstName} ${attendee.user?.lastName}`
+                : "Guest"
+            }
+            description={attendee?.event?.name || "Event"}
+            imageSrc={attendee?.receipt?.imageUrl}
+            action1="Accept"
+            action2="Reject"
+            handler1={() => {
+              handleApporve(attendee.id);
+            }}
+            handler2={() => {
+              handleReject(attendee.id);
+            }}
+          />
+        ))
+      ) : (
+        <h1>No pending guests</h1>
+      )}
     </div>
   );
 }
