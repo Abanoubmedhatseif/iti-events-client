@@ -11,7 +11,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import StorefrontIcon from "@mui/icons-material/Storefront";
 import { Link } from "react-router-dom";
 import { selectUser } from "../store/auth/authSlice";
 import { Login } from "@mui/icons-material";
@@ -19,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../store/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import ITI_Logo from "../assets/ITI_LOGO.png";
 
 function capitalizeFirst(string) {
   return string?.charAt(0)?.toUpperCase() + string?.slice(1);
@@ -71,24 +71,13 @@ function ResponsiveAppBar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <StorefrontIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
+          <Box
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1 , bgcolor: "white"}}
             component={Link}
             to="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
           >
-            ITI
-          </Typography>
+            <img src={ITI_Logo} alt="ITI" width={50} height={50} />
+          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -135,9 +124,9 @@ function ResponsiveAppBar() {
             <MenuItem
               component={Link}
               to="/"
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+              sx={{ display: { xs: "flex", md: "none" }, mr: 1, bgcolor: "white"}}
             >
-              <StorefrontIcon />
+              <img src={ITI_Logo} alt="ITI" width={50} height={50} />
             </MenuItem>
           </Box>
 
