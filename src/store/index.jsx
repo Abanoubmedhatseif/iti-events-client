@@ -4,6 +4,7 @@ import eventCategoryReducer from "./categories/categorySlice";
 import eventReducer from "./Events/eventSlice";
 import authReducer from "./auth/authSlice";
 import usersReducer from "./users/usersSlice";
+import attedneesReducer from "./Events/attedneesSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     events: eventReducer,
     auth: authReducer,
     users: usersReducer,
+    attednees: attedneesReducer,
   },
 });
 
