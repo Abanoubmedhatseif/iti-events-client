@@ -35,6 +35,7 @@ import theme from "./styles/theme";
 import CssBaseline from "@mui/material/CssBaseline";
 import ResetPassword from "./pages/ResetPassword";
 import { ToastContainer } from "react-toastify";
+import Profile from "./pages/Profile";
 
 setupInterceptors(store);
 
@@ -74,7 +75,7 @@ function App() {
                 element={<UpcomingEventsPage />}
               />
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
-
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<PageNotFound />} />
             </Route>
 
