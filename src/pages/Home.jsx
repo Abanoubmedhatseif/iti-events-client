@@ -5,6 +5,7 @@ import HowItWorks from "./HowItWorks";
 import UpcomingEventsPage from "./UpcomingEventsPage"
 import HomeHappingEvents from "./HomeHappingEvents";
 import RealityViewOfOurEvent from "./RealityViewOfOurEvent"
+import RidePage from "./RidePage"
  
 function Home() {
   return (
@@ -17,6 +18,7 @@ function Home() {
       <UpcomingEventsPage />
       <HowItWorks />
       <RealityViewOfOurEvent />
+      <RidePage />
 
       
     </div>
