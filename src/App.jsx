@@ -29,6 +29,7 @@ import AdminAccountsPage from "./pages/Admin/AdminAccountsPage";
 import AboutUsPage from './pages/AboutUs'
 import UpcomingEventsPage from './pages/UpcomingEventsPage'
 import HappeningEventsPage from './pages/HappeningEventsPage'
+import EventAttendeesPage from './pages/Admin/EventAttendeesPage'
 
 setupInterceptors(store);
 
@@ -73,6 +74,7 @@ function App() {
               <Route index element={<AdminHome />} />
               <Route path="categories" element={<AdminCategoryPage />} />
               <Route path="events" element={<AdminEventPage />} />
+              <Route path="events/:eventId/attendees" element={<EventAttendeesPage />} />
               <Route path="bus" element={<AdminBusPage />} />
               <Route path="guests" element={<AdminGuestsPage />} />
               <Route path="users" element={<AdminUsersPage />} />
