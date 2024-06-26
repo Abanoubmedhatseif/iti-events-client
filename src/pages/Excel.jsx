@@ -14,8 +14,9 @@ import {
 } from "@mui/material";
 import * as XLSX from "xlsx";
 import { createStudents } from "../store/users/usersSlice";
+import { useNavigate } from "react-router-dom";
 
-const processExcel = (file, setError, setUsers) => {
+const processExcel = (file, setError, setUsers, setOpen) => {
   const reader = new FileReader();
   reader.onload = (event) => {
     const data = new Uint8Array(event.target.result);
@@ -51,11 +52,16 @@ const processExcel = (file, setError, setUsers) => {
 
     setUsers(users);
     setError("");
+    setOpen(true); // Open the confirmation modal after processing the file
   };
   reader.readAsArrayBuffer(file);
+  reader.onerror = () => {
+    setError("Error reading the file");
+  };
 };
 
 const ExcelUploader = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
@@ -64,8 +70,7 @@ const ExcelUploader = () => {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      processExcel(file, setError, setUsers);
-      setOpen(true); // Open the confirmation modal
+      processExcel(file, setError, setUsers, setOpen);
     }
   };
 
@@ -74,10 +79,11 @@ const ExcelUploader = () => {
   };
 
   const handleConfirm = () => {
-    console.log("Creating students", users);
     dispatch(createStudents(users)).then(() => {
+      setError("");
       setOpen(false);
       setUsers([]);
+      navigate("/");
     });
   };
 
@@ -109,37 +115,35 @@ const ExcelUploader = () => {
         </Button>
       </label>
       {error && <Typography color="error">{error}</Typography>}
-      {users.length > 0 && (
-        <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-          <DialogTitle>Confirm User Creation</DialogTitle>
-          <DialogContent
-            dividers
-            style={{ maxHeight: "400px", overflowY: "auto" }}
-          >
-            <DialogContentText>
-              Are you sure you want to create these students?
-            </DialogContentText>
-            <List>
-              {users.map((user, index) => (
-                <ListItem key={index}>
-                  <ListItemText
-                    primary={`${user.firstName} ${user.lastName}`}
-                    secondary={`${user.birthdate} - ${user.email} - ${user.role}`}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleConfirm} color="primary">
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
+      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+        <DialogTitle>Confirm User Creation</DialogTitle>
+        <DialogContent
+          dividers
+          style={{ maxHeight: "400px", overflowY: "auto" }}
+        >
+          <DialogContentText>
+            Are you sure you want to create these students?
+          </DialogContentText>
+          <List>
+            {users.map((user, index) => (
+              <ListItem key={index}>
+                <ListItemText
+                  primary={`${user.firstName} ${user.lastName}`}
+                  secondary={`${user.birthdate} - ${user.email} - ${user.role}`}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirm} color="primary">
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
