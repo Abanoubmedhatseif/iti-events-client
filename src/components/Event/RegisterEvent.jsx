@@ -19,12 +19,14 @@ const RegisterEventModal = ({ eventId, open, handleClose, event }) => {
     uploadImage: null,
   });
 
+  const [selectedImageName, setSelectedImageName] = useState('');
+
   useEffect(() => {
     if (registrationSuccess || registrationError) {
-      handleClose();
+      setSnackbarOpen(true);
       dispatch(clearRegistrationMessages());
     }
-  }, [registrationSuccess, registrationError, handleClose, dispatch]);
+  }, [registrationSuccess, registrationError, dispatch]);
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -34,19 +36,19 @@ const RegisterEventModal = ({ eventId, open, handleClose, event }) => {
     if (registrationSuccess) {
       setSnackbarMessage(registrationSuccess);
       setSnackbarSeverity('success');
-      setSnackbarOpen(true);
     } else if (registrationError) {
       setSnackbarMessage(registrationError);
       setSnackbarSeverity('error');
-      setSnackbarOpen(true);
     }
   }, [registrationSuccess, registrationError]);
 
   const handleFileChange = (e) => {
+    const file = e.target.files[0];
     setRegistrationData({
       ...registrationData,
-      uploadImage: e.target.files[0],
+      uploadImage: file,
     });
+    setSelectedImageName(file ? file.name : '');
   };
 
   const handleSubmit = async (e) => {
@@ -73,6 +75,7 @@ const RegisterEventModal = ({ eventId, open, handleClose, event }) => {
     setRegistrationData({
       uploadImage: null,
     });
+    setSelectedImageName('');
   };
 
   const handleModalClose = () => {
@@ -131,6 +134,11 @@ const RegisterEventModal = ({ eventId, open, handleClose, event }) => {
                       onChange={handleFileChange}
                     />
                   </Button>
+                  {selectedImageName && (
+                    <Typography variant="body2" style={{ marginTop: 8 }}>
+                      {selectedImageName}
+                    </Typography>
+                  )}
                 </Grid>
               )}
               <Grid item xs={12}>
