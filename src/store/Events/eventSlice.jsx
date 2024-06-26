@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+//import axios from "axios";
 import api from "../../api";
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
