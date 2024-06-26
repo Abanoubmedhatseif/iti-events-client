@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   Button,
@@ -13,7 +13,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import * as XLSX from "xlsx";
-import { createAdmin } from "../store/users/usersSlice";
+import { createStudents } from "../store/users/usersSlice";
 
 const processExcel = (file, setError, setUsers) => {
   const reader = new FileReader();
@@ -46,6 +46,7 @@ const processExcel = (file, setError, setUsers) => {
       birthdate: row[2],
       email: row[3],
       role: "student",
+      password: "12345678",
     }));
 
     setUsers(users);
@@ -73,11 +74,18 @@ const ExcelUploader = () => {
   };
 
   const handleConfirm = () => {
-    dispatch(createAdmin(users));
-
-    setOpen(false);
-    setUsers([]);
+    console.log("Creating students", users);
+    dispatch(createStudents(users)).then(() => {
+      setOpen(false);
+      setUsers([]);
+    });
   };
+
+  useEffect(() => {
+    if (users.length === 0) {
+      setOpen(false);
+    }
+  }, [users]);
 
   return (
     <div style={{ padding: "20px" }}>
