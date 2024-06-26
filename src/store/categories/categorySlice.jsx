@@ -75,7 +75,7 @@ export const deleteEventCategory = createAsyncThunk('eventCategories/deleteEvent
 
 export const fetchEventCategoryDetails = createAsyncThunk('eventCategories/fetchEventCategoryDetails', async (categoryId, thunkAPI) => {
   try {
-    const response = await axios.get(`${BASE_URL}/event-categories/${categoryId}`);
+    const response = await api.get(`${BASE_URL}/event-categories/${categoryId}`);
     return response.data.category;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.message);
@@ -85,7 +85,7 @@ export const fetchEventCategoryDetails = createAsyncThunk('eventCategories/fetch
 // New thunk to fetch events by category
 export const fetchCategoryEvents = createAsyncThunk('eventCategories/fetchCategoryEvents', async (categoryId, thunkAPI) => {
   try {
-    const response = await axios.get(`${BASE_URL}/event-categories/${categoryId}/events`);
+    const response = await api.get(`${BASE_URL}/event-categories/${categoryId}/events`);
     return response.data.events;
   } catch (error) {
     if (error.response && error.response.status === 400) {

@@ -50,7 +50,7 @@ const Footer = () => {
               color: "white",
               ":hover": { color: "red" },
             }}
-            to="/aboutUs"
+            to="/about"
           >
             About Us
           </Link>
@@ -63,7 +63,7 @@ const Footer = () => {
               ":hover": { color: "red" },
             }}
             color="primary"
-            to="/aboutUs/#our-story"
+            to="/about#our-story"
           >
             Our Story
           </Link>
@@ -76,7 +76,7 @@ const Footer = () => {
               ":hover": { color: "red" },
             }}
             color="primary"
-            to="/aboutUs/#our-mission"
+            to="/about#our-mission"
           >
             Our Mission
           </Link>
@@ -89,7 +89,7 @@ const Footer = () => {
               ":hover": { color: "red" },
             }}
             color="primary"
-            to="/aboutUs/#contact-us"
+            to="/about#contact-us"
           >
             Contact Us
           </Link>
