@@ -13,9 +13,9 @@ export const getUserData = () => api.get("users/me/");
 //Not done in backend yet
 export const resetPassword = (
   resetData /* : { password: string; token: string } */
-) => api.post("users/reset-password/", resetData);
+) => api.post("auth/reset/", resetData);
 export const sendResetPassword = (email /* : string */) =>
-  api.post("users/send-reset-password/", { email });
+  api.post("auth/forgot/", { email });
 export const verifyEmail = (token /* : string */) =>
   api.post("users/verify-email/", { token });
 export const sendVerificationEmail = () => api.post("users/send-verify-email/");

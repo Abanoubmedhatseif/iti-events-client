@@ -2,9 +2,8 @@
 .footer {
   background-color: #203947;
   color: white;
-  padding: 10px 20px 40px 20px; /* Adjust padding as needed */
+  padding: 10px 20px 0 20px; /* Adjust padding as needed */
   font-family: Arial, sans-serif; /* Example: Change font family if needed */
-  height: 150px; /* Fixed height of the footer */
 }
 
 
@@ -17,7 +16,6 @@
   
   .footer-section {
     flex: 1;
-    margin-bottom: 20px;
   }
   
   .footer-logo {
