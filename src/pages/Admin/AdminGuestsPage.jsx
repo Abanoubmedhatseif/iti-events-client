@@ -55,7 +55,9 @@ function AdminGuestsPage() {
                 ? `${attendee.user?.firstName} ${attendee.user?.lastName}`
                 : "Guest"
             }
-            description={attendee?.event?.name || "Event"}
+            description={
+              (attendee?.event?.name).substring(0, 28) + "..." || "Event"
+            }
             imageSrc={attendee?.receipt?.imageUrl}
             action1="Accept"
             action2="Reject"

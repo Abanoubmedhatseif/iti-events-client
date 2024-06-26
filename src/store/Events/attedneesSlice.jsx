@@ -41,7 +41,7 @@ export const rejectAttendee = createAsyncThunk(
   "events/rejectAttendee",
   async (attendeeId) => {
     try {
-      const response = await api.post(`${BASE_URL}/attendees/${attendeeId}`);
+      const response = await api.delete(`${BASE_URL}/attendees/${attendeeId}`);
       return response.data.attendee;
     } catch (error) {
       return Promise.reject(
@@ -82,7 +82,6 @@ const attendeesSlice = createSlice({
       })
       .addCase(acceptAttendee.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         if (action.payload) {
           state.pendingAttendees = state.pendingAttendees.filter(
             (attendee) => attendee.id !== action.payload.id
@@ -99,8 +98,7 @@ const attendeesSlice = createSlice({
       })
       .addCase(rejectAttendee.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
-        if (action.payload) {
+        if (!action.payload) {
           state.pendingAttendees = state.pendingAttendees.filter(
             (attendee) => attendee.id !== action.payload.id
           );
