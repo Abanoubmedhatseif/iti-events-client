@@ -4,8 +4,7 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import DownloadIcon from '@mui/icons-material/Download';
 
 const RidePage = () => {
-  // Placeholder link for demonstration
-  const placeholderAPKLink = "https://example.com/your-app.apk";
+  const googleDriveLink = "https://drive.google.com/drive/folders/16dkLmWXox-ixM_tycGHX_SxUcbDW8gdD";
 
   return (
     <Container
@@ -78,7 +77,7 @@ const RidePage = () => {
       </Box>
       <Button
         variant="contained"
-        href={placeholderAPKLink} // Use the placeholder link here
+        href={googleDriveLink} // Direct users to the Google Drive link
         startIcon={<DownloadIcon />}
         sx={{
           backgroundColor: '#901b20',
