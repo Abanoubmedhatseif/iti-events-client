@@ -30,6 +30,7 @@ import AboutUsPage from './pages/AboutUs'
 import UpcomingEventsPage from './pages/UpcomingEventsPage'
 import HappeningEventsPage from './pages/HappeningEventsPage'
 import EventAttendeesPage from './pages/Admin/EventAttendeesPage'
+import FAQ from './pages/FAQ';
 
 setupInterceptors(store);
 
@@ -58,6 +59,7 @@ function App() {
                 path="categories/:categoryId"
                 element={<CategoryDetails />}
               />
+              <Route path="faq" element={<FAQ/>}/>
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="aboutUs" element={<AboutUsPage />} />
