@@ -56,7 +56,7 @@ const RealityViewOfOurEvent = () => {
         </Typography>
       </Box>
       <Grid container spacing={4} sx={{ maxWidth: '90%', mx: 'auto' }}>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12} md={7} sx={{ marginBottom: { xs: 4, md: 0 } , marginTop: '100px' }}>
           <Box sx={{ position: 'relative', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)', borderRadius: '8px', overflow: 'hidden' }}>
             <Slider ref={sliderRef} {...settings}>
               {images.map((image, index) => (

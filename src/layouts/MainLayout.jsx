@@ -6,10 +6,10 @@ import Footer from '../components/Footer';
 const MainLayout = () => {
   return (
     <div style={{ minHeight: '100vh', position: 'relative' }}>
-      <div style={{ paddingBottom: '50px', minHeight: 'calc(100vh - 150px)',backgroundColor: '#f0f0f0' }}>
+      <div style={{ paddingBottom: '50px', minHeight: 'calc(100vh - 150px)', backgroundColor: '#f0f0f0' }}>
         {/* 150px is the height of the footer */}
         <Navbar />
-        <main style={{ padding: '20px' }}>
+        <main style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
           <Outlet /> {/* This will render the child routes */}
         </main>
       </div>

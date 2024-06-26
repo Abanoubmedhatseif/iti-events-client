@@ -5,7 +5,7 @@ import EventImage from '../assets/itinewCapital.png'; // Replace with your event
 
 const HomeHappingEvents = () => {
   return (
-    <Box sx={{ backgroundColor: '#f0f0f0', py: 4, maxWidth: '1400px', margin: 'auto' }}>
+    <Box sx={{ backgroundColor: '#f0f0f0', py: 4, maxWidth: '100%', margin: 'auto' }}>
       <Box sx={{ maxWidth: '90%', textAlign: 'center', mx: 'auto', px: 2 }}>
         <Typography 
           variant="h2"
@@ -19,7 +19,7 @@ const HomeHappingEvents = () => {
             WebkitTextFillColor: 'transparent', 
             marginTop: '40px',
             marginBottom: '50px',
-            fontSize: '2.9rem', // Increased font size
+            fontSize: '3rem', // Adjusted font size for larger screens
             '@media (max-width: 600px)': {
               fontSize: '2.5rem', // Adjust font size for smaller screens
             },
@@ -37,7 +37,7 @@ const HomeHappingEvents = () => {
               component={Link}
               to="/happeningEvents"
               color="primary"
-              sx={{ px: 4, py: 2, borderRadius: '999px', fontSize: '1.1rem', fontWeight: 'bold', bgcolor: '#901b20', color: 'white', '&:hover': { bgcolor: '#b71c1f' } }}
+              sx={{ px: 4, py: 2, borderRadius: '999px', fontSize: '1.2rem', fontWeight: 'bold', bgcolor: '#901b20', color: 'white', '&:hover': { bgcolor: '#b71c1f' } }}
             >
               View Events
             </Button>
