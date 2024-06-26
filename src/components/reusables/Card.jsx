@@ -30,29 +30,45 @@ export function ImgMediaCard({
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 300, height: 300, margin: "10px", padding: "10px" }}>
       <CardMedia
         component="img"
-        alt={title}
-        height="140"
+        alt="no image provided"
+        height="120"
         image={imageSrc}
         onClick={handleClickOpen}
         style={{ cursor: "pointer" }}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h6" component="div">
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="h6" color="text.secondary">
           {description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={handler1}>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: "green",
+            color: "white",
+            marginTop: "16px",
+          }}
+          onClick={handler1}
+        >
           {action1}
         </Button>
         {action2 && handler2 && (
-          <Button size="small" onClick={handler2}>
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "#901b20",
+              color: "white",
+              marginTop: "16px",
+            }}
+            onClick={handler2}
+          >
             {action2}
           </Button>
         )}
@@ -60,7 +76,12 @@ export function ImgMediaCard({
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-          <img src={imageSrc} alt={title} style={{ width: "100%" }} />
+          {/* eslint-disable */}
+          <img
+            src={imageSrc}
+            alt="No image was provided"
+            style={{ width: "100%" }}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
