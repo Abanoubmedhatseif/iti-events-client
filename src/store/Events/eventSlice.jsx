@@ -108,6 +108,27 @@ export const fetchEventDetails = createAsyncThunk(
   }
 );
 
+
+export const fetchEventAttendees = createAsyncThunk(
+    "events/fetchEventAttendees",
+    async (eventId, { rejectWithValue }) => {
+      try {
+        const response = await api.get(`/events/${eventId}/attendees`);
+        console.log("Attendees data:", response.data); // Log the response data here
+  
+        // Check if response.data has attendees array
+        if (response.data.attendees) {
+          return response.data.attendees;
+        } else {
+          return []; // Return empty array if no attendees found
+        }
+      } catch (error) {
+        console.error("Error fetching event attendees:", error.response.data);
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+
 const eventSlice = createSlice({
   name: "events",
   initialState: {
@@ -120,6 +141,7 @@ const eventSlice = createSlice({
       loading: false,
       error: null,
     },
+    attendees: [], // New state for storing attendees
   },
   reducers: {
     clearEvent: (state) => {
@@ -217,6 +239,16 @@ const eventSlice = createSlice({
       .addCase(fetchEventDetails.rejected, (state, action) => {
         state.eventDetails.loading = false;
         state.eventDetails.error = action.error.message;
+      })
+      .addCase(fetchEventAttendees.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchEventAttendees.fulfilled, (state, action) => {
+        state.loading = false;
+        state.attendees = Array.isArray(action.payload) ? action.payload : [];
+      })
+      .addCase(fetchEventAttendees.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
