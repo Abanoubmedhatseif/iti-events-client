@@ -35,7 +35,6 @@ const CreateCategoryModal = ({ open, handleClose, handleSuccessMessageClose }) =
         handleClose();
         handleSuccessMessageClose();
       } catch (error) {
-        console.error('Failed to create category:', error);
         setErrors({ ...errors, createUpdate: error.message });
       }
     }

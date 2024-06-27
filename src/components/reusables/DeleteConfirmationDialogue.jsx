@@ -11,11 +11,9 @@ import {
 const DeleteConfirmationDialog = ({ open, onClose, onConfirm, item }) => {
   const handleConfirmDelete = () => {
     if (!item) {
-      console.error("undefined value.");
       onClose();
       return;
     }
-    console.log("Deleted Successfully");
     onConfirm();
   };
 

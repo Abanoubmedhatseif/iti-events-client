@@ -104,14 +104,12 @@ const UpdateModal = ({ open, onClose, onUpdate, event }) => {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      console.error('Validation errors:', newErrors);
       return;
     } else {
       setErrors({});
     }
 
     if (!event || !event.id) {
-      console.error('Event ID is missing.');
       return;
     }
 
@@ -135,7 +133,6 @@ const UpdateModal = ({ open, onClose, onUpdate, event }) => {
       onUpdate(parsedFormData); // Call the onUpdate callback with updated data
       onClose(); // Close the modal after successful update
     } catch (error) {
-      console.error('Failed to update event:', error);
     }
   };
 

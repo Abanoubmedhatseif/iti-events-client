@@ -65,7 +65,6 @@ const CreateAdminModal = ({ open, handleClose, handleSuccessMessageClose }) => {
         handleClose();
         handleSuccessMessageClose();
       } catch (error) {
-        console.error("Failed to create admin account:", error);
         setErrors({ ...errors, requestError: error.message });
       }
     }

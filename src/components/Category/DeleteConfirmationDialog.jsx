@@ -10,7 +10,6 @@ const DeleteConfirmationDialog = ({ open, onClose, category }) => {
 
   const handleConfirmDelete = () => {
     if (!category) {
-      console.error('Category is undefined.');
       onClose();
       return;
     }
@@ -21,7 +20,6 @@ const DeleteConfirmationDialog = ({ open, onClose, category }) => {
         onClose();
       })
       .catch((error) => {
-        console.error('Failed to delete category:', error);
         onClose();
       });
   };

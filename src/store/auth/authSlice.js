@@ -16,7 +16,6 @@ const parseLocalStorageUser = () => {
   try {
     return JSON.parse(localStorage.getItem("user") || "null");
   } catch (e) {
-    console.error("Failed to parse user from localStorage", e);
     return null;
   }
 };

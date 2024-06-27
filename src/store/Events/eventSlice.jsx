@@ -113,6 +113,7 @@ export const fetchEventAttendees = createAsyncThunk(
   async (eventId, { rejectWithValue }) => {
     try {
       const response = await api.get(`/events/${eventId}/attendees`);
+      console.log("Attendees data:", response.data); // Log the response data here
 
       // Check if response.data has attendees array
       if (response.data.attendees) {

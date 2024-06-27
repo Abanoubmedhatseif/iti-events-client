@@ -61,7 +61,6 @@ const EventCategoryTable = () => {
           setShowSuccessMessage(true);
         })
         .catch((error) => {
-          console.error('Failed to delete event category:', error);
           if (error.message === 'Category name already exists') {
             setBackendError(error.message);
           }
