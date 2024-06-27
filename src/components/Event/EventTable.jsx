@@ -56,7 +56,6 @@ const EventTable = () => {
           setSnackbarMessage('Event deleted successfully');
         })
         .catch((error) => {
-          console.error('Failed to delete event:', error);
           setOpenDeleteDialog(false);
         });
     }
@@ -72,7 +71,6 @@ const EventTable = () => {
           setSnackbarMessage('Event updated successfully');
         })
         .catch((error) => {
-          console.error('Failed to update event:', error);
           setOpenUpdateModal(false);
         });
     }

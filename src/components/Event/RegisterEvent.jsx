@@ -52,7 +52,6 @@ const RegisterEventModal = ({ eventId, open, handleClose, event }) => {
     try {
       await dispatch(registerForEvent({ eventId, formData })).unwrap();
     } catch (error) {
-      console.error('Dispatch Error:', error);
       setSnackbarMessage(error.message || 'Failed to register for the event');
       setSnackbarSeverity('error');
       setSnackbarOpen(true);

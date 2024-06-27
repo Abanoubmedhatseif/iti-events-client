@@ -22,12 +22,10 @@ function ContactUs() {
       .then(
         () => {
           setAlert('Message sent successfully!');
-          console.log('SUCCESS!');
           form.current.reset();
         },
         (error) => {
           setAlert('Failed to send message. Please try again.');
-          console.log('FAILED...', error.text);
         }
       );
   };

@@ -81,7 +81,6 @@ const CreateEventModal = ({ open, handleClose }) => {
       handleClose();
       resetForm();
     } catch (error) {
-      console.error('Failed to create event:', error);
     }
   };
 

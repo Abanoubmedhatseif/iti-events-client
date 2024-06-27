@@ -33,7 +33,6 @@ export const fetchHappeningEvents = createAsyncThunk(
   async () => {
     try {
       const response = await api.get(`${BASE_URL}/events/happening`);
-      console.log("happening events", response.data); // Log the response data here
 
       return response.data.events;
 
@@ -117,7 +116,6 @@ export const fetchEventAttendees = createAsyncThunk(
     async (eventId, { rejectWithValue }) => {
       try {
         const response = await api.get(`/events/${eventId}/attendees`);
-        console.log("Attendees data:", response.data); // Log the response data here
   
         // Check if response.data has attendees array
         if (response.data.attendees) {
@@ -126,7 +124,6 @@ export const fetchEventAttendees = createAsyncThunk(
           return []; // Return empty array if no attendees found
         }
       } catch (error) {
-        console.error("Error fetching event attendees:", error.response.data);
         return rejectWithValue(error.response.data);
       }
     }

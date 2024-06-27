@@ -10,7 +10,6 @@ function Profile() {
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    console.log(user);
   }, []);
 
   const [profile, setProfile] = useState({

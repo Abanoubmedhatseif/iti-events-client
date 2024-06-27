@@ -39,7 +39,6 @@ function AdminUsersPage() {
   }
 
   function handleDeleteUser() {
-    console.log(userToDelete);
     if (userToDelete) {
       dispatch(deleteUser(userToDelete.id));
       setShowSuccessMessage(true);

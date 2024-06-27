@@ -10,29 +10,24 @@
     const queryParams = useQuery();
     const token = queryParams.get("token");
     const id = queryParams.get("id");
-    console.log(id)
-    console.log(token)
+
 
     const dispatch = useDispatch();
     const handleCLick = () => {
       dispatch(verifyEmailAction({ token, id }))
       .then(() => {
-        console.log("Email verification successful, navigating to home.");
         navigate("/");
       })
       .catch((error) => {
-        console.error("Email verification failed:", error);
       });
     };
     useEffect(() => {
       if (token && id) {
         dispatch(verifyEmailAction({ token, id }))
         .then(() => {
-          console.log("Email verification successful, navigating to home.");
           navigate("/");
         })
         .catch((error) => {
-          console.error("Email verification failed:", error);
         });
       }
     }, [dispatch, token, id, navigate]);

@@ -16,7 +16,6 @@ const parseLocalStorageUser = () => {
   try {
     return JSON.parse(localStorage.getItem("user") || "null");
   } catch (e) {
-    console.error("Failed to parse user from localStorage", e);
     return null;
   }
 };
@@ -69,7 +68,6 @@ const authSlice = createSlice({
       .addCase(loginAction.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        console.log("Action payload", action.payload);
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         localStorage.setItem("accessToken", action.payload.accessToken);
