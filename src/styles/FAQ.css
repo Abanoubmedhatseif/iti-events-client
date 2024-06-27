@@ -3,7 +3,6 @@
     display: flex;
     justify-content: center;
     align-items: flex-start; /* Align items to the top to prevent overlap with the navbar */
-    height: 100vh;
     padding: 60px 20px 20px; /* Adjust padding to account for the navbar height */
     box-sizing: border-box; /* Include padding in height calculations */
 }

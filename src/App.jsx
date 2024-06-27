@@ -40,6 +40,7 @@ import Profile from "./pages/Profile";
 import ExcelUploader from "./pages/Excel";
 import VerifyEmail from "./pages/VerifyEmail";
 import { Navigate } from "react-router-dom";
+import ContactUs from "./pages/ContactUs";
 
 setupInterceptors(store);
 
@@ -68,6 +69,7 @@ function App() {
                 path="categories/:categoryId"
                 element={<CategoryDetails />}
               />
+              <Route path="contact-us" element={<ContactUs/>}/>
               <Route path="faq" element={<FAQ />} />
               <Route path="about" element={<AboutUsPage />} />
               <Route
