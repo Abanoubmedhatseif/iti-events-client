@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import "../styles/Footer.css"; // Import the CSS file
 import whiteLogo from "../assets/WhiteLogo.svg"; // Import the image
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Link as LinkR } from "react-router-dom";
 import { Link } from "@mui/material";
 
@@ -23,115 +23,134 @@ const Footer = () => {
       <Box
         sx={{
           display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
         }}
       >
-        <Box m="auto">
-          <img src={whiteLogo} alt="ITI Logo" className="footer-logo" />
-        </Box>
-
         <Box
           sx={{
             display: "flex",
-            gap: 2,
-            justifyContent: "center",
+            justifyContent: "space-between",
             alignItems: "center",
-            height: "100%",
-            m: "auto",
-            px: 10,
+            width: "100%",
+            flexWrap: "wrap",
           }}
         >
-          <Link
-            component={LinkR}
-            sx={{
-              textDecoration: "none",
-              color: "white",
-              ":hover": { color: "red" },
-            }}
-            to="/about"
-          >
-            About Us
-          </Link>
+          <Box m="auto">
+            <img src={whiteLogo} alt="ITI Logo" className="footer-logo" />
+          </Box>
 
-          <Link
-            component={LinkR}
+          <Box
             sx={{
-              textDecoration: "none",
-              color: "white",
-              ":hover": { color: "red" },
+              display: "flex",
+              gap: 2,
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              m: "auto",
+              px: 10,
             }}
-            color="primary"
-            to="/about#our-story"
           >
-            Our Story
-          </Link>
+            <Link
+              component={LinkR}
+              sx={{
+                textDecoration: "none",
+                color: "white",
+                ":hover": { color: "red" },
+              }}
+              to="/about"
+            >
+              About Us
+            </Link>
 
-          <Link
-            component={LinkR}
-            sx={{
-              textDecoration: "none",
-              color: "white",
-              ":hover": { color: "red" },
-            }}
-            color="primary"
-            to="/about#our-mission"
-          >
-            Our Mission
-          </Link>
+            <Link
+              component={LinkR}
+              sx={{
+                textDecoration: "none",
+                color: "white",
+                ":hover": { color: "red" },
+              }}
+              color="primary"
+              to="/about#our-story"
+            >
+              Our Story
+            </Link>
 
-          <Link
-            component={LinkR}
-            sx={{
-              textDecoration: "none",
-              color: "white",
-              ":hover": { color: "red" },
-            }}
-            color="primary"
-            to="/about#contact-us"
-          >
-            Contact Us
-          </Link>
+            <Link
+              component={LinkR}
+              sx={{
+                textDecoration: "none",
+                color: "white",
+                ":hover": { color: "red" },
+              }}
+              color="primary"
+              to="/about#our-mission"
+            >
+              Our Mission
+            </Link>
+
+            <Link
+              component={LinkR}
+              sx={{
+                textDecoration: "none",
+                color: "white",
+                ":hover": { color: "red" },
+              }}
+              color="primary"
+              to="/about#contact-us"
+            >
+              Contact Us
+            </Link>
+          </Box>
+
+          <Box justifyContent="end" m="auto">
+            <h3>Social Media Icons</h3>
+            <div className="social-icons">
+              <Link
+                component={LinkR}
+                to="https://www.facebook.com/ITIKnowledgeCityBranch/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faFacebook} />
+              </Link>
+              <Link
+                component={LinkR}
+                to="https://www.twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faTwitter} />
+              </Link>
+              <Link
+                component={LinkR}
+                to="https://www.instagram.com/itians_newcapital/?hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faInstagram} />
+              </Link>
+              <Link
+                component={LinkR}
+                to="https://www.linkedin.com/school/information-technology-institute-iti/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faLinkedin} />
+              </Link>
+            </div>
+          </Box>
         </Box>
 
-        <Box justifyContent="end" m="auto">
-          <h3>Social Media Icons</h3>
-          <div className="social-icons">
-            <Link
-              component={LinkR}
-              to="https://www.facebook.com/ITIKnowledgeCityBranch/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faFacebook} />
-            </Link>
-            <Link
-              component={LinkR}
-              to="https://www.twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faTwitter} />
-            </Link>
-            <Link
-              component={LinkR}
-              to="https://www.instagram.com/itians_newcapital/?hl=en"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faInstagram} />
-            </Link>
-            <Link
-              component={LinkR}
-              to="https://www.linkedin.com/school/information-technology-institute-iti/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faLinkedin} />
-            </Link>
-          </div>
-        </Box>
+        <Typography
+          variant="body2"
+          color="white"
+          sx={{ mt: -2 }}
+        >
+          © ITI Open Source Track Intake 44 New Capital Branch
+        </Typography>
       </Box>
     </Box>
   );
