@@ -54,6 +54,18 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  "users/updateUser",
+  async (updatedUser, thunkAPI) => {
+    try {
+      const response = await api.patch(`${BASE_URL}/users/me`, updatedUser);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message || "Failed to update user");
+    }
+  }
+);
+
 export const fetchUserRegisteredEvents = createAsyncThunk(
   "users/fetchUserRegisteredEvents",
   async (_, thunkAPI) => {
@@ -61,7 +73,9 @@ export const fetchUserRegisteredEvents = createAsyncThunk(
       const response = await api.get(`${BASE_URL}/users/me`);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message || "Failed to fetch user-registered events");
+      return thunkAPI.rejectWithValue(
+        error.message || "Failed to fetch user-registered events"
+      );
     }
   }
 );
@@ -126,6 +140,17 @@ const usersSlice = createSlice({
       })
       .addCase(createStudents.pending, (state) => {
         state.loading = true;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.users = action.payload;
+        state.loading = false;
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.error = "Failed to update user";
+        state.loading = false;
       });
   },
 });

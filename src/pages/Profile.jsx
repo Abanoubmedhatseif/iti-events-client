@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Profile.css";
-import person from '../assets/person.png'; // Importing the default profile image
+import person from "../assets/person.png";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../store/auth/authSlice";
+import { updateUser } from "../store/users/usersSlice";
 
 function Profile() {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  useEffect(() => {
+    if (user) {
+    }
+  }, [user]);
+
   const [profile, setProfile] = useState({
-    first_name: "Abanoub",
-    last_name: "Medhat",
-    email: "abanoub@example.com",
-    password: "password123",
+    first_name: user?.firstName,
+    last_name: user?.lastName,
+    email: user?.email,
+    password: user?.password,
     profileImage: person,
   });
 
@@ -41,6 +52,7 @@ function Profile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateUser(formData));
     setProfile(formData);
     setIsEditing(false);
   };
@@ -116,7 +128,7 @@ function Profile() {
               />
               <label htmlFor="password">Password:</label>
               <input
-                type="password"
+                type="text"
                 id="password"
                 name="password"
                 value={formData.password}

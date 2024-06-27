@@ -11,6 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+
 import { Link } from "react-router-dom";
 import { selectUser } from "../store/auth/authSlice";
 import { Login } from "@mui/icons-material";
@@ -84,6 +85,10 @@ function ResponsiveAppBar() {
               display: { xs: "none", md: "flex" },
               mr: 1,
               bgcolor: "white",
+              borderRadius: 2,
+              padding: "2px",
+              paddingBottom: "4px",
+              overflow: "hidden",
             }}
             component={Link}
             to="/"
