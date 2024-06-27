@@ -48,7 +48,7 @@ const RegisterEventModal = ({ eventId, open, handleClose, event, onRegistrationM
     }
 
     try {
-      await dispatch(registerForEvent({ eventId, formData })).unwrap();
+      dispatch(registerForEvent({ eventId, formData }));
     } catch (error) {
       onRegistrationMessage(error.message || 'Failed to register for the event', 'error');
     }
