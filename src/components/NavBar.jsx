@@ -184,12 +184,11 @@ function ResponsiveAppBar() {
               </Badge> */}
               <Tooltip title="Open settings">
                 {/*     <Badge badgeContent={wishList?.length || 0} color="error"> */}
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt={user?.firstName?.charAt(0)}
-                    src={user?.profileImage}
-                  />
-                </IconButton>
+                <Button onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Typography color="white">
+                  {user?.firstName + " " + user?.lastName}
+                  </Typography>
+                </Button>
                 {/* </Badge> */}
               </Tooltip>
               <Menu
