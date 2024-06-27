@@ -3,6 +3,20 @@ import api from "../../api";
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
+export const createStudents = createAsyncThunk(
+  "users/createStudents",
+  async (newStudents, thunkAPI) => {
+    try {
+      const response = await api.post(`${BASE_URL}/users/import`, newStudents);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.message || "Failed to create students"
+      );
+    }
+  }
+);
+
 export const fetchAllUsers = createAsyncThunk(
   "users/fetchUsers",
   async (_, thunkAPI) => {
@@ -101,6 +115,17 @@ const usersSlice = createSlice({
       .addCase(fetchUserRegisteredEvents.rejected, (state) => {
         state.loading = false;
         state.error = "Failed to fetch user-registered events";
+      })
+      .addCase(createStudents.fulfilled, (state, action) => {
+        state.users = action.payload;
+        state.loading = false;
+      })
+      .addCase(createStudents.rejected, (state) => {
+        state.error = "Failed to create students";
+        state.loading = false;
+      })
+      .addCase(createStudents.pending, (state) => {
+        state.loading = true;
       });
   },
 });

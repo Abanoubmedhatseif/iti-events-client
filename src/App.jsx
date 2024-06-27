@@ -37,6 +37,8 @@ import ResetPassword from "./pages/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import Profile from "./pages/Profile";
 import ExcelUploader from "./pages/Excel";
+import VerifyEmail from "./pages/VerifyEmail";
+import { Navigate } from "react-router-dom";
 
 setupInterceptors(store);
 
@@ -66,10 +68,6 @@ function App() {
                 element={<CategoryDetails />}
               />
               <Route path="faq" element={<FAQ />} />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              <Route path="forgot" element={<ForgotPassword />} />
-              <Route path="reset" element={<ResetPassword />} />
               <Route path="about" element={<AboutUsPage />} />
               <Route
                 path="UpcomingEventsPage"
@@ -78,11 +76,33 @@ function App() {
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
               <Route path="profile" element={<Profile />} />
               <Route path="excel" element={<ExcelUploader />} />
-              <Route path="*" element={<PageNotFound />} />        
+              <Route path="verify" element={<VerifyEmail />} />
+
+              <Route
+                path="login"
+                element={user ? <Navigate to={"/"} /> : <Login />}
+              />
+              <Route
+                path="register"
+                element={user ? <Navigate to={"/"} /> : <Register />}
+              />
+              <Route
+                path="forgot"
+                element={user ? <Navigate to={"/"} /> : <ForgotPassword />}
+              />
+              <Route
+                path="reset"
+                element={user ? <Navigate to={"/"} /> : <ResetPassword />}
+              />
             </Route>
 
             {/* Admin Layout Routes */}
-            <Route path="admin/*" element={<AdminLayout />}>
+            <Route
+              path="admin/*"
+              element={
+                user?.role !== "admin" ? <Navigate to={"/"} /> : <AdminLayout />
+              }
+            >
               <Route index element={<AdminHome />} />
               <Route path="categories" element={<AdminCategoryPage />} />
               <Route path="events" element={<AdminEventPage />} />
@@ -96,6 +116,8 @@ function App() {
               <Route path="*" element={<PageNotFound />} />
               {/* Add other admin routes here */}
             </Route>
+
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
         <ToastContainer />

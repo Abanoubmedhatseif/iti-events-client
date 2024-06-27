@@ -24,11 +24,12 @@ function formatRoute(string) {
   return string?.charAt(0)?.toUpperCase() + string?.slice(1);
 }
 
-const pages = ["events", "categories", "about", "faq"];
+const defaultPages = ["events", "categories", "about", "faq"];
 
 const settings = ["profile"];
 
 function ResponsiveAppBar() {
+  const [pages, setPages] = React.useState(defaultPages);
   const currentPage = window.location.pathname.split("/")[1];
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,6 +62,12 @@ function ResponsiveAppBar() {
       navigate("/login");
     }
   };
+
+  React.useEffect(() => {
+    if (user?.role === "admin" && !pages.includes("admin")) {
+      setPages((prev) => [...prev, "admin"]);
+    }
+  }, [user, pages]);
 
   return (
     <AppBar
