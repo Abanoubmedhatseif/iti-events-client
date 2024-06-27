@@ -150,6 +150,7 @@ export const fetchEventAttendees = createAsyncThunk(
       }
     }
   );
+  
 
 const eventSlice = createSlice({
   name: "events",

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/Profile.css";
+import person from '../assets/person.png'; // Importing the default profile image
 
 function Profile() {
   const [profile, setProfile] = useState({
@@ -7,7 +8,7 @@ function Profile() {
     last_name: "Medhat",
     email: "abanoub@example.com",
     password: "password123",
-    profileImage: "profile-image.png",
+    profileImage: person,
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -45,28 +46,25 @@ function Profile() {
   };
 
   return (
-    <div className="App">
-      <main>
-        <section className="profile">
-          <div className="profile-box">
-            <img
-              src={profile.profileImage}
-              alt="Profile"
-              className="profile-image"
-            />
-            <div className="details">
-              <h2>
-                Name: {profile.first_name} {profile.last_name}
-              </h2>
-              <p>Email: {profile.email}</p>
-              <p>Password: {profile.password}</p>
-              <button className="edit-btn" onClick={() => setIsEditing(true)}>
-                Edit
-              </button>
-            </div>
+    <div className="profile-container">
+      <div className="profile">
+        <div className="profile-info">
+          <img
+            src={profile.profileImage}
+            alt="Profile"
+            className="profile-image"
+          />
+          <div className="details">
+            <h2>
+              {profile.first_name} {profile.last_name}
+            </h2>
+            <p>{profile.email}</p>
+            <button className="edit-btn" onClick={() => setIsEditing(true)}>
+              Edit Profile
+            </button>
           </div>
-        </section>
-      </main>
+        </div>
+      </div>
 
       {isEditing && (
         <div className="modal">
@@ -74,9 +72,9 @@ function Profile() {
             <span className="close" onClick={() => setIsEditing(false)}>
               &times;
             </span>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="edit-form">
               <h2>Edit Profile</h2>
-              <label htmlFor="name">First name:</label>
+              <label htmlFor="firstname">First name:</label>
               <input
                 type="text"
                 id="firstname"
@@ -85,7 +83,7 @@ function Profile() {
                 onChange={handleInputChange}
                 required
               />
-              <label htmlFor="name">Last name:</label>
+              <label htmlFor="lastname">Last name:</label>
               <input
                 type="text"
                 id="lastname"
@@ -102,10 +100,7 @@ function Profile() {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                title="Please enter a valid email address"
               />
-
               <label htmlFor="password">Password:</label>
               <input
                 type="password"
