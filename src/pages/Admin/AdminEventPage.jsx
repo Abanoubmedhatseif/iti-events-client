@@ -17,7 +17,7 @@ const AdminEventPage = () => {
 
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl"> {/* Change maxWidth to xl */}
         <Box mt={4} mb={2} display="flex" justifyContent="flex-end">
           <Button
             variant="contained"
