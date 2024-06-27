@@ -24,7 +24,7 @@ function formatRoute(string) {
   return string?.charAt(0)?.toUpperCase() + string?.slice(1);
 }
 
-const defaultPages = ["events", "categories", "about", "faq"];
+const defaultPages = ["events", "categories", "about", "faq","contact-us"];
 
 const settings = ["profile"];
 
