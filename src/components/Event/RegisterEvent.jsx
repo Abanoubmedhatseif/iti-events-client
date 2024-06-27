@@ -44,7 +44,7 @@ const RegisterEventModal = ({ eventId, open, handleClose, event, onRegistrationM
     const formData = new FormData();
     
     if (event.isPaid && registrationData.imageUrl) {
-      formData.append('imageUrl', registrationData.imageUrl);
+      formData.append('image', registrationData.imageUrl); // Change 'imageUrl' to 'image'
     }
 
     try {

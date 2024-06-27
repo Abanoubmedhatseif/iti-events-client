@@ -66,6 +66,19 @@ function Profile() {
         </div>
       </div>
 
+      <div className="registered-events">
+        <h2 className="events-title">My Registered Events</h2>
+        {/* Replace with your logic to display registered events */}
+        <div className="events-list">
+          {/* Example event */}
+          <div className="event">
+            <h3>Event Name</h3>
+            <p>Date: DD/MM/YYYY</p>
+            <p>Location: Event Location</p>
+          </div>
+        </div>
+      </div>
+
       {isEditing && (
         <div className="modal">
           <div className="modal-content">
