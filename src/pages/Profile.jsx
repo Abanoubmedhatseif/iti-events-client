@@ -10,9 +10,8 @@ function Profile() {
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    if (user) {
-    }
-  }, [user]);
+    console.log(user);
+  }, []);
 
   const [profile, setProfile] = useState({
     first_name: user?.firstName,
@@ -52,6 +51,9 @@ function Profile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (formData.password === "") {
+      delete formData.password;
+    }
     dispatch(updateUser(formData));
     setProfile(formData);
     setIsEditing(false);
@@ -80,15 +82,31 @@ function Profile() {
 
       <div className="registered-events">
         <h2 className="events-title">My Registered Events</h2>
-        {/* Replace with your logic to display registered events */}
-        <div className="events-list">
-          {/* Example event */}
-          <div className="event">
-            <h3>Event Name</h3>
-            <p>Date: DD/MM/YYYY</p>
-            <p>Location: Event Location</p>
-          </div>
-        </div>
+        {user?.events
+          .filter((e) => e)
+          .map((event) => (
+            <div className="events-list">
+              <div className="event">
+                <h3>{event?.name}</h3>
+                <p>
+                  <strong>Start Date : </strong>
+                  {formatDate(event?.startDate)}
+                </p>
+                <p>
+                  <strong>Price : </strong>
+                  {event?.price === 0 ? "Free" : event?.price}
+                </p>
+                <p>
+                  <strong>Min Age : </strong>
+                  {event?.minAge}
+                </p>
+                <p>
+                  <strong>Max Age : </strong>
+                  {event?.maxAge}
+                </p>
+              </div>
+            </div>
+          ))}
       </div>
 
       {isEditing && (
@@ -131,9 +149,9 @@ function Profile() {
                 type="text"
                 id="password"
                 name="password"
+                placeholder="Enter new password"
                 value={formData.password}
                 onChange={handleInputChange}
-                required
                 minLength={8}
                 maxLength={20}
               />
@@ -155,3 +173,11 @@ function Profile() {
 }
 
 export default Profile;
+
+function formatDate(dateStr) {
+  if (!dateStr) return "";
+  let date = new Date(dateStr);
+  let options = { year: "numeric", month: "long", day: "numeric" };
+  let formattedDate = date.toLocaleDateString("en-US", options);
+  return formattedDate;
+}
