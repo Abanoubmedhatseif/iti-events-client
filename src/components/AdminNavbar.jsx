@@ -27,7 +27,7 @@ const AdminNavbar = () => {
           <Tab label="Guests" component={Link} to="/admin/guests" />
           <Tab label="Users" component={Link} to="/admin/users" />
           <Tab label="Admins" component={Link} to="/admin/admins" />
-
+          <Tab label="Create Users" component={Link} to="/admin/createUsers" />
         </Tabs>
       </Toolbar>
     </AppBar>

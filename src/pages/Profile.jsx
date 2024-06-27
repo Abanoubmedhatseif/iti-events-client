@@ -9,10 +9,6 @@ function Profile() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
   const [profile, setProfile] = useState({
     first_name: user?.firstName,
     last_name: user?.lastName,
@@ -24,11 +20,11 @@ function Profile() {
   const [isEditing, setIsEditing] = useState(false);
 
   const [formData, setFormData] = useState({
-    first_name: profile.first_name,
-    last_name: profile.last_name,
-    email: profile.email,
-    password: profile.password,
-    profileImage: profile.profileImage,
+    first_name: user?.firstName,
+    last_name: user?.lastName,
+    email: user?.email,
+    password: user?.password,
+    profileImage: person,
   });
 
   const handleInputChange = (e) => {
@@ -84,8 +80,8 @@ function Profile() {
         <h2 className="events-title">My Registered Events</h2>
         {user?.events
           .filter((e) => e)
-          .map((event) => (
-            <div className="events-list">
+          .map((event, index) => (
+            <div className="events-list" key={index}>
               <div className="event">
                 <h3>{event?.name}</h3>
                 <p>

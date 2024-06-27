@@ -4,17 +4,14 @@ import api from "../../api";
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
-export const fetchEvents = createAsyncThunk(
-  "events/fetchEvents",
-  async () => {
-    try {
-      const response = await api.get(`${BASE_URL}/events`);
-      return response.data.events;
-    } catch (error) {
-      return Promise.reject(error.message || "Failed to fetch events");
-    }
+export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
+  try {
+    const response = await api.get(`${BASE_URL}/events`);
+    return response.data.events;
+  } catch (error) {
+    return Promise.reject(error.message || "Failed to fetch events");
   }
-);
+});
 
 export const fetchUpcomingEvents = createAsyncThunk(
   "events/fetchUpcomingEvents",
@@ -33,12 +30,12 @@ export const fetchHappeningEvents = createAsyncThunk(
   async () => {
     try {
       const response = await api.get(`${BASE_URL}/events/happening`);
-      console.log("happening events", response.data); // Log the response data here
 
       return response.data.events;
-
     } catch (error) {
-      return Promise.reject(error.message || "Failed to fetch happening events");
+      return Promise.reject(
+        error.message || "Failed to fetch happening events"
+      );
     }
   }
 );
@@ -100,59 +97,58 @@ export const updateEvent = createAsyncThunk(
 );
 
 export const fetchEventDetails = createAsyncThunk(
-  'eventDetails/fetchEventDetails',
+  "eventDetails/fetchEventDetails",
   async (eventId) => {
     try {
       const response = await api.get(`${BASE_URL}/events/${eventId}`);
       return response.data.event;
     } catch (error) {
-      return Promise.reject(error.message || 'Failed to fetch event details');
+      return Promise.reject(error.message || "Failed to fetch event details");
     }
   }
 );
 
-
 export const fetchEventAttendees = createAsyncThunk(
-    "events/fetchEventAttendees",
-    async (eventId, { rejectWithValue }) => {
-      try {
-        const response = await api.get(`/events/${eventId}/attendees`);
-        console.log("Attendees data:", response.data); // Log the response data here
-  
-        // Check if response.data has attendees array
-        if (response.data.attendees) {
-          return response.data.attendees;
-        } else {
-          return []; // Return empty array if no attendees found
-        }
-      } catch (error) {
-        console.error("Error fetching event attendees:", error.response.data);
-        return rejectWithValue(error.response.data);
-      }
-    }
-  );
+  "events/fetchEventAttendees",
+  async (eventId, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/events/${eventId}/attendees`);
 
-  export const registerForEvent = createAsyncThunk(
-    'events/registerForEvent',
-    async ({ eventId, formData }, { rejectWithValue }) => {
-      try {
-        const response = await api.postForm(`${BASE_URL}/events/${eventId}/attendees`, formData
-         // , {
-          // headers: {
-          //   'Content-Type': 'multipart/form-data',
-          // },
-       // }
-      );
-        return response.data;
-      } catch (error) {
-        if (!error.response) {
-          throw error;
-        }
-        return rejectWithValue(error.response.data);
+      // Check if response.data has attendees array
+      if (response.data.attendees) {
+        return response.data.attendees;
+      } else {
+        return []; // Return empty array if no attendees found
       }
+    } catch (error) {
+      console.error("Error fetching event attendees:", error.response.data);
+      return rejectWithValue(error.response.data);
     }
-  );
-  
+  }
+);
+
+export const registerForEvent = createAsyncThunk(
+  "events/registerForEvent",
+  async ({ eventId, formData }, { rejectWithValue }) => {
+    try {
+      const response = await api.postForm(
+        `${BASE_URL}/events/${eventId}/attendees`,
+        formData
+        // , {
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
+        // }
+      );
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const eventSlice = createSlice({
   name: "events",
@@ -278,11 +274,12 @@ const eventSlice = createSlice({
       })
       .addCase(registerForEvent.fulfilled, (state) => {
         state.loading = false;
-        state.registrationSuccess = 'Successfully registered for the event!';
+        state.registrationSuccess = "Successfully registered for the event!";
       })
       .addCase(registerForEvent.rejected, (state, action) => {
         state.loading = false;
-        state.registrationError = action.payload || 'Failed to register for the event';
+        state.registrationError =
+          action.payload || "Failed to register for the event";
       })
       .addCase(fetchEventAttendees.pending, (state) => {
         state.loading = true;

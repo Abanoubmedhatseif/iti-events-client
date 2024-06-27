@@ -69,7 +69,7 @@ function App() {
                 path="categories/:categoryId"
                 element={<CategoryDetails />}
               />
-              <Route path="contact-us" element={<ContactUs/>}/>
+              <Route path="contact-us" element={<ContactUs />} />
               <Route path="faq" element={<FAQ />} />
               <Route path="about" element={<AboutUsPage />} />
               <Route
@@ -79,6 +79,7 @@ function App() {
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
               <Route path="profile" element={<Profile />} />
               <Route path="excel" element={<ExcelUploader />} />
+              <Route path="createUsers" element={<ExcelUploader />} />
               <Route path="verify" element={<VerifyEmail />} />
 
               <Route
@@ -116,6 +117,8 @@ function App() {
               <Route path="guests" element={<AdminGuestsPage />} />
               <Route path="users" element={<AdminUsersPage />} />
               <Route path="admins" element={<AdminAccountsPage />} />
+              <Route path="createUsers" element={<ExcelUploader />} />
+
               <Route path="*" element={<PageNotFound />} />
               {/* Add other admin routes here */}
             </Route>
