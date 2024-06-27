@@ -15,6 +15,8 @@ const AdminNavbar = () => {
           indicatorColor="secondary" // Adjust indicator color if needed
           textColor="inherit"
         >
+          <Tab label="Home" component={Link} to="/" />
+
           <Tab
             label="Categories"
             sx={{ color: "white" }} // Set the text color to white
@@ -25,6 +27,7 @@ const AdminNavbar = () => {
           <Tab label="Guests" component={Link} to="/admin/guests" />
           <Tab label="Users" component={Link} to="/admin/users" />
           <Tab label="Admins" component={Link} to="/admin/admins" />
+
         </Tabs>
       </Toolbar>
     </AppBar>
