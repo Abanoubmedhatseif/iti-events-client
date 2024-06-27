@@ -42,7 +42,7 @@ const RegisterEventModal = ({ eventId, open, handleClose, event, onRegistrationM
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    
+    console.log(event , registrationData)
     if (event.isPaid && registrationData.imageUrl) {
       formData.append('image', registrationData.imageUrl); // Change 'imageUrl' to 'image'
     }

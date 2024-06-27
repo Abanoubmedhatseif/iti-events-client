@@ -13,8 +13,8 @@ export const resetPassword = (
 ) => api.post("auth/reset/", resetData);
 export const sendResetPassword = (email /* : string */) =>
   api.post("auth/forgot/", { email });
-export const verifyEmail = (token , id) =>
-  api.get(`auth/verify/?token=${token}&id=${id}`);
+export const verifyEmail = (payload) =>
+  api.get(`auth/verify/?token=${payload.token}&id=${payload.id}`);
 export const getUserData = () => api.get("users/me/");
 
 
