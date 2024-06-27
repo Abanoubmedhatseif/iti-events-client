@@ -40,10 +40,23 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+export const fetchUserRegisteredEvents = createAsyncThunk(
+  "users/fetchUserRegisteredEvents",
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get(`${BASE_URL}/users/me`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message || "Failed to fetch user-registered events");
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: "users",
   initialState: {
     users: [],
+    userRegisteredEvents: [],
     loading: false,
     error: null,
   },
@@ -77,6 +90,17 @@ const usersSlice = createSlice({
       })
       .addCase(createAdmin.rejected, (state) => {
         state.error = "Failed to create user";
+      })
+      .addCase(fetchUserRegisteredEvents.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUserRegisteredEvents.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userRegisteredEvents = action.payload;
+      })
+      .addCase(fetchUserRegisteredEvents.rejected, (state) => {
+        state.loading = false;
+        state.error = "Failed to fetch user-registered events";
       });
   },
 });
