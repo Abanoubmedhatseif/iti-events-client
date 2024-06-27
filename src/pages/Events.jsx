@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUpcomingEvents } from '../store/Events/eventSlice';
-import { Grid, Container, Typography, CircularProgress, Box, Button } from '@mui/material';
+import { Grid, Container, Typography, CircularProgress, Box, Button, TextField } from '@mui/material';
 import EventCard from '../components/Event/EventCard';
 
 function Events() {
@@ -9,6 +9,7 @@ function Events() {
   const { events, loading, error } = useSelector(state => state.events);
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
   const eventsPerPage = 4; // Number of events per page
 
   useEffect(() => {
@@ -28,11 +29,23 @@ function Events() {
     return <div>Error: {error}</div>;
   }
 
+  const formatDate = (date) => {
+    const options = { month: 'numeric', day: 'numeric', year: 'numeric' };
+    return new Date(date).toLocaleDateString('en-US', options);
+  };
+
+  // Filter events based on search query
+  const filteredEvents = events.filter(event => 
+    event.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    `Start Date: ${formatDate(event.startDate)}`.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   // Calculate the number of pages
-  const totalPages = Math.ceil(events.length / eventsPerPage);
+  const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
 
   // Get the events for the current page
-  const paginatedEvents = events.slice((currentPage - 1) * eventsPerPage, currentPage * eventsPerPage);
+  const paginatedEvents = filteredEvents.slice((currentPage - 1) * eventsPerPage, currentPage * eventsPerPage);
 
   const handlePreviousPage = () => {
     setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
@@ -64,6 +77,16 @@ function Events() {
           </Box>
         </Grid>
       </Grid>
+      <Box display="flex" justifyContent="center" mb={4}>
+        <TextField
+          label="Search Events"
+          variant="outlined"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          fullWidth
+          sx={{ maxWidth: '400px' }}
+        />
+      </Box>
       <Grid container spacing={4} style={{ marginTop: '16px' }}>
         {paginatedEvents.map((event) => (
           <Grid item key={event.id} xs={12} sm={6} md={4} lg={3}>
