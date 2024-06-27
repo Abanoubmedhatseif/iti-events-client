@@ -37,6 +37,8 @@ import ResetPassword from "./pages/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import Profile from "./pages/Profile";
 import ExcelUploader from "./pages/Excel";
+import VerifyEmail from "./pages/VerifyEmail";
+import { Navigate } from "react-router-dom";
 
 setupInterceptors(store);
 
@@ -74,35 +76,47 @@ function App() {
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
               <Route path="profile" element={<Profile />} />
               <Route path="excel" element={<ExcelUploader />} />
-              {!user && (
-                <>
-                  <Route path="login" element={<Login />} />
-                  <Route path="register" element={<Register />} />
-                  <Route path="forgot" element={<ForgotPassword />} />
-                  <Route path="reset" element={<ResetPassword />} />
-                </>
-              )}
+              <Route path="verify" element={<VerifyEmail />} />
+
+              <Route
+                path="login"
+                element={user ? <Navigate to={"/"} /> : <Login />}
+              />
+              <Route
+                path="register"
+                element={user ? <Navigate to={"/"} /> : <Register />}
+              />
+              <Route
+                path="forgot"
+                element={user ? <Navigate to={"/"} /> : <ForgotPassword />}
+              />
+              <Route
+                path="reset"
+                element={user ? <Navigate to={"/"} /> : <ResetPassword />}
+              />
             </Route>
 
             {/* Admin Layout Routes */}
-            {user?.role === "admin" && (
-              <>
-                <Route path="admin/*" element={<AdminLayout />}>
-                  <Route index element={<AdminHome />} />
-                  <Route path="categories" element={<AdminCategoryPage />} />
-                  <Route path="events" element={<AdminEventPage />} />
-                  <Route
-                    path="events/:eventId/attendees"
-                    element={<EventAttendeesPage />}
-                  />
-                  <Route path="guests" element={<AdminGuestsPage />} />
-                  <Route path="users" element={<AdminUsersPage />} />
-                  <Route path="admins" element={<AdminAccountsPage />} />
-                  <Route path="*" element={<PageNotFound />} />
-                  {/* Add other admin routes here */}
-                </Route>
-              </>
-            )}
+            <Route
+              path="admin/*"
+              element={
+                user?.role !== "admin" ? <Navigate to={"/"} /> : <AdminLayout />
+              }
+            >
+              <Route index element={<AdminHome />} />
+              <Route path="categories" element={<AdminCategoryPage />} />
+              <Route path="events" element={<AdminEventPage />} />
+              <Route
+                path="events/:eventId/attendees"
+                element={<EventAttendeesPage />}
+              />
+              <Route path="guests" element={<AdminGuestsPage />} />
+              <Route path="users" element={<AdminUsersPage />} />
+              <Route path="admins" element={<AdminAccountsPage />} />
+              <Route path="*" element={<PageNotFound />} />
+              {/* Add other admin routes here */}
+            </Route>
+
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
