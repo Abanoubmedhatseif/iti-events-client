@@ -66,10 +66,6 @@ function App() {
                 element={<CategoryDetails />}
               />
               <Route path="faq" element={<FAQ />} />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              <Route path="forgot" element={<ForgotPassword />} />
-              <Route path="reset" element={<ResetPassword />} />
               <Route path="about" element={<AboutUsPage />} />
               <Route
                 path="UpcomingEventsPage"
@@ -78,24 +74,36 @@ function App() {
               <Route path="happeningEvents" element={<HappeningEventsPage />} />
               <Route path="profile" element={<Profile />} />
               <Route path="excel" element={<ExcelUploader />} />
-              <Route path="*" element={<PageNotFound />} />        
+              {!user && (
+                <>
+                  <Route path="login" element={<Login />} />
+                  <Route path="register" element={<Register />} />
+                  <Route path="forgot" element={<ForgotPassword />} />
+                  <Route path="reset" element={<ResetPassword />} />
+                </>
+              )}
             </Route>
 
             {/* Admin Layout Routes */}
-            <Route path="admin/*" element={<AdminLayout />}>
-              <Route index element={<AdminHome />} />
-              <Route path="categories" element={<AdminCategoryPage />} />
-              <Route path="events" element={<AdminEventPage />} />
-              <Route
-                path="events/:eventId/attendees"
-                element={<EventAttendeesPage />}
-              />
-              <Route path="guests" element={<AdminGuestsPage />} />
-              <Route path="users" element={<AdminUsersPage />} />
-              <Route path="admins" element={<AdminAccountsPage />} />
-              <Route path="*" element={<PageNotFound />} />
-              {/* Add other admin routes here */}
-            </Route>
+            {user?.role === "admin" && (
+              <>
+                <Route path="admin/*" element={<AdminLayout />}>
+                  <Route index element={<AdminHome />} />
+                  <Route path="categories" element={<AdminCategoryPage />} />
+                  <Route path="events" element={<AdminEventPage />} />
+                  <Route
+                    path="events/:eventId/attendees"
+                    element={<EventAttendeesPage />}
+                  />
+                  <Route path="guests" element={<AdminGuestsPage />} />
+                  <Route path="users" element={<AdminUsersPage />} />
+                  <Route path="admins" element={<AdminAccountsPage />} />
+                  <Route path="*" element={<PageNotFound />} />
+                  {/* Add other admin routes here */}
+                </Route>
+              </>
+            )}
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
         <ToastContainer />
