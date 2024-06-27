@@ -30,7 +30,7 @@ export function ImgMediaCard({
   };
 
   return (
-    <Card sx={{ width: 350, height: 300, margin: "10px", padding: "10px" }}>
+    <Card sx={{ width: 450, margin: "10px", padding: "10px" }}>
       <CardMedia
         component="img"
         alt="no image provided"
