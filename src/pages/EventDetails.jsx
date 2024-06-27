@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Container, CircularProgress, Typography, Grid, Card, CardContent, Box } from '@mui/material';
+import { Container, CircularProgress, Typography, Grid, Card, CardContent, Box, Snackbar, Alert } from '@mui/material';
 import { fetchEventDetails, clearEvent } from '../store/Events/eventSlice';
 import Button from '../components/Button';
 import RegisterEventModal from '../components/Event/RegisterEvent';
@@ -13,6 +13,9 @@ function EventDetails() {
   const dispatch = useDispatch();
   const { event, loading, error } = useSelector(state => state.events.eventDetails);
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
   useEffect(() => {
     dispatch(fetchEventDetails(eventId));
@@ -28,6 +31,16 @@ function EventDetails() {
 
   const handleModalClose = () => {
     setRegisterModalOpen(false);
+  };
+
+  const handleRegistrationMessage = (message, severity) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   if (loading) {
@@ -132,7 +145,18 @@ function EventDetails() {
         open={isRegisterModalOpen}
         handleClose={handleModalClose}
         event={event}
+        onRegistrationMessage={handleRegistrationMessage}
       />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

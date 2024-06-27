@@ -136,11 +136,13 @@ export const fetchEventAttendees = createAsyncThunk(
     'events/registerForEvent',
     async ({ eventId, formData }, { rejectWithValue }) => {
       try {
-        const response = await api.post(`${BASE_URL}/events/${eventId}/attendees`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        const response = await api.postForm(`${BASE_URL}/events/${eventId}/attendees`, formData
+         // , {
+          // headers: {
+          //   'Content-Type': 'multipart/form-data',
+          // },
+       // }
+      );
         return response.data;
       } catch (error) {
         if (!error.response) {
@@ -150,6 +152,7 @@ export const fetchEventAttendees = createAsyncThunk(
       }
     }
   );
+  
 
 const eventSlice = createSlice({
   name: "events",

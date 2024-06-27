@@ -8,16 +8,17 @@ export const register = (registerData /* : FormData */) =>
   api.post("auth/register/", registerData);
 export const refreshToken = (refreshToken /* : string */) =>
   refreshApi.post("auth/refresh/", { refreshToken });
-export const getUserData = () => api.get("users/me/");
-
-//Not done in backend yet
 export const resetPassword = (
   resetData /* : { password: string; token: string } */
 ) => api.post("auth/reset/", resetData);
 export const sendResetPassword = (email /* : string */) =>
   api.post("auth/forgot/", { email });
-export const verifyEmail = (token /* : string */) =>
-  api.post("users/verify-email/", { token });
+export const verifyEmail = (payload) =>
+  api.get(`auth/verify/?token=${payload.token}&id=${payload.id}`);
+export const getUserData = () => api.get("users/me/");
+
+
+//Not done in backend yet
 export const sendVerificationEmail = () => api.post("users/send-verify-email/");
 export const editUser = (userData /* : FormData */) =>
   api.put("users/me/", userData);
